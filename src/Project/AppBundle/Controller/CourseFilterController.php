@@ -585,14 +585,7 @@ class CourseFilterController extends Controller
         $this->getDoctrine()->getManager()->persist($comment);
         $this->getDoctrine()->getManager()->flush();
 
-        return $this->render(
-            'AppBundle:Event:eventEdit.html.twig',
-            [
-                'event' => $event,
-                'course' => $event->getCourse(),
-                'comments' => $this->getDoctrine()->getRepository('AppBundle:Comment')->sortComments($id)
-            ]
-        );
+        return $this->redirect($this->generateUrl('view-event', ['id' => $event->getId()]));
     }
 
 
