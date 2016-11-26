@@ -10,7 +10,7 @@
             {# sorting of properties based on query components #}
             <th {% if pagination.isSorted('p.professor') %} class="sorted {{ pagination.getDirection() }}"{% endif %}>{{ knp_pagination_sortable(pagination, 'project_form.table.professor'|trans, ['u.firstName', 'u.lastName']) }}
                 <i class="fa fa-fw fa-sort"></i></th>
-            <th {% if pagination.isSorted('p.name') %} class="sorted {{ pagination.getDirection() }}"{% endif %}>{{ knp_pagination_sortable(pagination, 'project_form.table.project_name'|trans, 'p.name') }}
+            <th {% if pagination.isSorted('p.name') %} class="sorted {{ pNagination.getDirection() }}"{% endif %}>{{ knp_pagination_sortable(pagination, 'project_form.table.project_name'|trans, 'p.name') }}
                 <i class="fa fa-fw fa-sort"></i></th>
             <th {% if pagination.isSorted('p.nameRo') %} class="sorted {{ pagination.getDirection() }}"{% endif %}>{{ knp_pagination_sortable(pagination, 'project_form.table.project_name_ro'|trans, 'p.nameRo') }}
                 <i class="fa fa-fw fa-sort"></i></th>
