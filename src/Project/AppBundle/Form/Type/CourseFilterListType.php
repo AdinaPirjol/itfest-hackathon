@@ -27,13 +27,14 @@ class CourseFilterListType extends AbstractType
 
         $builder
             ->add(
-                'professor',
+                'college',
                 'choice',
                 array(
-                    'choices' => $filterData['professor'],
-                    'label' => $translator->trans('project_form.filters.labels.professor'),
+                    'choices' => $filterData['college'],
+                    'label' => 'Universitatea',
+                    'placeholder' => 'Selecteaza universitatea',
                     'multiple' => false,
-                    'required' => false,
+                    'required' => true,
                 )
             )
             ->add(
@@ -44,16 +45,7 @@ class CourseFilterListType extends AbstractType
                     'required' => false,
                 )
             )
-            ->add(
-                'course',
-                'choice',
-                array(
-                    'choices' => $filterData['course'],
-                    'label' => $translator->trans('Curs'),
-                    'multiple' => false,
-                    'required' => false,
-                )
-            );
+            ;
     }
 
     /**

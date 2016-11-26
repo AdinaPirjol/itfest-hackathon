@@ -63,13 +63,13 @@
                     {{ form_errors(form) }}
 
                     <div class="row">
-                        {#<div class="col-md-6">#}
-                            {#<div class="form-group">#}
-                                {#{{ form_label(form.professor) }}#}
-                                {#{{ form_errors(form.professor) }}#}
-                                {#{{ form_widget(form.professor, { 'attr': {'class': 'form-control'} }) }}#}
-                            {#</div>#}
-                        {#</div>#}
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                {{ form_label(form.college) }}
+                                {{ form_errors(form.college) }}
+                                {{ form_widget(form.college, { 'attr': {'class': 'form-control'} }) }}
+                            </div>
+                        </div>
 
                         <div class="col-md-4">
                             <div class="form-group">

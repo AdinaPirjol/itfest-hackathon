@@ -130,6 +130,8 @@ class CourseService
 
         /** @var User[] $professors */
         $professors = $userRepository->findByRole(UserType::ROLE_ADMIN);
+        /** @var College[] $colleges */
+        $colleges = $em->getRepository('AppBundle:College')->findAll();
 
         foreach ($professors as $professor) {
             $filterData['professor'][$professor->getId()] = $professor->getName();
@@ -139,6 +141,11 @@ class CourseService
         foreach($courseRepository->findAll() as $course) {
             $filterData['course'][$course->getId()] = $course->getName();
         }
+
+        foreach ($colleges as $college) {
+            $filterData['college'][$college->getId()] = $college->getName();
+        }
+
 
         return $filterData;
     }

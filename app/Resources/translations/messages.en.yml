@@ -195,7 +195,7 @@ project_student_status:
 
 apply_project:
     message:
-        succes: You successfully applied! An email was sent to the coordinating professor.
+        succes: Te-ai inscris cu succes!
         not_allowed: You don't have permissions to apply for projects!
         already_applied: You have already applied to this project!
         already_accepted: You have already been accepted to this project!

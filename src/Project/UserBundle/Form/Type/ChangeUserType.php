@@ -141,21 +141,6 @@ class ChangeUserType extends AbstractType
                         new Length(array('min' => 0, 'max' => 255))
                     )
                 )
-            )
-            ->add(
-                'preferred_locale',
-                'choice',
-                array(
-                    'choices' => $locales,
-                    'label' => $translator->trans('users.edit.locale'),
-                    'data' => ($user->getGroup() ? $user->getGroup()->getGroupName() : ''),
-                    'invalid_message' => 'locale',
-                    'required' => true,
-                    'error_bubbling' => true,
-                    'constraints' => array(
-                        new Choice(array('choices' => array_keys($locales)))
-                    )
-                )
             );
 
         if ($user->getUserType()->getRoleType() == UserType::ROLE_USER) {

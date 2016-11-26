@@ -15,10 +15,8 @@ project-view:
         id: \d+
 
 project-apply:
-    path: /apply/{id}
-    defaults: { _controller: AppBundle:CourseFilter:applyProject, id: 0 }
-    requirements:
-        id: \d+
+    path: /apply
+    defaults: { _controller: AppBundle:CourseFilter:applyProject }
     options:
         expose: true
 

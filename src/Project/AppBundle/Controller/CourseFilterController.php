@@ -6,11 +6,13 @@ use JMS\SecurityExtraBundle\Annotation\Secure;
 use Knp\Component\Pager\Paginator;
 use Project\AppBundle\Entity\Course;
 use Project\AppBundle\Entity\CourseProfessors;
+use Project\AppBundle\Entity\CourseSubscribers;
 use Project\AppBundle\Entity\Project;
 use Project\AppBundle\Entity\ProjectStudent;
 use Project\AppBundle\Form\Type\CourseFilterListType;
 use Project\AppBundle\Form\Type\EditProjectType;
 use Project\AppBundle\Form\Type\ProjectFilterListType;
+use Project\AppBundle\Repository\CourseSubscribersRepository;
 use Project\AppBundle\Repository\ProjectRepository;
 use Project\AppBundle\Services\CourseService;
 use Project\AppBundle\Services\MailService;
@@ -46,6 +48,8 @@ class CourseFilterController extends Controller
         /** @var UserService $userService */
         $userService = $this->get(UserService::ID);
 
+        $user = $userService->getCurrentUser();
+
         $courseFilterListType = new CourseFilterListType();
 
         $form = $this->createForm(
@@ -57,10 +61,21 @@ class CourseFilterController extends Controller
             )
         );
 
-        /** @var Course $course */
         $courseProf = $courseService->getCourseFilterData(array());
 
-//        var_dump($courseProf);die;
+        $enabled = [];
+        /** @var CourseSubscribersRepository $courseSubRepo */
+        $courseSubRepo = $this->getDoctrine()->getRepository('AppBundle:CourseSubscribers');
+        foreach($courseProf->getResult() as $c) {
+            $cs = $courseSubRepo->findOneBy(['student' => $user->getId(), 'course' => $c['id']]);
+            if(!UtilService::isNullObject($cs)) {
+                $enabled[$c['id']] = true;
+            } else {
+                $enabled[$c['id']] = false;
+            }
+        }
+
+        $params['enabled'] = $enabled;
 
         $pagination = $paginator->paginate(
             $courseProf, /* query NOT result */
@@ -91,12 +106,25 @@ class CourseFilterController extends Controller
         $courseService = $this->get(CourseService::ID);
         /** @var UserService $userService */
         $userService = $this->get(UserService::ID);
+        $user = $userService->getCurrentUser();
 
         try {
             $projectFilterListType = new CourseFilterListType();
             $params = $request->get($projectFilterListType->getName());
 
             $projects = $courseService->getCourseFilterData($params);
+
+            $enabled = [];
+            /** @var CourseSubscribersRepository $courseSubRepo */
+            $courseSubRepo = $this->getDoctrine()->getRepository('AppBundle:CourseSubscribers');
+            foreach($projects->getResult() as $c) {
+                $cs = $courseSubRepo->findOneBy(['student' => $user->getId(), 'course' => $c['id']]);
+                if(!UtilService::isNullObject($cs)) {
+                    $enabled[$c['id']] = true;
+                } else {
+                    $enabled[$c['id']] = false;
+                }
+            }
 
             $pagination = $paginator->paginate(
                 $projects, /* query NOT result */
@@ -108,6 +136,7 @@ class CourseFilterController extends Controller
                 'AppBundle:Course:courseList.html.twig',
                 [
                     'pagination' => $pagination,
+                    'enabled' => $enabled
                 ]
             );
 
@@ -137,23 +166,25 @@ class CourseFilterController extends Controller
      */
     public function viewProjectAction(Request $request, $id)
     {
-        /** @var Project $project */
-        $project = $this->getDoctrine()->getRepository('AppBundle:Project')->find($id);
+        /** @var Course $course */
+        $course = $this->getDoctrine()->getRepository('AppBundle:Course')->find($id);
 
         /** @var UserService $userService */
         $userService = $this->container->get('app.user');
         /** @var User $user */
         $currentUser = $userService->getCurrentUser();
 
-        $canApply = ($currentUser->getUserType()->getRoleType() == UserType::ROLE_USER);
-        $canEdit = ($this->isGranted(UserType::ROLE_ADMIN) || $this->isGranted(UserType::ROLE_SUPER_ADMIN))
-            && ($project->getProfessor()->getId() == $currentUser->getId());
+        $canView = $this->getDoctrine()->getRepository('AppBundle:CourseSubscribers')->findOneBy(['course'=>$id, 'student' => $currentUser->getId()]);
+        $canEdit = $this->getDoctrine()->getRepository('AppBundle:CourseProfessors')->findOneBy(['course'=>$id, 'professor' => $currentUser->getId()]);
+
+        $courseProf = $this->getDoctrine()->getRepository('AppBundle:CourseProfessors')->findBy(['course'=>$id, 'professor' => $currentUser->getId()]);
 
         return $this->render(
             'AppBundle:Project:projectMoreInfo.html.twig',
             [
-                'project' => $project,
-                'canApply' => $canApply,
+                'course' => $course,
+                'courseProf' => $courseProf,
+                'canView' => $canView,
                 'canEdit' => $canEdit
             ]
         );
@@ -161,13 +192,15 @@ class CourseFilterController extends Controller
 
     /**
      * @param Request $request
-     * @param $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \Exception
      * @Secure(roles="ROLE_USER")
      */
-    public function applyProjectAction(Request $request, $id)
+    public function applyProjectAction(Request $request)
     {
+        $id = $request->request->get('id');
+        $enabled = $request->request->get('enable');
+
         /** @var Translator $translator */
         $translator = $this->get('translator');
 
@@ -180,10 +213,11 @@ class CourseFilterController extends Controller
         $userService = $this->container->get('app.user');
         /** @var User $user */
         $user = $userService->getCurrentUser();
-        /** @var Project $project */
-        $project = $this->getDoctrine()->getRepository('AppBundle:Project')->find($id);
 
-        if (UtilService::isNullObject($project)) {
+        /** @var Course $course */
+        $course = $this->getDoctrine()->getRepository('AppBundle:Course')->find($id);
+
+        if (UtilService::isNullObject($course)) {
             $response = [
                 'error' => true,
                 'message' => $translator->trans('apply_project.message.not_exist', ['%id%' => $id])
@@ -192,59 +226,20 @@ class CourseFilterController extends Controller
             return new JsonResponse($response);
         }
 
-        /** @var ProjectStudent $projectStudent */
-        $projectStudent = $this->getDoctrine()->getRepository('AppBundle:ProjectStudent')->findOneBy(
-            [
-                'student' => $user->getId(),
-                'project' => $project->getId()
-            ]
-        );
-
-        if (!UtilService::isNullObject($projectStudent)) {
-            switch ($projectStudent->getStatus()) {
-                case ProjectStudent::STATUS_PENDING:
-                    $message = $translator->trans('apply_project.message.already_applied');
-                    break;
-                case ProjectStudent::STATUS_REJECTED:
-                    $message = $translator->trans('apply_project.message.rejected');
-                    break;
-                case ProjectStudent::STATUS_ACCEPTED:
-                    $message = $translator->trans('apply_project.message.already_accepted');
-                    break;
-                case ProjectStudent::STATUS_INVALIDATED:
-                    $message = $translator->trans('apply_project.message.invalidated');
-                    break;
-                default:
-                    $message = '';
-                    break;
+        if ($enabled == 1){
+            $courseSub = new CourseSubscribers();
+            $courseSub->setStudent($user);
+            $courseSub->setCourse($course);
+            $this->getDoctrine()->getManager()->persist($courseSub);
+        } else {
+            /** @var CourseSubscribersRepository $courseSubRepo */
+            $courseSubRepo = $this->getDoctrine()->getRepository('AppBundle:CourseSubscribers');
+            $courseSub = $courseSubRepo->findOneBy(['student' => $user->getId(), 'course' => $id]);
+            if (!UtilService::isNullObject($courseSub)) {
+                $this->getDoctrine()->getManager()->remove($courseSub);
             }
-
-            $response = [
-                'error' => true,
-                'message' => $message
-            ];
-
-            return new JsonResponse($response);
         }
-
-        $projectStudent = new ProjectStudent();
-        $projectStudent
-            ->setStudent($user)
-            ->setProject($project);
-
-        $this->getDoctrine()->getManager()->persist($projectStudent);
         $this->getDoctrine()->getManager()->flush();
-
-        /** @var MailService $mailService */
-        $mailService = $this->get(MailService::ID);
-        $mailService->sendMail2(
-            $user,
-            MailService::TYPE_SEND_APPLICATION,
-            [
-                'project' => $project,
-                'student' => $user
-            ]
-        );
 
         return new JsonResponse($response);
     }
@@ -340,19 +335,17 @@ class CourseFilterController extends Controller
 
         /** @var ProjectService $projectService */
         $projectService = $this->get(ProjectService::ID);
-        /** @var Project $project */
-        $project = $this->getDoctrine()->getRepository('AppBundle:Project')->find($id);
+        /** @var Course $course */
+        $course = $this->getDoctrine()->getRepository('AppBundle:Course')->find($id);
+        /** @var CourseProfessors $courseProf */
+        $courseProf = $this->getDoctrine()->getRepository('AppBundle:Course')->findOneBy(['professor' => $user->getId()]);
 
-        if (UtilService::isNullObject($project)) {
+        if (UtilService::isNullObject($course)) {
             throw new NotFoundHttpException();
         }
 
-        if ($project->getProfessor()->getId() != $user->getId()) {
+        if (UtilService::isNullObject($courseProf) || $courseProf->getProfessor()->getId() != $user->getId()) {
             throw new AccessDeniedHttpException();
-        }
-
-        if ($project->getStatus() == Project::STATUS_INACTIVE) {
-            /** @todo */
         }
 
         $form = $this->createForm(
@@ -360,8 +353,10 @@ class CourseFilterController extends Controller
             [],
             [
                 'translator' => $this->get('translator'),
-                'project' => $project,
-                'filterData' => $projectService->getEditProjectFormData()
+                'course' => $course,
+                'filterData' => [
+                    'courseProf' => $courseProf = $this->getDoctrine()->getRepository('AppBundle:Course')->findBy(['professor' => $user->getId()])
+                ]
             ]
         );
 
@@ -372,7 +367,7 @@ class CourseFilterController extends Controller
 
             if ($form->isValid()) {
                 $formData = $form->getData();
-                $error = $projectService->editProject($project, $user, $formData);
+                $error = $projectService->editProject($course, $user, $formData);
             }
         }
 
@@ -380,7 +375,7 @@ class CourseFilterController extends Controller
             'AppBundle:Project:projectEdit.html.twig',
             [
                 'form' => $form->createView(),
-                'project' => $project,
+                'project' => $course,
                 'error' => $error
             ]
         );

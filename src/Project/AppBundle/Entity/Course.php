@@ -14,6 +14,10 @@ use Project\UserBundle\Entity\User;
  */
 class Course
 {
+    const CURS = 'curs';
+    const EVENT = 'event';
+    const EXAM = 'exam';
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -33,6 +37,12 @@ class Course
      * @ORM\JoinColumn(name="college_id", referencedColumnName="id")
      */
     protected $college;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", columnDefinition="enum('curs', 'special', 'exam')")
+     */
+    protected $type;
 
     /**
      * @return mixed
@@ -80,6 +90,22 @@ class Course
     public function setCollege($college)
     {
         $this->college = $college;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
     }
 
 

@@ -18,7 +18,8 @@ class CourseProfessorsRepository extends EntityRepository
         $qb = $this->createQueryBuilder('cp');
         $qb->select('c.id, c.name, p.id as professorId')
             ->join('cp.course', 'c')
-            ->join('cp.professor', 'p');
+            ->join('cp.professor', 'p')
+            ->join('c.college', 'cl');
 
         if (!empty($params['professor'])) {
             $qb->andWhere('p.id in (:professor)')->setParameter('professor', $params['professor']);
@@ -29,7 +30,11 @@ class CourseProfessorsRepository extends EntityRepository
         }
 
         if (!empty($params['courseInput'])) {
-            $qb->andWhere('c.name like :courseInput')->setParameter('courseInput','%'.$params['courseInput'].'%');
+            $qb->andWhere('c.name like :courseInput')->setParameter('courseInput', '%' . $params['courseInput'] . '%');
+        }
+
+        if (!empty($params['college'])) {
+            $qb->andWhere('cl.id = :college')->setParameter('college', $params['college']);
         }
 
         return $qb->getQuery();

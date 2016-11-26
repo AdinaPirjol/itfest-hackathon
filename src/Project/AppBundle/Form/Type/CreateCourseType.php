@@ -63,6 +63,7 @@ class CreateCourseType extends AbstractType
                 'text',
                 array(
                     'label' => 'Universitate',
+                    'data' => $course->getCollege() != null ? $course->getCollege()->getName() : null,
                     'required' => true,
                     'error_bubbling' => true,
                     'trim' => true,
@@ -70,6 +71,16 @@ class CreateCourseType extends AbstractType
                         new NotBlank(),
                         new Length(['min' => 2, 'max' => 255])
                     ]
+                )
+            )
+            ->add(
+                'moderator',
+                'choice',
+                array(
+                    'choices' => $options['courseProf'],
+                    'label' => 'Moderatori',
+                    'multiple' => true,
+                    'required' => false,
                 )
             );
     }
@@ -83,7 +94,8 @@ class CreateCourseType extends AbstractType
             ->setRequired(
                 array(
                     'translator',
-                    'course'
+                    'course',
+                    'courseProf'
                 )
             )
             ->setAllowedTypes(
@@ -92,7 +104,8 @@ class CreateCourseType extends AbstractType
                         'Symfony\Bundle\FrameworkBundle\Translation\Translator',
                         'Symfony\Component\Translation\DataCollectorTranslator'
                     ),
-                    'course' => 'Project\AppBundle\Entity\Course'
+                    'course' => 'Project\AppBundle\Entity\Course',
+                    'courseProf' => 'array'
                 )
             );
     }

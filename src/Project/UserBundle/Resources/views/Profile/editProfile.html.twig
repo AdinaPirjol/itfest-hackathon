@@ -60,15 +60,6 @@
                     </div>
 
                     <div class="row">
-                        {% if user.userType.roleType == constant('\\Project\\UserBundle\\Entity\\UserType::ROLE_USER') %}
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    {{ form_label(formProfile.group) }}<span>*</span>
-                                    {{ form_errors(formProfile.group) }}
-                                    {{ form_widget(formProfile.group, { 'attr': {'class': 'form-control' } }) }}
-                                </div>
-                            </div>
-                        {% endif %}
                         <div class="col-md-3">
                             <div class="form-group">
                                 {{ form_label(formProfile.phone) }}
@@ -81,14 +72,6 @@
                                 {{ form_label(formProfile.role) }}
                                 {{ form_errors(formProfile.role) }}
                                 {{ form_widget(formProfile.role, { 'attr': {'class': 'form-control', 'placeholder': 'users.edit.placeholders.role'|trans } }) }}
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                {{ form_label(formProfile.preferred_locale) }}
-                                {{ form_errors(formProfile.preferred_locale) }}
-                                {{ form_widget(formProfile.preferred_locale, { 'attr': {'class': 'form-control', 'placeholder': 'users.edit.placeholders.locale'|trans } }) }}
                             </div>
                         </div>
                     </div>

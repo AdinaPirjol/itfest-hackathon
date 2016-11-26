@@ -262,7 +262,6 @@ class UserService
             'firstname' => $user->getFirstName(),
             'lastname' => $user->getLastName(),
             'email' => $user->getUserCredentials()->getEmail(),
-            'group' => !is_null($user->getGroup()) ? $user->getGroup()->getGroupName() : "",
             'description' => $user->getDescription(),
             'phone' => $user->getPhoneNumber()
         );

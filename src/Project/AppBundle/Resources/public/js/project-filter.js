@@ -48,13 +48,17 @@ $(document).ready(function () {
 
     $('.action-apply').click(function () {
         var selector = $(this);
+        var courseId = selector.data('project-id');
+        var enabled = selector.data('enabled');
 
         $.ajax({
-            url: Routing.generate('project-apply', {'_locale': Translator.locale, 'id': selector.data('project-id')}),
-            type: 'POST',
-            beforeSend: function () {
-                //show loading modal
+            url: Routing.generate('project-apply'),
+            dataType: 'json',
+            data: {
+                'id': courseId,
+                'enable': enabled
             },
+            type: 'POST',
             success: function (data) {
                 if (data.error === true) {
                     $.notify({
@@ -66,14 +70,35 @@ $(document).ready(function () {
                         timer: 100
                     });
                 } else {
-                    $.notify({
-                        icon: 'fa fa-gift',
-                        message: data.message
 
-                    }, {
-                        type: 'info',
-                        timer: 100
-                    });
+
+
+                    if (enabled == 1) {
+                        $('#sub-' + courseId).show();
+                        $('#unsub-' + courseId).hide();
+
+                        $.notify({
+                            icon: 'fa fa-gift',
+                            message: 'Te-ai abonat cu succes!'
+
+                        }, {
+                            type: 'info',
+                            timer: 100
+                        });
+
+                    } else {
+                        $('#sub-' + courseId).hide();
+                        $('#unsub-' + courseId).show();
+
+                        $.notify({
+                            icon: 'fa fa-gift',
+                            message: 'Te-ai dezabonat cu succes!'
+
+                        }, {
+                            type: 'info',
+                            timer: 100
+                        });
+                    }
                 }
             },
             error: function (data) {
@@ -101,8 +126,8 @@ $(document).ready(function () {
             },
             success: function (data) {
                 var arr = [];
-                if(data.length > 0) {
-                    $.each(data, function(key,value){
+                if (data.length > 0) {
+                    $.each(data, function (key, value) {
                         arr.push(value);
                     });
 

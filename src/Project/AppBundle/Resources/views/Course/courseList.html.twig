@@ -7,15 +7,12 @@
         </div>
         <table class="table table-hover table-striped">
             <thead>
-            sorting of properties based on query components
+            {#sorting of properties based on query components#}
             <th {% if pagination.isSorted('c.id') %} class="sorted {{ pagination.getDirection() }}"{% endif %}>
-                {{ knp_pagination_sortable(pagination, 'project_form.table.professor'|trans, ['p.firstName', ' ', 'p.lastName']) }}
+                {{ knp_pagination_sortable(pagination, 'Id curs', ['p.firstName', ' ', 'p.lastName']) }}
                 <i class="fa fa-fw fa-sort"></i></th>
             <th {% if pagination.isSorted('c.name') %} class="sorted {{ pagination.getDirection() }}"{% endif %}>
-                {{ knp_pagination_sortable(pagination, 'project_form.table.project_name'|trans, 'c.name') }}
-                <i class="fa fa-fw fa-sort"></i></th>
-            <th {% if pagination.isSorted('professor') %} class="sorted {{ pagination.getDirection() }}"{% endif %}>
-                {{ knp_pagination_sortable(pagination, 'Professor', 'professor') }}
+                {{ knp_pagination_sortable(pagination, 'Curs', 'c.name') }}
                 <i class="fa fa-fw fa-sort"></i></th>
 
             <th>{{ 'project_form.table.actions'|trans }}</th>
@@ -24,14 +21,8 @@
             <tbody>
             {% for p in pagination %}
                 <tr>
-                    <td>
-                        <a href="{{ path('user-view-profile', {'id': p.professorId}) }}">
-                            {{ p.professorId }}
-                        </a>
-                    </td>
                     <td>{{ p.id }}</td>
                     <td>{{ p.name }}</td>
-                    <td>{{ p.professorId }}</td>
                     {#<td>{{ course.description|slice(0,50) }}{{ course.description|length > 50 ? '...' : '' }}</td>#}
                     <td>
                         <div class="btn-group">
@@ -41,10 +32,19 @@
                                 <i class="fa fa-external-link"></i>{{ 'project_form.table.view'|trans }}
                             </button>
 
-                            <button class="action-apply btn btn-primary btn-sm"
-                                    data-project-id="{{ p.id }}">
+
+                            <button id="sub-{{ p.id }}" class="action-apply btn btn-primary btn-sm"
+                                    data-project-id="{{ p.id }}" data-enabled="0"
+                                    {% if not enabled[p.id] %}style="display: none;" {% endif %}>
+                                <i class="fa fa-external-link"></i>Unsubscribe
+                            </button>
+
+                            <button id="unsub-{{ p.id }}" class="action-apply btn btn-primary btn-sm"
+                                    data-project-id="{{ p.id }}" data-enabled="1"
+                                    {% if enabled[p.id] %}style="display: none;" {% endif %}>
                                 <i class="fa fa-external-link"></i>Subscribe
                             </button>
+
 
                             <a href="{{ path('list_events') }}" class="action-apply btn btn-warning btn-sm"
                                     data-project-id="{{ p.id }}">

@@ -2,6 +2,8 @@
 
 namespace Project\AppBundle\Form\Type;
 
+use Project\AppBundle\Entity\Course;
+use Project\AppBundle\Entity\CourseProfessors;
 use Project\AppBundle\Entity\Project;
 use Project\AppBundle\Services\UtilService;
 use Symfony\Component\Form\AbstractType;
@@ -23,17 +25,16 @@ class EditProjectType extends AbstractType
     {
         /** @var \Symfony\Bundle\FrameworkBundle\Translation\Translator $translator */
         $translator = $options['translator'];
-        /** @var Project $project */
-        $project = $options['project'];
-        $filterData = $options['filterData'];
-
-        $tagKeysData = [];
-
-        if (!$project) {
-            foreach ($project->getTagProjects() as $tagProject) {
-                $tagKeysData[] = $tagProject->getTag()->getId();
-            }
+        /** @var Course $course */
+        $course = $options['project'];
+        /** @var CourseProfessors[] $courseProf */
+        $courseProf = $options['courseProf'];
+        $cp = [];
+        foreach($courseProf as $c) {
+            $cp[$c->getId()] = $c->getProfessor()->getFirstName() . ' ' . $c->getProfessor()->getLastName();
         }
+
+        $filterData = $options['filterData'];
 
         $builder
             ->add(
@@ -41,7 +42,7 @@ class EditProjectType extends AbstractType
                 'text',
                 [
                     'label' => $translator->trans('view_project.name'),
-                    'data' => $project->getName(),
+                    'data' => $course->getName(),
                     'required' => true,
                     'error_bubbling' => true,
                     'trim' => true,
@@ -56,7 +57,7 @@ class EditProjectType extends AbstractType
                 'text',
                 [
                     'label' => $translator->trans('view_project.name_ro'),
-                    'data' => $project->getNameRo(),
+                    'data' => $course->getNameRo(),
                     'required' => true,
                     'error_bubbling' => true,
                     'trim' => true,
@@ -72,7 +73,7 @@ class EditProjectType extends AbstractType
                 [
                     'choices' => $filterData['streams'],
                     'label' => $translator->trans('view_project.stream'),
-                    'data' => $project->getId() ? $project->getStream()->getId() : '',
+                    'data' => $course->getId() ? $course->getStream()->getId() : '',
                     'required' => true,
                     'constraints' => [
                         new Choice(['choices' => array_keys($filterData['streams'])])
@@ -80,22 +81,11 @@ class EditProjectType extends AbstractType
                 ]
             )
             ->add(
-                'tags',
-                'choice',
-                [
-                    'choices' => $filterData['tags'],
-                    'label' => $translator->trans('view_project.tags'),
-                    'data' => $tagKeysData,
-                    'multiple' => true,
-                    'required' => true
-                ]
-            )
-            ->add(
                 'description',
                 'textarea',
                 [
                     'label' => $translator->trans('users.edit.about'),
-                    'data' => $project->getDescription(),
+                    'data' => $course->getDescription(),
                     'invalid_message' => 'Invalid description',
                     'required' => false,
                     'error_bubbling' => true,
@@ -110,14 +100,14 @@ class EditProjectType extends AbstractType
                 'integer',
                 [
                     'label' => $translator->trans('view_project.no_students'),
-                    'data' => $project->getStudentNo(),
+                    'data' => $course->getStudentNo(),
                     'invalid_message' => 'Invalid studentNo',
                     'required' => true,
                     'trim' => true,
                     'error_bubbling' => true,
                     'constraints' => [
                         new NotBlank(),
-                        new Range(['min' => max(1, $project->getRemainingStudentNo()), 'max' => 20])
+                        new Range(['min' => max(1, $course->getRemainingStudentNo()), 'max' => 20])
                     ]
                 ]
             );

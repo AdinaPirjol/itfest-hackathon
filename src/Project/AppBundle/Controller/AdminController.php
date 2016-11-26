@@ -2,6 +2,7 @@
 
 namespace Project\AppBundle\Controller;
 
+use Project\UserBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use FOS\UserBundle\Model\Group;
 use JMS\SecurityExtraBundle\Annotation\Secure;
@@ -182,6 +183,12 @@ class AdminController extends Controller
 
         /** @var Course $group */
         $course = new Course();
+        /** @var User[] $users */
+        $users = $this->getDoctrine()->getRepository('UserBundle:User')->findAll();
+        $courseProf = [];
+        foreach($users as $user) {
+            $courseProf[$user->getId()] = $user->getFirstName() . ' ' . $user->getLastName();
+        }
 
         $form = $this->createForm(
             $this->get(\Project\AppBundle\Form\Type\CreateCourseType::ID),
@@ -189,6 +196,7 @@ class AdminController extends Controller
             [
                 'translator' => $this->get('translator'),
                 'course' => $course,
+                'courseProf' => $courseProf
             ]
         );
 
@@ -236,13 +244,22 @@ class AdminController extends Controller
      */
     public function editCourseAction(Request $request, $id)
     {
-        /** @var CourseService $projectService */
+        /** @var CourseService $courseService */
         $courseService = $this->get(CourseService::ID);
+        /** @var UserService $userService */
+        $userService= $this->get(UserService::ID);
         /** @var Course $course */
         $course = $this->getDoctrine()->getRepository('AppBundle:Course')->find($id);
 
         if (UtilService::isNullObject($course)) {
             throw new NotFoundHttpException();
+        }
+
+        /** @var User[] $users */
+        $users = $this->getDoctrine()->getRepository('UserBundle:User')->findAll();
+        $courseProf = [];
+        foreach($users as $user) {
+            $courseProf[$user->getId()] = $user->getFirstName() . ' ' . $user->getLastName();
         }
 
         $form = $this->createForm(
@@ -251,6 +268,7 @@ class AdminController extends Controller
             [
                 'translator' => $this->get('translator'),
                 'course' => $course,
+                'courseProf' => $courseProf
             ]
         );
 
@@ -261,7 +279,7 @@ class AdminController extends Controller
 
             if ($form->isValid()) {
                 $formData = $form->getData();
-                $error = $courseService->editCourse($course, $formData);
+                $error = $courseService->editCourse($course, $formData, $userService->getCurrentUser());
             }
         }
 
