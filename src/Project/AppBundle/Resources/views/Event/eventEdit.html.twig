@@ -1,15 +1,9 @@
 {% extends "::default/index.html.twig" %}
-{% block javascripts %}
-    {{ parent() }}
-    <script>
-        //        $('.add-event').on('click').function({
-        //           $('.page-content').append("<div class='form-group'></div>");
-        //        });
-    </script>
-{% endblock %}
+
 {% block stylesheets %}
     {{ parent() }}
 {% endblock %}
+
 {% block content %}
 
     <ul class="list-unstyled">
@@ -28,14 +22,14 @@
             <li>Userul {{ comment.user.firstName ~ ' ' ~ comment.user.lastName }} a zis:</li>
             <li>{{ comment.comment }}</li>
             <li>Rating:
-                <div class="rating">{{ comment.rating }}</div>
-                <div onclick="thumbsUp({{ comment.id }},this)">
-                    <i class="fa fa-thumbs-up" style="color:green"></i>
-                </div>
+                <span class="rating">{{ comment.rating }}</span>
+                <a onclick="thumbsUp({{ comment.id }},this)">
+                    <i class="fa fa-thumbs-up" style="color:green"></i>Thumbs up
+                </a>
 
-                <div onclick="thumbsDown({{ comment.id }})">
-                    <i class="fa fa-thumbs-down" style="color:red"></i>
-                </div>
+                <a onclick="thumbsDown({{ comment.id }})">
+                    <i class="fa fa-thumbs-down" style="color:red"></i>Thumbs down
+                </a>
 
             </li>
         </ul><br><br><br>
