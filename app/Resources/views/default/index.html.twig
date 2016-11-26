@@ -8,143 +8,9 @@
     {% endblock %}
 
     {#Main#}
-    <div class="main-panel">
-
-        {% block navbar %}
-            {#Nav bar#}
-            {#<nav class="navbar navbar-default navbar-fixed">#}
-                {#<div class="container-fluid">#}
-                    {#<div class="navbar-header">#}
-                        {#<button type="button" class="navbar-toggle" data-toggle="collapse">#}
-                            {#<span class="sr-only">Toggle navigation</span>#}
-                            {#<span class="icon-bar"></span>#}
-                            {#<span class="icon-bar"></span>#}
-                            {#<span class="icon-bar"></span>#}
-                        {#</button>#}
-                        {#<a class="navbar-brand" href="#">#}
-                            {#{% block page_title %}#}
-                                {#{{ 'menu.dashboard'|trans }}#}
-                            {#{% endblock %}#}
-                        {#</a>#}
-                    {#</div>#}
-                    {#<div class="collapse navbar-collapse">#}
-
-                        {#<ul class="nav navbar-nav navbar-right">#}
-                            {#<li class="dropdown">#}
-                                {#<a href="#" class="dropdown-toggle" data-toggle="dropdown">#}
-                                    {#<img src="{{ asset('bundles/app/images/lang/' ~ app.request.locale ~ '-icon.png') }}"/>#}
-                                    {#<b class="caret"></b>#}
-                                {#</a>#}
-                                {#<ul class="dropdown-menu">#}
-                                    {#<li>#}
-                                        {#<a href="{{ path(app.request.attributes.get('_route'),{'_locale':'ro'}) }}">#}
-                                            {#<img src="{{ asset('bundles/app/images/lang/ro-icon.png') }}"/>#}
-                                            {#{{ 'lang.ro'|trans }}#}
-                                        {#</a>#}
-                                    {#</li>#}
-                                    {#<li>#}
-                                        {#<a href="{{ path(app.request.attributes.get('_route'),{'_locale':'en'}) }}">#}
-                                            {#<img src="{{ asset('bundles/app/images/lang/en-icon.png') }}"/>#}
-                                            {#{{ 'lang.en'|trans }}#}
-                                        {#</a>#}
-                                    {#</li>#}
-                                    {#<li>#}
-                                        {#<a href="{{ path(app.request.attributes.get('_route'),{'_locale':'fr'}) }}">#}
-                                            {#<img src="{{ asset('bundles/app/images/lang/fr-icon.png') }}"/>#}
-                                            {#{{ 'lang.fr'|trans }}#}
-                                        {#</a>#}
-                                    {#</li>#}
-                                    {#<li>#}
-                                        {#<a href="{{ path(app.request.attributes.get('_route'),{'_locale':'de'}) }}">#}
-                                            {#<img src="{{ asset('bundles/app/images/lang/de-icon.png') }}"/>#}
-                                            {#{{ 'lang.de'|trans }}#}
-                                        {#</a>#}
-                                    {#</li>#}
-                                {#</ul>#}
-                            {#</li>#}
-
-                            {#<li>#}
-                                {#<a>{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}</a>#}
-                            {#</li>#}
-                            {#<li>#}
-                                {#<a href="{{ path('fos_user_security_logout') }}">#}
-                                    {#{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}#}
-                                {#</a>#}
-                            {#</li>#}
-                        {#</ul>#}
-                    {#</div>#}
-                {#</div>#}
-            {#</nav>#}
-            <!-- HEADER:Start -->
-            <nav class="navbar navbar-default navbar-fixed-top" style="margin-left: 260px">
-                <div class="container-fluid"><!-- Brand and toggle get grouped for better mobile display -->
-                    <div class="navbar-header">
-                        <div class="nav-controls visible-xs-inline-block pull-right">
-                            <button id="toggle-nav-btn" type="button" class="btn btn-default navbar-btn" data-toggle="collapse" data-target="#main-nav" aria-expanded="false">
-                                <span class="sr-only">Toggle navigation</span><i class="fa fa-angle-down"></i>
-                            </button>
-                        </div>
-                    </div><!-- Collect the nav links, forms, and other content for toggling -->
-                    <div class="collapse navbar-collapse" id="main-nav">
-                        <h4 class="navbar-text">Demo</h4>
-                        <ul class="nav navbar-nav navbar-right">
-                            <li class="dropdown">
-                                <a href="javascript:void(0)" class="dropdown-toggle dd-language" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                    <span class="visible-xs-inline">Language</span>
-                                    {% if app.request.locale == 'ro' %}
-                                        <span><i class="flag-icon flag-icon-ro"></i>RO</span><i class="fa fa-angle-down hidden-xs"></i>
-                                    {% elseif app.request.locale == 'en'%}
-                                        <span><i class="flag-icon flag-icon-gb"></i>EN</span><i class="fa fa-angle-down hidden-xs"></i>
-                                    {% elseif app.request.locale == 'fr'%}
-                                        <span><i class="flag-icon flag-icon-fr"></i>FR</span><i class="fa fa-angle-down hidden-xs"></i>
-                                    {% elseif app.request.locale == 'de'%}
-                                        <span><i class="flag-icon flag-icon-de"></i>DE</span><i class="fa fa-angle-down hidden-xs"></i>
-                                    {% endif %}
-                                </a>
-                                <ul class="dropdown-menu dm-language">
-                                    <li>
-                                        <a href="{{ path(app.request.attributes.get('_route'),{'_locale':'ro'}) }}">
-                                            <i class="flag-icon flag-icon-ro"></i>
-                                            <span>{{ 'lang.ro'|trans }}</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ path(app.request.attributes.get('_route'),{'_locale':'en'}) }}">
-                                            <i class="flag-icon flag-icon-gb"></i>
-                                            <span>{{ 'lang.en'|trans }}</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ path(app.request.attributes.get('_route'),{'_locale':'fr'}) }}">
-                                            <i class="flag-icon flag-icon-fr"></i>
-                                            <span>{{ 'lang.fr'|trans }}</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ path(app.request.attributes.get('_route'),{'_locale':'de'}) }}">
-                                            <i class="flag-icon flag-icon-de"></i>
-                                            <span>{{ 'lang.de'|trans }}</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                            <a>{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}</a>
-                            </li>
-                            <li>
-                            <a href="{{ path('fos_user_security_logout') }}">
-                            {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
-                            </a>
-                            </li>
-                        </ul>
-                    </div><!-- /.navbar-collapse -->
-                </div><!-- /.container-fluid -->
-            </nav>
-        {% endblock %}
-
         {#Content#}
-        <div class="content">
-            <div class="container-fluid">
+        <div class="main-content">
+            <div class="page-content">
                 {% block content %}{% endblock %}
             </div>
         </div>
@@ -154,6 +20,5 @@
             {% include "::default/footer.html.twig" %}
         {% endblock %}
 
-    </div>
 
 {% endblock %}
