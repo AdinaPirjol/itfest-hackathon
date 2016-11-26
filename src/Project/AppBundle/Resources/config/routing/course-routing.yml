@@ -83,3 +83,9 @@ add-comment:
         id: \d+
     options:
         expose: true
+
+get_event:
+    path: /get-events/{id}
+    defaults: { _controller: AppBundle:Admin:getEventAjax, id: 0 }
+    requirements:
+        id: \d+

@@ -2,6 +2,7 @@
 
 namespace Project\AppBundle\Controller;
 
+use Project\AppBundle\Entity\Event;
 use Project\UserBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use FOS\UserBundle\Model\Group;
@@ -436,10 +437,30 @@ class AdminController extends Controller
     /**
      * @Route("/list-events", name="list_events"  )
      */
-    public function listEventsAction()
+    public function listEventsAction(Request $request)
     {
         return $this->render(
-            'AppBundle:Calendar:listCalendar.html.twig');
+            'AppBundle:Calendar:listCalendar.html.twig',
+        ['id'=>$request->get('id')]);
+    }
+
+    public function getEventAjaxAction($id)
+    {
+        $json = [];
+        /** @var array $events */
+        $events = $this->getDoctrine()->getRepository('AppBundle:Event')->findBy(['course'=>$id]);
+        /** @var Event $event */
+        foreach ($events as $event) {
+            $jsonT['start'] = date_format($event->getStartDate(), 'Y-m-d h:i:s');
+            $jsonT['title'] = $event->getCourse()->getName();
+            if (!empty($event->getEndDate())) {
+                $jsonT['end'] = date_format($event->getEndDate(), 'Y-m-d h:i:s');
+            }
+            $jsonT['url'] = '/ro/courses/view-event/' . $event->getCourse()->getId();
+            $json[] = $jsonT;
+        }
+
+        return new JsonResponse($json);
     }
 
 }
