@@ -1,0 +1,32 @@
+{
+  "name": "project",
+  "authors": [
+    "Adina Pirjol <adinapirjol@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "web/assets/vendor/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "3.3.*",
+    "select2": "4.0.*",
+    "jquery": "^3.0.0",
+    "chartist": "^0.9.8",
+    "bootstrap-notify": "^0.2.0",
+    "bootstrap-select": "^1.10.0",
+    "jquery-ui": "^1.11.4",
+    "bootstrap-switch": "^3.3.2"
+  },
+  "resolutions": {
+    "jquery": "^3.0.0"
+  }
+}

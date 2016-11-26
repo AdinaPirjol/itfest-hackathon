@@ -1,0 +1,77 @@
+{% extends "::default/index.html.twig" %}
+
+{% block title %}
+    {{ parent() }}
+    - {{ 'menu.admin'|trans }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {#More#}
+    <script type="text/javascript" src="{{ asset('bundles/app/js/report.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">{{ 'reports.title'|trans }}</h4>
+                </div>
+
+                <div class="content">
+                    {{ form_start(form, { 'action': path('admin-reports') }) }}
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                {{ form_label(form.report) }}
+                                {{ form_errors(form.report) }}
+                                {{ form_widget(form.report, { 'attr': {'class': 'form-control'} }) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                    <div class="col-md-12">
+                        <div class="btn-group">
+                            <button type="submit" class="btn btn-success" name="{{ form.vars.name }}_save">
+                                <i class="fa fa-file"></i>{{ 'reports.button_create'|trans }}
+                            </button>
+                        </div>
+                    </div>
+                        </div>
+
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">{{ 'reports.statistics'|trans }}</h4>
+                </div>
+
+                <div class="content">
+                    <div class="content">
+                        <div id="chartPreferences" class="ct-chart ct-perfect-fourth"></div>
+
+                        <div class="footer">
+                            <div class="legend">
+                                <i class="fa fa-circle text-success"></i> Accepted
+                                <i class="fa fa-circle text-warning"></i> Pending
+                                <i class="fa fa-circle text-danger"></i> Rejected
+                                <i class="fa fa-circle text-info"></i> Invalidated
+                            </div>
+                            <hr>
+                            <div class="stats">
+                                <i class="fa fa-clock-o"></i> since the beginning of the current year
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

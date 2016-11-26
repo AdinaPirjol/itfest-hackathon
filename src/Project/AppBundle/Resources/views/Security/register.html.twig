@@ -1,0 +1,61 @@
+{% block fos_user_content %}
+    {% if error %}
+        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+    <form action="{{ path("fos_user_security_check") }}" method="post">
+        <input type="hidden" name="_csrf_token" value="{{ token }}" />
+
+        <div>
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}
+                <p>
+                    <a href="{{ path('fos_user_security_logout') }}">
+                        {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                    </a> |
+                    <a href="/profile">Profile</a>
+                </p>
+            {% else %}
+                <a href="{{ path('fos_user_security_login') }}">Login</a>
+                &nbsp;|&nbsp;
+                <a href="/register">Register</a>
+            {% endif %}
+        </div>
+
+        {% if app.request.hasPreviousSession %}
+            {% for type, messages in app.session.flashbag.all() %}
+                {% for message in messages %}
+                    <div class="flash-{{ type }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+
+        <ul>
+            <li>
+                <h1>Login</h1>
+            </li>
+            <li>
+                <p>Enter your credentials.</p>
+            </li>
+
+            <li class="username">
+                <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" class="login-input" />
+            </li>
+
+            <li class="password">
+                <input type="password" id="password" name="_password" required="required" class="login-input" />
+            </li>
+
+            <li>
+                <input type="checkbox" id="remember_me" name="_remember_me" checked />
+                <label for="remember_me">Remember me</label>
+            </li>
+
+            <li>
+                <input class="button" type="submit" id="_submit" name="_submit" value="Submit" />
+            </li>
+        </ul>
+    </form>
+{% endblock fos_user_content %}

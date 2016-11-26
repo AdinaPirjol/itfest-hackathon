@@ -1,0 +1,236 @@
+{% block fos_user_content %}
+    <head>
+        <title>Log in</title>
+        <meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="{{ asset('bundles/app/css/plugins/prism/prism.min.css')}}">
+
+<!-- PHOTON main styles -->
+<link rel="stylesheet" href="{{ asset('bundles/app/css/main_style.min.css')}}">
+
+    <body>
+
+        <!-- HEADER:Start -->
+        <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid"><!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <div class="nav-controls visible-xs-inline-block pull-right">
+                <button id="toggle-nav-btn" type="button" class="btn btn-default navbar-btn" data-toggle="collapse" data-target="#main-nav" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span><i class="fa fa-angle-down"></i>
+                </button>
+            </div>
+        </div><!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="main-nav">
+            <h4 class="navbar-text">Demo</h4>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="javascript:void(0)" class="dropdown-toggle dd-language" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <span class="visible-xs-inline">Language</span>
+                        {% if app.request.locale == 'ro' %}
+                            <span><i class="flag-icon flag-icon-ro"></i>RO</span><i class="fa fa-angle-down hidden-xs"></i>
+                        {% elseif app.request.locale == 'en'%}
+                            <span><i class="flag-icon flag-icon-gb"></i>EN</span><i class="fa fa-angle-down hidden-xs"></i>
+                        {% elseif app.request.locale == 'fr'%}
+                            <span><i class="flag-icon flag-icon-fr"></i>FR</span><i class="fa fa-angle-down hidden-xs"></i>
+                        {% elseif app.request.locale == 'de'%}
+                            <span><i class="flag-icon flag-icon-de"></i>DE</span><i class="fa fa-angle-down hidden-xs"></i>
+                        {% endif %}
+                    </a>
+                    <ul class="dropdown-menu dm-language">
+                        <li>
+                            <a href="{{ path(app.request.attributes.get('_route'),{'_locale':'ro'}) }}">
+                                <i class="flag-icon flag-icon-ro"></i>
+                                <span>{{ 'lang.ro'|trans }}</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path(app.request.attributes.get('_route'),{'_locale':'en'}) }}">
+                                <i class="flag-icon flag-icon-gb"></i>
+                                <span>{{ 'lang.en'|trans }}</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path(app.request.attributes.get('_route'),{'_locale':'fr'}) }}">
+                                <i class="flag-icon flag-icon-fr"></i>
+                                <span>{{ 'lang.fr'|trans }}</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path(app.request.attributes.get('_route'),{'_locale':'de'}) }}">
+                                <i class="flag-icon flag-icon-de"></i>
+                                <span>{{ 'lang.de'|trans }}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>        <!-- HEADER:End -->
+        
+        <!-- PAGE:Start -->
+            <div class="main-container" id="main-container">
+                <div class="main-container-inner">
+                    <!-- CONTENT:Start -->
+                    <div class="main-content">
+                        <div class="page-content">
+                            <div id="login_box" class="auth-box">
+                                {% if error %}
+                                    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                                {% endif %}
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        <h2 class="auth-title">Log in</h2>
+                                        <form id="user_auth" action="{{ path("fos_user_security_check") }}" method="post">
+                                            {% if token is defined %}
+                                                <input type="hidden" name="_csrf_token" value="{{ token }}"/>
+                                            {% endif %}
+                                            {% if app.request.hasPreviousSession %}
+                                                {% for type, messages in app.session.flashbag.all() %}
+                                                    {% for message in messages %}
+                                                        <div class="flash-{{ type }}">
+                                                            {{ message }}
+                                                        </div>
+                                                    {% endfor %}
+                                                {% endfor %}
+                                            {% endif %}
+
+
+                                            <div class="form-group">
+                                                <label for="user_username" class="control-label">Username</label>
+                                                <input type="text" id="username" name="_username" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="user_password" class="control-label">Password</label>
+                                                <input type="password" id="password" name="_password" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <input id="user_reminder" name="user_reminder" type="checkbox"> Keep me signed in
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <div class="pull-right panel-controls">
+                                                        <button type="submit" id="special_submit" name="_submit"  class="btn btn-primary" value="Submit"><span>Log in</span></button>
+
+                                                        {#<a href="index.html" id="special_submit"><span>Log in</span></a>#}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <form action="{{ path('user-recover-password') }}" method="get">
+                                    <div class="form-control-static text-center">
+                                    <button type="submit" id="_submit" name="_submit" value="Submit "class="btn btn-danger"><span>Forgot password?</span>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div id="recover_box" class="auth-box hidden">
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        <h2 class="auth-title">Reset your password</h2>
+                                        <form id="user_recover_password">
+                                            <div class="form-group">
+                                                <label for="user_email" class="control-label">Email address</label>
+                                                <input type="email" id="user_email" name="user_email" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="form-control-static">
+                                                    <small><a href="#login_box" class="user-actions">Take me back to Sign in.</a></small>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <div class="pull-right panel-controls">
+                                                        <a href="index.html" id="special_submit" class="btn btn-primary"><span>Confirm</span></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="register_box" class="auth-box hidden">
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        <h2 class="auth-title">Sign up</h2>
+                                        <form id="user_register">
+                                            <div class="form-group">
+                                                <label for="user_reg_email" class="control-label">Email address</label>
+                                                <input type="email" id="user_reg_email" name="user_reg_email" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="user_reg_username" class="control-label">Username</label>
+                                                <input type="text" id="user_reg_username" name="user_reg_username" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="user_reg_password" class="control-label">Password</label>
+                                                <input type="password" id="user_reg_password" name="user_reg_password" class="form-control">
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-6">
+                                                    <div class="form-group">
+                                                        <label for="user_reg_dob" class="control-label">Date of birth</label>
+                                                        <input type="text" id="user_reg_dob" name="user_reg_dob" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-6">
+                                                    <div class="form-group">
+                                                        <label for="user_reg_gender" class="control-label">Gender</label>
+                                                        <select id="user_reg_gender" name="user_reg_gender" class="form-control">
+                                                            <option value="none">Select</option>
+                                                            <option value="male">Male</option>
+                                                            <option value="female">Female</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="form-control-static">
+                                                    <span>By signing up you agree with our Terms and Conditions</span>
+                                                </div>
+                                                <div class="form-control-static">
+                                                    <small><a href="#login_box" class="user-actions">Take me back to Sign in.</a></small>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <div class="pull-right panel-controls">
+                                                        <a href="index.html" id="special_submit" class="btn btn-primary"><span>Sign up</span></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- CONTENT:End -->
+                <!-- FOOTER:Start -->
+                <div id="main_footer" class="footer">
+    <div class="footer-inner text-center">
+        <div class="footer-content">
+            <span>Copyright &copy; 2011 - 2016 <strong>eMAG</strong>. <br class="visible-xs-inline">All rights reserved.</span>
+        </div>
+    </div>
+</div>                <!-- FOOTER:End -->
+                </div>
+            </div>
+        <!-- PAGE:End -->
+        
+        <!-- SCRIPTS:Start -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script>window.jQuery || document.write("<script src=\"../dist/js/lib/jquery-1.11.3.min.js\">"+"<"+"/script>")</script>
+        <script src="{{ asset('bundles/app/js/main_script.min.js')}}"></script>
+        <script src="{{ asset('bundles/app/js/demo_helpers.js')}}"></script>
+        <!-- SCRIPTS:End -->
+    </body>
+{% endblock fos_user_content %}

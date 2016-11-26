@@ -1,0 +1,8 @@
+<ul class="list-unstyled">
+    {% for project in projects %}
+        <li>
+            <a href="{{ path('project-view', {'id': project.id}) }}">{{ project.name }}</a>
+            ({{ project.professor.name }})
+        </li>
+    {% endfor %}
+</ul>

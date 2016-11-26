@@ -1,0 +1,254 @@
+fils_title: FILS
+fils_site: FILS-Diplomarbeiten
+
+error: Fehler
+error_request: Die Anfrage konnte nicht bearbeitet werden.
+
+menu:
+    admin: Verwalter
+    dashboard: Bedienpanel
+    user_profile: Benutzerprofil
+    projects: Projekte
+    messages: Nachrichten
+    form: Formular
+
+streams:
+    engleza: Englische Abteilung
+    franceza: Französische Abteilung
+    germana: Deutsche Abteilung
+
+lang:
+    ro: rumänisch
+    en: englisch
+    fr: französisch
+    de: deutsch
+
+roles:
+    ROLE_USER: Student
+    ROLE_ADMIN: Professor
+    ROLE_SUPER_ADMIN: Verwalter
+
+ajax:
+    add_user: Der Benutzer wurde erfolgreich hinzugefügt!
+    change_password: Das Passwort wurde erfolgreich verändert!
+    edit_profile: Das Profil wurde erfolgreich aktualisiert!
+    add_project: Das Projekt wurde erfolgreich hinzugefügt!
+    delete_project: Das Projekt wurde erfolgreich gelöscht!
+
+project_form:
+    title: Themenvorschläge für die Bachelorarbeit
+    actions:
+        title: Aktionen
+        add: Hinzufügen des Projektes
+        view_personal: Die Liste mit eigenen Projekten
+    filters:
+        labels:
+            availability: Verfügbarkeit
+            availability_yes: verfügbar
+            availability_no: nicht verfügbar
+            stream: Die Abteilung
+            professor: Lehrkraft
+            tag: Labels
+        empty_value:
+            availability: Alle Projekte
+            stream: Alle Abteilungen
+            professor: Alle Professoren
+            tag: Alle Messen
+        buttons:
+            submit: Suche
+            reset: Filter zurücksetzen
+    table:
+        professor: Lehrkraft
+        project_name: Projektname
+        project_name_ro: Projektname (ro)
+        description: Kurze Beschreibung
+        actions: Aktionen
+        date_created: Datum des Hinzufügens
+        view: Visualisierung
+        apply: Bewerben Sie sich!
+
+import_form:
+    file_button: Durchsuchen der Dateien
+    title_students: Studierende importieren
+    title_professors: Lehrkräfte importieren
+    bulk_button_students: Lehrkräfte per Bulk hinzufügen
+    bulk_button_professors: Studierende per Bulk hinzufügen
+    title: Details about the bulk user import
+    content: Details about the bulk user import will be imported from the Moodle platform in .csv format. The format of the files will have the following columns: username, first name, last name and email address.
+
+
+mail:
+    footer: Das UPB-FILS-Team
+    create_account:
+        title: FILS Themen für Bachelorarbeit
+        body: Herzliche Glückwunsch! Es wurde fr Sie ein Konto erstellt. Der Benutzername ist %username% und das Passwort %password%.
+    apply_project:
+        title: FILS Bewerbung für das Bachelorarbeitsthema
+        description: Der Student %student% (%email%) will für das Projekt '%project%' anzumelden. Schicken Sie die Antwort:
+        accept: Akzeptieren
+        reject: Verwerfen
+        view_profile: Visualisierung des Studentsprofils
+    accept_project:
+        title: FILS Antwort für die Bewerbung der Bachelorarbeit
+        body: Ihre Anmeldungsanfrage für das Projekt %project% (%professor%) wurde angenommen.
+        email: Sie können mit dem Professor per E-mail %email% Kontakt aufnehmen.
+    reject_project:
+        title: FILS Response for applying for a project proposal theme
+        body: Ihre Anmeldungsanfrage für das Projekt %project% (%professor%) wurde verworfen
+        optional: automatisch, weil es nicht mehr freie Plätze für das Projekt gibt
+
+users:
+    create:
+        title: Benutzer hinzufügen
+        save_button: Hinzufügen
+        firstname: Vorname
+        lastname: Nachname
+        username: Benutzername
+        email: E-Mail-Adresse
+        role: Aufgabe
+        locale: Bevorzugte Sprache
+    view:
+        title: Visualisierung des Profils
+        edit_button: Profil bearbeiten
+        name: Name
+        email: E-Mail-Adresse
+        role: Aufgabe
+        group: Gruppe
+        phone: Phone number
+        about: Beschreibung
+        error: Der Benutzer wurde nicht gefunden.
+    edit:
+        title: Profil bearbeiten
+        title_password: Passwort ändern
+        update_button: Profil aktualisieren
+        password_button: Passwort ändern
+        username: Username
+        firstname: Vorname
+        lastname: Nachname
+        email: E-Mail-Adresse
+        group: Gruppe
+        phone: Telefonnummer
+        role: Spezielle Ninja-Kraft
+        disabled: arbeitsunfähig
+        about: Beschreibung
+        locale: Bevorzugte Sprache
+        placeholders:
+            email: E-Mail-Adresse
+            group: Name der Gruppe
+            username: Benutzername
+            firstname: Vorname
+            lastname: Nachname
+            phone: Telefonnummer
+            role: Aufgabe
+            about: Sagen Sie ein paar Worte über sich
+            locale: Bevorzugte Sprache
+
+application:
+    submit:
+        title: Zusätzliche Informationen über das Projekt
+        design: Erste Angaben für die Arbeit
+        contribution: Beitrag des Studenten/der Studentin
+        graphics: Notwendiges graphisches Material
+        knowledge: Die Thesis basiert auf angeeignetes Wissen von folgenden Vorlesungen
+        environment: Umfeld der Entwicklung der Arbeit
+        serve: Die wird folgende Nutzung haben
+        date: Abgabetermin der Arbeit
+        save_button: Formular erstellen
+        university: "UNIVERSITÄT \"POLITEHNICA\" BUKAREST"
+        faculty: FAKULTÄT FÜR INGENIEURWISSENSCHAFTEN IN FREMDSPRACHEN
+        approval: Genehmigt
+        director: Abteilungsleiter
+        professor: Prof. dr. ing. George DRAGOI
+        subtitle: Bachelor Thesis von
+        theme: Titel des Themas
+        coordinator: Betreuer
+        student: Student
+        proftitle: Professor Titel
+        download: herunterladen
+
+view_project:
+    submitted_by: themenvorschlag von
+    stream: Abteilung
+    title_edit: Projekt bearbeiten
+    title_add: Hinzufügen des Projektes
+    name: Name (original)
+    name_ro: Name (rumänisch)
+    description: Descriere
+    tags: Etichete
+    no_students: Maximale Anzahl der Studenten
+    no_available_students: Verfügbare Anzahl der Studenten
+    students: Studenten
+    buttons:
+        apply: Einschreiben
+        edit: Bearbeiten
+        delete: Löschen
+        save: Änderungen speichern
+    professor:
+        title: Vorschläge für die Themen der Bachelorarbeit
+        no_applications: Niemand hat bisher beworben.
+        accept: Akzeptieren
+        reject: Verwerfen
+
+project_student_status:
+    pending: Warten
+    accepted: Sie sind akzeptiert
+    rejected: Sie sind verworfen
+    invalidated: Ungültig
+
+apply_project:
+    message:
+        succes: Sie haben erfolgreich beworben! Eine E-Mail wurde an den koordinierenden Professor geschickt.
+        not_allowed: Sie haben keine Berechtigung für Projekte zu bewerben!
+        already_applied: Sie haben für dieses Projekt bereits beworben!
+        already_accepted: Sie sind schon für dieses Projekt akzeptiert!
+        rejected: Sie wurden zu diesem Projekt verworfen! Sprechen Sie mit dem Professor, um die Antwort zu ändern!
+        invalidated: Die Bewerbung für dieses Projekt wurde automatisch abgebrochen, weil Sie bereits für ein anderes Projekt akzeptiert wurden!
+        not_exist: Das Projekt mit der Nummer %id% existiert nicht.
+        prof_response:
+            success: Die Antwort wurde erfolgreich aktualisiert! Eine Informations-E-mail wurde zum Bewerber gesendet.
+            no_spots_available: Es gibt keine freien Plätze für dieses Projekt zur Verfügung! Eine Informations-E-mail wurde zum Bewerber gesendet.
+            accepted: Der Student wurde bereits akzeptiert.
+            rejected: Der Student wurde bereits abgelehnt. Sie können die Antwort aus der Vorschlägsliste bearbeiten.
+            invalidated: Der Student wurde bereits für ein anderes Projekt akzeptiert.
+            invalid:
+                project: Das Projekt wurde nicht gefunden.
+                student: Der Student wurde nicht gefunden.
+                project_student: Die Anmeldung für die Bewerbung des Studenten wurde nicht gefunden.
+
+dashboard:
+    recent:
+        title: Vorschläge für die Themen der Bachelorarbeit
+        category: von Professoren aufgenommen
+        footer: letzte vorgeschlage 10 Sätze
+
+reports:
+    title: Erstellen von Berichten
+    button_create: Erstellen
+    good_report: Studierende, die bereits ihre Diplomarbeit gewählt haben
+    bad_report: Studierende, die noch nicht ihre Diplomarbeit gewählt haben
+    report_type: Repport type
+    statistics: Statistiken
+
+view_group:
+    title_add: Add Group
+    buttons:
+        save: Save
+    name: Groupname
+    specialisation: Specialisation
+
+group:
+    create:
+        specialisation: Specialisation
+        groupname: Groupname
+        stream: Stream
+
+view_course:
+    title_add: Add Course
+    buttons:
+        save: Save
+    coursename: Course Name
+
+course:
+    create:
+        coursename: Course Name
+        all_groups: All Groups

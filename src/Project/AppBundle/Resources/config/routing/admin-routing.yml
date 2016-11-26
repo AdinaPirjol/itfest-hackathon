@@ -1,0 +1,49 @@
+admin-index:
+    path: /
+    defaults: { _controller: AppBundle:Admin:index }
+
+admin-import-users:
+    path: /import
+    defaults: { _controller: AppBundle:Admin:importUsers }
+
+admin-create-users:
+    path: /createUser
+    defaults: { _controller: AppBundle:Admin:createUsers }
+
+admin-reports:
+    path: /reports
+    defaults: { _controller: AppBundle:Admin:createReports }
+
+admin-create-user-ajax:
+    path: /create-user
+    defaults: { _controller: AppBundle:Admin:createUserAjax }
+    options:
+        expose: true
+
+admin-report-chart:
+    path: /report-chart
+    defaults: { _controller: AppBundle:Admin:reportChart }
+
+admin-create-course:
+    path: /create-course
+    defaults: { _controller: AppBundle:Admin:createCourse }
+    options:
+        expose: true
+
+admin-edit-course:
+    path: /edit-course/{id}
+    defaults: { _controller: AppBundle:Admin:editCourse, id: 0 }
+    options:
+        expose: true
+
+admin-create-group:
+    path: /create-group
+    defaults: { _controller: AppBundle:Admin:createGroup }
+    options:
+        expose: true
+
+admin-edit-group:
+    path: /edit-group/{id}
+    defaults: { _controller: AppBundle:Admin:editGroup, id: 0 }
+    options:
+        expose: true

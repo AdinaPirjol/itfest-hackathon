@@ -1,0 +1,253 @@
+fils_title: FILS
+fils_site: FILS Projets de fin d'études
+
+error: Erreur
+error_request: La demande n'a pas pu étre exécutée
+
+menu:
+    admin: Administrateur
+    dashboard: Panneau de contrôle
+    user_profile: Profil utilisateur
+    projects: Projets
+    messages: Messages
+    form: Formulaire
+
+streams:
+    engleza: Filière Anglophone
+    franceza: Filière Francophone
+    germana: Filière Allemande
+
+lang:
+    ro: Roumain
+    en: Anglais
+    fr: Français
+    de: Allemand
+
+roles:
+    ROLE_USER: Etudiant
+    ROLE_ADMIN: Professeur
+    ROLE_SUPER_ADMIN: Administrateur
+
+ajax:
+    add_user: L'utilisateur a été ajouté avec succès!
+    change_password: Le mot de passe a été changé!
+    edit_profile: Le profil a été actualisé avec succès!
+    add_project: Le projet a été ajouté avec succès!
+    delete_project: Le projet a été supprimé avec succès!
+
+project_form:
+    title: Propositions thèmes projet de fin d'études
+    actions:
+        title: Actions
+        add: Projet à ajouter
+        view_personal: Listage projets personnels
+    filters:
+        labels:
+            availability: Disponibilité
+            availability_yes: Disponible
+            availability_no: Indisponible
+            stream: Filière
+            professor: Professeur
+            tag: Etiquette
+        empty_value:
+            availability: Tous les projets
+            stream: Toutes les filières
+            professor: Tous les professeurs
+            tag: Toutes les étiquettes
+        buttons:
+            submit: Recherche
+            reset: Réinitialiser des filtres
+    table:
+        professor: Professeur
+        project_name: Le titre du projet
+        project_name_ro: Le titre du projet (ro)
+        description: Petite description
+        actions: Actions
+        date_created: La date de l'ajout
+        view: Visualisation
+        apply: Aplique
+
+mail:
+    footer: L'équipe FILS UPB
+    create_account:
+        title: FILS Thèmes projet de fin d'études
+        body: Félicitations! On a créé un compte pour toi. L'identifiant est %username% et le mot de passe est %password%
+    apply_project:
+        title: FILS Application propositions thème projet de fin d'études
+        description: The student %student% (%email%) wants to apply to the project '%project%'. Send response:
+        accept: Accepte
+        reject: Rejete
+        view_profile: Visualisation profil étudiant
+    accept_project:
+        title: FILS Réponse pour l'application projet de fin d'études
+        body: Votre demande d'application pour le projet %project% (%professor%) a été acceptée.
+        email: Vous pouvez contacter le professeur coordinateur à l'adresse e-mail %email%.
+    reject_project:
+        title: FILS Réponse pour l'application projet de fin d'études
+        body: Votre demande d'application pour le projet %project% (%professor%) a été rejetée
+        optional: automatiquement parce qu'il n'ya plus des places disponibles pour le projet.
+
+users:
+    create:
+        title: Utilisateur à rajouter
+        save_button: Ajout
+        firstname: Prénom
+        lastname: Nom
+        username: Identifiant
+        email: Adresse e-mail
+        role: Rôle
+        locale: La langue préférée
+    view:
+        title: Visualisation profile
+        edit_button: Editer le profil
+        name: Nom
+        email: E-mail
+        role: Rôle
+        group: Le groupe
+        phone: Le numéro de téléphone
+        about: Description
+        error: L'utilisateur n'a pas été trouvé.
+    edit:
+        title: Editer le profil
+        title_password: Change le mot de passe
+        update_button: Mettre à jour le profil
+        password_button: Change le mot de passe
+        username: Identifiant
+        firstname: Prénom
+        lastname: Nom
+        email: Adresse e-mail
+        group: Le groupe
+        phone: Le numéro de téléphone
+        role: Pouvoir ninja spéciale
+        disabled: desactivé
+        about: Description
+        locale: Langue préférée
+        placeholders:
+            email: Adresse e-mail
+            group: Le nom du groupe
+            username: Identifiant
+            firstname: Prénom
+            lastname: Nom
+            phone: Le numéro de téléphone
+            role: Rôle
+            about: Ecris quelques mots sur toi
+            locale: Langue préférée
+
+import_form:
+    file_button: Feuillete le fichier
+    title_students: Importer des étudiants
+    title_professors: Importer des professeurs
+    bulk_button_students: Ajouter un group d'étudiants
+    bulk_button_professors: Ajouter un group de professeurs
+    title: Détails sur l'import d'un group des utilisateurs
+    content: Les détails concernant l'importation d'un grup des utilisateurs seront importées à partir de la plate-forme Moodle au format .csv. Le format des fichiers aura les colonnes suivantes: nom d'utilisateur, prénom, nom et adresse e-mail.
+
+application:
+    submit:
+        title: Détails supplémentaires
+        design: Données initiales de conception
+        contribution: Contribution de l’étudiant
+        graphics: Matériel graphique obligatoire
+        knowledge: Le mémoire est basé sur les connaissances acquises au fil des études des suivants cours
+        environment: L’environnement de développement de l’ouvrage
+        serve: Ce projet serve à
+        date: Délai de l’ouvrage
+        save_button: Créer un formulaire
+        university: "UNIVERSITE \"POLITEHNICA\" DE BUCAREST"
+        faculty: FACULTE D’INGENIERIE EN LANGUES ETRANGERES
+        approval: Aprouvé
+        director: Directeur de départment
+        professor: Prof. dr. ing. George DRAGOI
+        subtitle: SUJET DU PROJET DE FIN D’ETUDE POUR
+        theme: Titre du thème (du sujet)
+        coordinator: Coordinateur (Tuteur) du projet
+        student: Etudiant
+        proftitle: Le titre de professeur
+        download: Télécharger
+
+view_project:
+    submitted_by: proposé par
+    title_edit: Editer projet
+    title_add: Projet à ajouter
+    name: Nom (original)
+    name_ro: Nom (roumain)
+    stream: Filière
+    description: Description
+    tags: Etiquette
+    no_students: Numéro maximum d'étudiants
+    no_available_students: Numéro disponible d'étudiants
+    students: Etudiants
+    buttons:
+        apply: Aplique
+        edit: Editer
+        delete: Supprimer
+        save: Sauvgarde les modifications
+    professor:
+        title: Propositions pour le projet de fin d'études
+        no_applications: Il n'y a personne qui a appliqué encore.
+        accept: Accepte
+        reject: Rejete
+
+project_student_status:
+    pending: En attente
+    accepted: Accepté
+    rejected: Rejeté
+    invalidated: Invalide
+
+apply_project:
+    message:
+        succes: Vous avez appliqué avec succès! Un message a été envoyé via e-mail vers le professeur coordinateur.
+        not_allowed: Vous n'avez pas des permissions pour appliquer à des projets!
+        already_applied: Vous avez déjà appliqué à ce projet-là!
+        already_accepted: Vous avez été déjà accepté à ce projet-là!
+        rejected: Vous avez été dejà rejeté à ce projet-là! Contactez le professeur pour la modification de la réponse!
+        invalidated: L'application pour ce projet a été annulée automatiqument parce que vous avez été déjà accepté pour un autre projet!
+        not_exist: Le projet numéro %id% n'existe pas!
+        prof_response:
+            success: La réponse a été mis à jour avec succès! Un e-mail d'information a été envoyé vers le candidat.
+            no_spots_available: Il n'y a pas des places disponibles pour ce projet. Un e-mail d'information a été envoyé vers le candidat.
+            accepted: L'étudiant a été déjà accepté.
+            rejected: L'étudiant a été déjà rejeté. Vous pouvez editer la réponse de la liste de projets enregistrés.
+            invalidated: L'étudiant a été déjà accepté pour un autre projet.
+            invalid:
+                project: Le projet n'a pas été trouvé.
+                student: L'étudiant n'a pas été trouvé.
+                project_student: L'enregistrement pour l'application de l'étudiant n'a pas été trouvé.
+
+dashboard:
+    recent:
+        title: Propositions thèmes projet de fin d'études
+        category: enregistrés par le professeurs
+        footer: les derniers 10 enregistrements proposés
+
+reports:
+    title: Créer des rapports
+    button_create: Créer
+    good_report: Les étudiants qui ont déjà choisi leur diplôme projet
+    bad_report: Les étudiants qui ont pas encore choisi leur diplôme projet
+    report_type: Type de rapport
+    statistics: Statistiques
+
+view_group:
+    title_add: Add Group
+    buttons:
+        save: Save
+    name: Groupname
+    specialisation: Specialisation
+
+group:
+    create:
+        specialisation: Specialisation
+        groupname: Groupname
+        stream: Stream
+
+view_course:
+    title_add: Add Course
+    buttons:
+        save: Save
+    coursename: Course Name
+
+course:
+    create:
+        coursename: Course Name
+        all_groups: All Groups

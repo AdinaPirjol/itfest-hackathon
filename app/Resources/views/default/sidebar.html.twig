@@ -1,0 +1,58 @@
+<div class="sidebar" data-color="blue" data-image="{{ asset('bundles/app/images/fils-banner.png') }}">
+    <div class="sidebar-wrapper">
+        <div class="logo">
+            <a href="{{ path('index') }}">
+                {#{{ 'fils_title'|trans }}#}
+                <img src="{{ asset('bundles/app/images/fils.png') }}" alt="{{ 'fils_title'|trans }}"
+                        class="img-responsive center-block">
+            </a>
+        </div>
+
+        <ul class="nav">
+            {% if is_granted('ROLE_SUPER_ADMIN') %}
+                <li id="admin" class="sidebar-list">
+                    <a href="{{ path('admin-index') }}">
+                        <i class="fa fa-cog"></i>
+                        <p>{{ 'menu.admin'|trans }}</p>
+                    </a>
+                </li>
+            {% endif %}
+
+            <li id="dashboard" class="sidebar-list">
+                <a href="{{ path('index') }}">
+                    <i class="fa fa-tachometer"></i>
+                    <p>{{ 'menu.dashboard'|trans }}</p>
+                </a>
+            </li>
+
+            <li id="user" class="sidebar-list">
+                <a href="{{ path('user-view-profile') }}">
+                    <i class="fa fa-user"></i>
+                    <p>{{ 'menu.user_profile'|trans }}</p>
+                </a>
+            </li>
+
+            <li id="projects" class="sidebar-list">
+                <a href="{{ path('filter-projects') }}">
+                    <i class="fa fa-list"></i>
+                    <p>{{ 'menu.projects'|trans }}</p>
+                </a>
+            </li>
+
+            {#<li id="messages" class="sidebar-list">#}
+                {#<a href="#">#}
+                    {#<i class="fa fa-bell"></i>#}
+                    {#<p>{{ 'menu.messages'|trans }}</p>#}
+                {#</a>#}
+            {#</li>#}
+
+            <li id="messages" class="sidebar-list">
+                <a href="{{ path('applications-pdf-index') }}">
+                    <i class="fa fa-graduation-cap"></i>
+                    <p>{{ 'menu.form'|trans }}</p>
+                </a>
+            </li>
+
+        </ul>
+    </div>
+</div>

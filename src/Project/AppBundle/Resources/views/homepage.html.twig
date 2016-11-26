@@ -1,0 +1,51 @@
+{% extends "::default/index.html.twig" %}
+
+{% block title %}
+    {{ parent() }}
+    - {{ 'menu.dashboard'|trans }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/app/js/recent.js') }}" charset="utf-8"></script>
+    <script type="application/javascript">
+        $("li.sidebar-list").removeClass("active");
+        $("li.sidebar-list#dashboard").addClass("active");
+    </script>
+
+    {% if params is not null and params.acceptProject %}
+        <script type="application/javascript">
+            $.notify({
+                icon: 'fa fa-gift',
+                message: '{{ params.acceptProject }}'
+
+            }, {
+                type: 'info',
+                timer: 100
+            });
+        </script>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        {#Recent projects#}
+        <div class="col-md-12">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">{{ 'dashboard.recent.title'|trans }}</h4>
+                    <p class="category">{{ 'dashboard.recent.category'|trans }}</p>
+                </div>
+                <div class="content">
+                    <div id="recent-projects"></div>
+
+                    <div class="footer">
+                        <div class="stats">
+                            <i class="fa fa-clock-o"></i>{{ 'dashboard.recent.footer'|trans }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

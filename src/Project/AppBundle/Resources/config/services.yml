@@ -1,0 +1,72 @@
+services:
+    app.util:
+        class: Project\AppBundle\Service\UtilService
+
+    app.default:
+        class: Project\AppBundle\Services\DefaultService
+        calls:
+          - [setContainer, ["@service_container"]]
+          - [setTokenManager, ["@form.csrf_provider"]]
+
+    app.mail:
+        class: Project\AppBundle\Services\MailService
+        calls:
+        - [setContainer, ["@service_container"]]
+        - [setFrom, ["%from%"]]
+        - [setAuthKey, ["%auth_key%"]]
+
+    app.project:
+        class: Project\AppBundle\Services\ProjectService
+        calls:
+          - [setDoctrine, ["@doctrine"]]
+          - [setTranslator, ["@translator"]]
+          - [setMailService, ["@app.mail"]]
+
+    app.application:
+        class: Project\AppBundle\Services\ApplicationService
+
+    applications.type:
+        class: Project\AppBundle\Form\Type\ApplicationSubmitType
+        tags:
+            - { name: form.type, alias: form_em }
+        arguments: [@doctrine]
+
+    applications.submit:
+        class: Project\AppBundle\Services\ApplicationService
+        calls:
+          - [setDoctrine, ["@doctrine"]]
+          - [setTranslator, ["@translator"]]
+
+    app.edit_project_form:
+        class: Project\AppBundle\Form\Type\EditProjectType
+        tags:
+            - { name: form.type }
+
+    app.report:
+        class: Project\AppBundle\Form\Type\ReportType
+        tags:
+            - { name: form.type }
+
+    app.create_course_form:
+        class: Project\AppBundle\Form\Type\CreateCourseType
+        tags:
+            - { name: form.type, alias: form_em }
+        arguments: [@doctrine]
+
+    app.course:
+        class: Project\AppBundle\Services\CourseService
+        calls:
+          - [setDoctrine, ["@doctrine"]]
+          - [setTranslator, ["@translator"]]
+
+    app.create_group_form:
+        class: Project\AppBundle\Form\Type\CreateGroupType
+        tags:
+            - { name: form.type, alias: form_em }
+        arguments: [@doctrine]
+
+    app.group:
+        class: Project\AppBundle\Services\GroupService
+        calls:
+          - [setDoctrine, ["@doctrine"]]
+          - [setTranslator, ["@translator"]]

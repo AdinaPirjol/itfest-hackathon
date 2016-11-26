@@ -1,0 +1,11 @@
+index:
+    path: /
+    defaults: { _controller: AppBundle:Default:index }
+
+reset-password:
+    path: /reset-password
+    defaults: { _controller: AppBundle:Default:recoverPassword }
+
+reset-password:
+    path: /reset-password
+    defaults: { _controller: AppBundle:Default:resetPassword }

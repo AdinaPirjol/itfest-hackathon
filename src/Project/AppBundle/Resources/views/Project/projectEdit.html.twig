@@ -1,0 +1,40 @@
+{% extends "::default/index.html.twig" %}
+
+{% block title %}
+    {{ parent() }}
+    - {{ 'menu.projects'|trans }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('assets/vendor/select2/dist/js/select2.js') }}"></script>
+    <script>
+        $("li.sidebar-list").removeClass("active");
+        $("li.sidebar-list#projects").addClass("active");
+
+        $(".js-example-basic-multiple").select2({maximumSelectionLength: 10});
+    </script>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('assets/vendor/select2/dist/css/select2.css') }}" rel="stylesheet" type="text/css"/>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">{{ 'view_project.title_edit'|trans }}</h4>
+                </div>
+
+                <div class="content">
+                    {{ form_start(form, { 'action': path('project-edit', {'id': project.id}) }) }}
+
+                    {% include 'AppBundle:Project:projectForm.html.twig' with {'form': form, 'project': project} %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

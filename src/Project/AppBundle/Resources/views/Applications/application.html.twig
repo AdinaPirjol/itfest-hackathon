@@ -1,0 +1,54 @@
+<head>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+</head>
+<body style="line-height: 200%;font-family: Georgia, 'Times New Roman', Times, serif;margin-left: 150px; margin-right: 150px">
+    <div style="margin-top: 150px;" class="row">
+        <p style="text-align: center;font-size: 35px;font-weight: bold;">{{ 'application.submit.university' | trans }}</p>
+        <p style="text-align: center;font-size: 35px;font-weight: bold;">{{ 'application.submit.faculty' | trans }}</p>
+        <p style="text-align: center;font-size: 35px;font-weight: bold;color: red;">{{ department }}</p>
+    </div>
+    <div style="margin-top: 0.15cm;" class="row">
+        <div style="float: right; width: 30%">
+            <p style="text-align: left;font-size: 20px;text-decoration: underline;">{{ 'application.submit.approval' | trans }}</p>
+            <p style="text-align: left;font-size: 20px;">{{ 'application.submit.director' | trans}}: </p>
+            <p style="text-align: left;font-size: 20px;">{{ 'application.submit.professor' | trans}} </p>
+        </div>
+    </div>
+    <div style="margin-top: 0.25cm;" class="row">
+        <p style="text-align: center;font-size: 40px;font-weight: bold;">{{ 'application.submit.subtitle' | trans}}:</p>
+        <p style="text-align: center;font-size: 40px;font-weight: bold;">{{ firstname }} {{ lastname }}</p>
+
+        <p style="font-size: 25px;">1.	{{ 'application.submit.theme' | trans}}:</p>
+        <p style="font-size: 25px;">{{ title }}</p>
+
+        <p style="font-size: 25px;">2.	{{ 'application.submit.design' | trans  | raw  }}:</p>
+        <p style="font-size: 25px;">{{ designdata }}</p>
+
+        <p style="font-size: 25px;">3.	{{ 'application.submit.contribution' | trans}}:</p>
+        <p style="font-size: 25px;">{{ contribution }}</p>
+
+        <p style="font-size: 25px;">4.	{{ 'application.submit.graphics' | trans}}:</p>
+        <p style="font-size: 25px;">{{ graphics }}</p>
+
+        <p style="font-size: 25px;">5.	{{ 'application.submit.knowledge' | trans}}: </p>
+        <p style="font-size: 25px;">{{ knowledge }}</p>
+
+        <p style="font-size: 25px;">6.	{{ 'application.submit.environment' | trans}}:</p>
+        <p style="font-size: 25px;">{{ environment }}</p>
+
+        <p style="font-size: 25px;">7.	{{ 'application.submit.serve' | trans}}:</p>
+        <p style="font-size: 25px;">{{ serve }}</p>
+
+        <p style="font-size: 25px;">8.	{{ 'application.submit.date' |trans}}:</p>
+        <p style="font-size: 25px;">{{ date }}</p>
+
+        <div style="margin-top: 0.25cm; float: left; width: 50%" class="row">
+            <p style="font-size: 25px; text-align: center; font-weight: bold">{{ 'application.submit.coordinator' | trans }}</p>
+            <p style="font-size: 25px; text-align: center; font-weight: bold">{{ proftitle }} {{ proffirstname }} {{ proflastname }} </p>
+        </div>
+        <div style="margin-top: 0.25cm; float: right; width: 50%" class="row">
+            <p style="font-size: 25px; text-align: center; font-weight: bold">{{ 'application.submit.student' | trans }}:</p>
+            <p style="font-size: 25px; text-align: center; font-weight: bold">{{ firstname }} {{ lastname }}</p>
+        </div>
+    </div>
+</body>

@@ -1,0 +1,58 @@
+<div class="card">
+    <div class="content table-responsive table-full-width">
+
+        {# display navigation #}
+        <div class="nav navbar-nav pull-right">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+        <table class="table table-hover table-striped">
+            <thead>
+            {# sorting of properties based on query components #}
+            <th {% if pagination.isSorted('p.professor') %} class="sorted {{ pagination.getDirection() }}"{% endif %}>{{ knp_pagination_sortable(pagination, 'project_form.table.professor'|trans, ['u.firstName', 'u.lastName']) }}
+                <i class="fa fa-fw fa-sort"></i></th>
+            <th {% if pagination.isSorted('p.name') %} class="sorted {{ pagination.getDirection() }}"{% endif %}>{{ knp_pagination_sortable(pagination, 'project_form.table.project_name'|trans, 'p.name') }}
+                <i class="fa fa-fw fa-sort"></i></th>
+            <th {% if pagination.isSorted('p.nameRo') %} class="sorted {{ pagination.getDirection() }}"{% endif %}>{{ knp_pagination_sortable(pagination, 'project_form.table.project_name_ro'|trans, 'p.nameRo') }}
+                <i class="fa fa-fw fa-sort"></i></th>
+            <th {% if pagination.isSorted('p.description') %} class="sorted {{ pagination.getDirection() }}"{% endif %}>{{ knp_pagination_sortable(pagination, 'project_form.table.description'|trans, 'p.description') }}
+                <i class="fa fa-fw fa-sort"></i></th>
+            <th>{{ 'project_form.table.actions'|trans }}</th>
+            </thead>
+
+            <tbody>
+            {% for project in pagination %}
+                <tr>
+                    <td>
+                        <a href="{{ path('user-view-profile', {'id': project.professorId}) }}">
+                            {{ project.professor }}
+                        </a>
+                    </td>
+                    <td>{{ project.name }}</td>
+                    <td>{{ project.nameRo }}</td>
+                    <td>{{ project.description|slice(0,50) }}{{ project.description|length > 50 ? '...' : '' }}</td>
+                    <td>
+                        <div class="btn-group">
+                            <button class="action-view btn btn-primary btn-sm"
+                                    data-href="{{ path('project-view', { 'id': project.id }) }}">
+                                <i class="fa fa-external-link"></i>{{ 'project_form.table.view'|trans }}
+                            </button>
+
+                            {% if canApply and project.remainingStudentNo %}
+                                <button class="action-apply btn btn-primary btn-sm"
+                                        data-project-id="{{ project.id }}">
+                                    <i class="fa fa-external-link"></i>{{ 'project_form.table.apply'|trans }}
+                                </button>
+                            {% endif %}
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        {# display navigation #}
+        <div class="nav navbar-nav pull-right">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+    </div>
+</div>

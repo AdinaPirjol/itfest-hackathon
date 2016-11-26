@@ -1,0 +1,19 @@
+services:
+    app.user:
+        class: Project\UserBundle\Services\UserService
+        calls:
+          - [setEntityManager, ["@doctrine.orm.entity_manager"]]
+          - [setTokenStorageInterface, ["@security.token_storage"]]
+          - [setUserManager, ["@fos_user.user_manager"]]
+          - [setMailService, ["@app.mail"]]
+          - [setTranslator, ["@translator"]]
+
+    app.create_user_form:
+        class: Project\UserBundle\Form\Type\CreateUserType
+        tags:
+          - { name: form.type }
+
+    app.change_user_form:
+        class: Project\UserBundle\Form\Type\ChangeUserType
+        tags:
+          - { name: form.type }

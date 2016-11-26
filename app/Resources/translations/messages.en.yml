@@ -1,0 +1,266 @@
+fils_title: FILS
+fils_site: FILS Diploma Projects
+
+error: Error
+error_request: Your request could not be processed.
+
+menu:
+    admin: Admin
+    dashboard: Dashboard
+    user_profile: User profile
+    projects: Projects
+    messages: Messages
+    form: Form
+
+streams:
+    engleza: English Stream
+    franceza: French Stream
+    germana: German Stream
+
+lang:
+    ro: Romanian
+    en: English
+    fr: French
+    de: German
+
+roles:
+    ROLE_USER: Student
+    ROLE_ADMIN: Profesor
+    ROLE_SUPER_ADMIN: Admin
+
+ajax:
+    add_user: User was successfully added!
+    change_password: Password was changed successfully!
+    edit_profile: Profile was successfully updated!
+    add_project: Project was successfully added!
+    delete_project: Project was successfully deleted!
+
+project_form:
+    title: Bachelor thesis themes proposals
+    actions:
+        title: Actions
+        add: Add project
+        view_personal: View your projects
+    filters:
+        labels:
+            availability: Availability
+            availability_yes: Available
+            availability_no: Unavailable
+            stream: Stream
+            professor: Professor
+            tag: Labels
+            sort: Sort by
+        empty_value:
+            availability: All projects
+            stream: All streams
+            professor: All professors
+            tag: All labels
+        buttons:
+            submit: Search
+            reset: Reset filters
+    table:
+        professor: Professor
+        project_name: Project name
+        project_name_ro: Project name (ro)
+        description: Short description
+        actions: Actions
+        date_created: Date added
+        view: View
+        apply: Apply
+
+import_form:
+    file_button: Browse File
+    title_students: Import students
+    title_professors: Import professors
+    bulk_button_students: Bulk Add Students
+    bulk_button_professors: Bulk Add Professors
+    title: Details about the bulk user import
+    content: Details about the bulk user import will be imported from the Moodle platform in .csv format. The format of the files will have the following columns: username, first name, last name and email address.
+
+mail:
+    footer: FILS UPB Team
+    create_account:
+        title: FILS Bachelor Diploma Proposal Themes
+        body: Congratulations! We have created an account for you. Your username is %username% and your password is %password%.
+    apply_project:
+        title: FILS Entry for applying for a project proposal theme
+        description: The student %student% (%email%) wants to apply to the project '%project%'. Send response:
+        accept: Accept
+        reject: Reject
+        view_profile: View student profile
+    accept_project:
+        title: FILS Response for applying for a project proposal theme
+        body: Your request for applying for the project %project% (%professor%) was accepted.
+        email: You can contact the coordinating professor at the email address %email%.
+    reject_project:
+        title: FILS Response for applying for a project proposal theme
+        body: Your request for applying for the project %project% (%professor%) was rejected
+        optional: automatically because there are no more available spots on this project
+
+users:
+    create:
+        title: Add user
+        save_button: Add
+        firstname: First Name
+        lastname: Last Name
+        username: Username
+        email: Email
+        role: Role
+        locale: Preferred Locale
+    view:
+        title: View Profile
+        edit_button: Edit Profile
+        name: Name
+        email: Email
+        role: Role
+        group: Group
+        phone: Phone number
+        about: About me
+        error: User not found.
+    edit:
+        title: Edit profile
+        title_password: Change password
+        update_button: Update profile
+        password_button: Change password
+        username: Username
+        firstname: First Name
+        lastname: Last Name
+        email: Email Address
+        group: Group
+        phone: Phone Number
+        role: Special ninja power
+        disabled: disabled
+        about: About me
+        locale: Preferred locale
+        placeholders:
+            email: Email
+            group: Group name
+            username: Username
+            firstname: First Name
+            lastname: Last Name
+            phone: Phone Number
+            role: Role
+            about: Say something about yourself
+            locale: Preferred locale
+
+application:
+    submit:
+        title: Project theme details form
+        design: Initial design data
+        contribution: Student contribution
+        graphics: Compulsory graphical material
+        knowledge: The paper is based on the knowledge obtained at the following study courses
+        environment: Paper development environment
+        serve: The paper serves as
+        date: Paper preparation date
+        save_button: Creeaza formular
+        university: "\"POLITEHNICA\" UNIVERSITY OF BUCHAREST"
+        faculty: FACULTY OF ENGINEERING IN FOREIGN LANGUAGES
+        approval: Approved
+        director: Director of department
+        professor: Prof. dr. ing. George DRAGOI
+        subtitle: DIPLOMA PROJECT THEME FOR
+        theme: Theme title
+        coordinator: Project coordinator
+        student: Student
+        proftitle: Professors' Title
+        department: Department
+        download: download
+
+view_project:
+    submitted_by: submitted by
+    name: Name (original)
+    name_ro: Name (romanian)
+    tags: Tags
+    stream: Stream
+    description: Description
+    no_students: Maximum number of students
+    no_available_students: Available number of students
+    students: Students
+    buttons:
+        apply: Apply
+        edit: Edit
+        delete: Delete
+    professor:
+        title: Proposed diploma projects themes
+        no_applications: No one applied yet.
+        accept: Accept
+        reject: Decline
+
+project_student_status:
+    pending: Waiting response
+    accepted: Accepted
+    rejected: Rejected
+    invalidated: Invalidated
+
+apply_project:
+    message:
+        succes: You successfully applied! An email was sent to the coordinating professor.
+        not_allowed: You don't have permissions to apply for projects!
+        already_applied: You have already applied to this project!
+        already_accepted: You have already been accepted to this project!
+        rejected: You have already been rejected to this project! Contact the coordinating professor for modifying the response!
+        invalidated: The application for this project was automatically canceled because you have been accepted to another project!
+        not_exist: The project with id %id% does not exist!
+        prof_response:
+            success: The response was successfully updated! An informational email was sent to the applier.
+            no_spots_available: There are no more available spots for this project. An informational email was sent to the applier.
+            accepted: The student was already accepted.
+            rejected: The student was already rejected. You can edit the response from your registered project proposals list.
+            invalidated: The student was already accepted to another project.
+            invalid:
+                project: The project was not found.
+                student: The student was not found.
+                project_student: The entry for the student application was not found.
+
+menu:
+    admin: Admin
+    dashboard: Dashboard
+    user_profile: User profile
+    projects: Projects
+    messages: Messages
+    form: Form
+
+dashboard:
+    recent:
+        title: Bachelor thesis proposal themes
+        category: registered by professors
+        footer: last 10 proposed entries
+    todo:
+        group: Add your student group.
+        apply: Apply for a project.
+        acceptet: Get accepted for a project.
+        form: Complete and submit the
+
+reports:
+    title: Create reports
+    button_create: Create
+    good_report: Students that have already chosen their diploma paper
+    bad_report: Students that have NOT yet chosen their diploma paper
+    report_type: Report type
+    statistics: Statistics
+
+view_group:
+    title_add: Add Group
+    buttons:
+        save: Save
+    name: Groupname
+    specialisation: Specialisation
+
+group:
+    create:
+        specialisation: Specialisation
+        groupname: Groupname
+        stream: Stream
+
+view_course:
+    title_add: Add Course
+    buttons:
+        save: Save
+    coursename: Course Name
+
+course:
+    create:
+        coursename: Course Name
+        all_groups: All Groups
+

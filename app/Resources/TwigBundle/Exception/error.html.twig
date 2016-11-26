@@ -1,0 +1,26 @@
+{% extends "::default/base.html.twig" %}
+
+<div class="row">
+    <div class="card">
+        <div class="header">
+            <h4 class="title">{{ "error"|trans }}</h4>
+        </div>
+
+        <div class="content">
+            {% if status_code == 404 %}
+                <p> The requested page couldn't be located. Checkout for any URL
+                    misspelling or <a href="{{ path('index') }}">return to the homepage</a>.</p>
+            {% elseif status_code == 403 %}
+                <p>You are forbidden from accessing this url! Contact the admin or
+                    <a href="{{ path('index') }}">
+                        return to the homepage
+                    </a>.</p>
+            {% else %}
+                <p>An unexpected error occured! Contact the admin or
+                    <a href="{{ path('index') }}">
+                        return to the homepage
+                    </a>.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,127 @@
+{% extends "::default/index.html.twig" %}
+
+{% block title %}
+    {{ parent() }}
+    - {{ 'menu.projects'|trans }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/app/js/list-projects-professor.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+    {# display navigation #}
+    <div class="row">
+        <div class="card">
+            <div class="header">
+                <h4 class="title">{{ 'view_project.professor.title'|trans }}</h4>
+            </div>
+
+            <div class="content">
+                This is a list of all your submitted proposals for the current academic year and the available actions
+                (view/edit/delete).
+                Collapse each project proposal by clicking on the title in order to see a list of all the students that
+                have applied to that project.<br>
+                Legend:
+                <ul class="list-unstyled">
+                    <li>
+                        {{ 'project_student_status.pending'|trans|upper }} - You have not yet responded to this request.
+                    </li>
+                    <li>
+                        {{ 'project_student_status.accepted'|trans|upper }} - You have accepted this request.
+                    </li>
+                    <li>
+                        {{ 'project_student_status.rejected'|trans|upper }} - You have rejected this request.
+                    </li>
+                    <li>
+                        {{ 'project_student_status.invalidated'|trans|upper }} - This request was
+                        invalidated (for example, due to an accept on another project or the student changed his mind).
+                    </li>
+                </ul>
+            </div>
+
+            <div class="nav navbar-nav pull-right">
+                {{ knp_pagination_render(projects) }}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="card">
+
+            <div class="content">
+                {% set foo = 1 %}
+
+                {% for project in projects %}
+                    <div class="panel-group">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" href="#collapse{{ foo }}">{{ project.name }}</a>
+
+                                    <div class="btn-group pull-right">
+                                        <a id="view-project" class="btn btn-success btn-sm"
+                                           href="{{ path('project-view', { 'id': project.id }) }}">
+                                            <i class="fa fa-search-plus"></i></a>
+
+                                        <a id="edit-project" class="btn btn-warning btn-sm"
+                                           href="{{ path('project-edit', { 'id': project.id }) }}">
+                                            <i class="fa fa-cog"></i></a>
+
+                                        <a id="delete-project" class="btn btn-danger btn-sm"
+                                           href="#" data-project-id="{{ project.id }}">
+                                           {#href="{{ path('project-delete', { 'id': project.id }) }}">#}
+                                            <i class="fa fa-trash-o"></i></a>
+                                    </div>
+                                </h4>
+                            </div>
+
+                            <div id="collapse{{ foo }}" class="panel-collapse collapse">
+                                <ul class="list-group">
+                                    {% if project.students|length %}
+                                        {% for projectStudent in project.students %}
+                                            <li class="list-group-item">
+                                                {{ projectStudent.student.name|capitalize }}
+                                                ({{ ('project_student_status.' ~ projectStudent.status)|trans|upper }})
+
+                                                {% if projectStudent.status == 'pending' %}
+                                                    <div class="btn-group pull-right">
+                                                        <a class="btn btn-success btn-sm"
+                                                           href="{{ path('applications-accept-decline', {'id': project.id, 'answer': '1', 'studentId': projectStudent.student.id }) }}">
+                                                            <i class="fa fa-search-plus"></i>{{ 'view_project.professor.accept'|trans }}
+                                                        </a>
+
+                                                        <a class="btn btn-danger btn-sm"
+                                                           href="{{ path('applications-accept-decline', {'id': project.id, 'answer': '0', 'studentId': projectStudent.student.id }) }}">
+                                                            <i class="fa fa-trash-o"></i>{{ 'view_project.professor.reject'|trans }}
+                                                        </a>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                {% endif %}
+                                            </li>
+                                        {% endfor %}
+                                    {% else %}
+                                        <li class="list-group-item">{{ 'view_project.professor.no_applications'|trans }}</li>
+                                    {% endif %}
+                                </ul>
+                                {#<div class="panel-footer">Footer</div>#}
+                            </div>
+                        </div>
+                    </div>
+
+                    {% set foo = foo + 1 %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    {# display navigation #}
+    <div class="row">
+        <div class="card">
+            <div class="nav navbar-nav pull-right">
+                {{ knp_pagination_render(projects) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

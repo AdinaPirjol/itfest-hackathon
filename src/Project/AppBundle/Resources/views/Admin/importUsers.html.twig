@@ -1,0 +1,116 @@
+{% extends "::default/index.html.twig" %}
+
+{% block title %}
+    {{ parent() }}
+    - {{ 'menu.admin'|trans }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/app/js/create-user.js') }}"
+            xmlns="http://www.w3.org/1999/html"></script>
+    <script>
+        $("li.sidebar-list").removeClass("active");
+        $("li.sidebar-list#admin").addClass("active");
+    </script>
+
+    {% if app.request.isMethod('post') %}
+        {% if errors|length %}
+            {% for error in errors %}
+                <script>
+                    $.notify({
+                        icon: 'fa fa-exclamation-circle',
+                        message: '{{ error }}'
+
+                    }, {
+                        type: 'danger',
+                        timer: 100
+                    });
+                </script>
+            {% endfor %}
+        {% else %}
+            <script>
+                $.notify({
+                    icon: 'fa fa-gift',
+                    message: "Successfully added new user!"
+
+                }, {
+                    type: 'info',
+                    timer: 100
+                });
+            </script>
+        {% endif %}
+    {% endif %}
+
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">{{ 'import_form.title'|trans }}</h4>
+                </div>
+
+                <div class="content">
+                    {{ 'import_form.content'|trans }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">{{ 'import_form.title_students'|trans }}</h4>
+                </div>
+
+                <div class="content">
+                    <form action="{{ path('admin-import-users') }}" name="bulkRegisterStudent" method="POST"
+                          enctype="multipart/form-data">
+                        <input type="hidden" name="student" value="student">
+                        <label class="btn btn-default btn-sm btn-file">
+                            {#{{ 'import_form.file_button'|trans }}#}
+                            <input type="file" name="submitFileStudent" id="submitFileStudent"
+                                    {#style="display: none;"#}
+                                    >
+                        </label>
+
+                        <button type="submit" class="btn btn-success btn-sm" id="bulkRegisterStudent_save">
+                            <i class="fa fa-external-link"></i>
+                            {{ 'import_form.bulk_button_students'|trans }}
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">{{ 'import_form.title_professors'|trans }}</h4>
+                </div>
+
+                <div class="content">
+                    <form action="{{ path('admin-import-users') }}" name="bulkRegisterProfessor" method="POST"
+                          enctype="multipart/form-data">
+                        <input type="hidden" name="professor" value="professor">
+                        <label class="btn btn-default btn-sm btn-file">
+                            {#{{ 'import_form.file_button'|trans }}#}
+                            <input type="file" name="submitFileProfessor" id="submitFileProfessor"
+                                    {#style="display: none;"#}
+                                    >
+                        </label>
+
+                        <button type="submit" class="btn btn-success btn-sm" id="bulkRegisterProfessor_save">
+                            <i class="fa fa-external-link"></i>
+                            {{ 'import_form.bulk_button_professors'|trans }}
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,96 @@
+{% extends "::default/index.html.twig" %}
+
+{% block title %}
+    {{ parent() }}
+    - {{ 'menu.projects'|trans }}
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="card">
+            <div class="header">
+                <h4 class="title">{{ project.name }}</h4>
+
+                <p class="category">{{ 'view_project.submitted_by'|trans }} {{ project.professor.name }}</p>
+            </div>
+            <div class="content">
+                <table class="table table-hover table-striped">
+                    <thead>
+                    {#//#}
+                    </thead>
+
+                    <tbody>
+                    <tr>
+                        <td class="text-right col-md-4">{{ 'view_project.name'|trans }}:</td>
+                        <td class="col-md-8">{{ project.name }}</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right col-md-4">{{ 'view_project.name_ro'|trans }}:</td>
+                        <td class="col-md-8">{{ project.nameRo }}</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right col-md-4">{{ 'view_project.stream'|trans }}:</td>
+                        <td class="col-md-8">{{ ('streams.' ~ project.stream.streamName)|trans }}</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right col-md-4">{{ 'view_project.description'|trans }}:</td>
+                        <td class="col-md-8">{{ project.description }}</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right col-md-4">{{ 'view_project.tags'|trans }}:</td>
+                        <td class="col-md-8">
+                            {% for tagProject in project.tagProjects %}
+                                #{{ tagProject.tag.name }}{% if not loop.last %}, {% endif %}
+                            {% endfor %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-right col-md-4">{{ 'view_project.no_students'|trans }}:</td>
+                        <td class="col-md-8">{{ project.studentNo }}</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right col-md-4">{{ 'view_project.no_available_students'|trans }}:</td>
+                        <td class="col-md-8">{{ project.remainingStudentNo }}</td>
+                    </tr>
+                    {% if project.students %}
+                        <td class="text-right col-md-4">{{ 'view_project.students'|trans }}:</td>
+                        <td class="col-md-8">
+                            <ul class="list-unstyled">
+                                {% for projectStudent in project.students %}
+                                    <li>
+                                        <a href="{{ path('user-view-profile', {'id': projectStudent.student.userCredentials.id}) }}">
+                                            {{ projectStudent.student.firstName|capitalize }} {{ projectStudent.student.lastName|upper }}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                    {% endif %}
+                    </tbody>
+                </table>
+
+                {% if canApply %}
+                    <div class="btn-group">
+                        <a class="btn btn-success" href="{{ path('project-apply', { 'id': project.id }) }}">
+                            <i class="fa fa-external-link"></i>{{ 'view_project.buttons.apply'|trans }}
+                        </a>
+                    </div>
+                {% endif %}
+
+                {% if canEdit %}
+                    <div class="btn-group">
+                        <a class="btn btn-warning" href="{{ path('project-edit', {'id': project.id}) }}">
+                            <i class="fa fa-cog"></i>{{ 'view_project.buttons.edit'|trans }}
+                        </a>
+                    </div>
+
+                    <div class="btn-group">
+                        <a class="btn btn-danger" href="{{ path('project-delete', {'id': project.id}) }}">
+                            <i class="fa fa-trash-o"></i>{{ 'view_project.buttons.delete'|trans }}
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

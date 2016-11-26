@@ -1,0 +1,76 @@
+{#dont include form_start; is child of edit/add#}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="list-unstyled">
+            {{ form_errors(form) }}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            {{ form_label(form.name) }}<span>*</span>
+            {{ form_errors(form.name) }}
+            {{ form_widget(form.name, { 'attr': {'class': 'form-control', 'placeholder': 'view_project.name'|trans } }) }}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            {{ form_label(form.nameRo) }}<span>*</span>
+            {{ form_errors(form.nameRo) }}
+            {{ form_widget(form.nameRo, { 'attr': {'class': 'form-control', 'placeholder': 'view_project.name_ro'|trans } }) }}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            {{ form_label(form.stream) }}<span>*</span>
+            {{ form_errors(form.stream) }}
+            {{ form_widget(form.stream, { 'attr': {'class': 'form-control', 'placeholder': 'view_project.stream'|trans } }) }}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            {{ form_label(form.tags) }}<span>*</span>
+            {{ form_errors(form.tags) }}
+            {{ form_widget(form.tags, { 'attr': {'class': 'form-control js-example-basic-multiple'} }) }}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            {{ form_label(form.studentNo) }}<span>*</span>
+            {{ form_errors(form.studentNo) }}
+            {{ form_widget(form.studentNo, { 'attr': {'class': 'form-control', 'placeholder': 'view_project.no_students'|trans } }) }}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            {{ form_label(form.description) }}
+            {{ form_errors(form.description) }}
+            {{ form_widget(form.description, { 'attr': {'class': 'form-control', 'placeholder': 'view_project.description'|trans, 'rows': 5 } }) }}
+        </div>
+    </div>
+</div>
+
+<button type="submit" class="btn btn-info btn-fill pull-right" id="{{ form.vars.name }}_save">
+    {{ 'view_project.buttons.save'|trans }}
+</button>
+<div class="clearfix"></div>
+
+{{ form_end(form) }}

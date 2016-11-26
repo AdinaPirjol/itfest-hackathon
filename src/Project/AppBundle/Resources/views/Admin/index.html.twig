@@ -1,0 +1,57 @@
+{% extends "::default/index.html.twig" %}
+
+{% block title %}
+    {{ parent() }}
+    - {{ 'menu.admin'|trans }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {#More#}
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="card">
+            <div class="header">
+                <h4 class="title">{{ "Admin board" | trans }}</h4>
+            </div>
+
+            <div class="content">
+                <ul class="nav">
+                    <li>
+                        <a href="{{ path('admin-import-users') }}">Import users</a>
+                    </li>
+
+                    <li>
+                        <a href="{{ path('admin-create-users') }}">Create users</a>
+                    </li>
+
+                    <li>
+                        <a href="{{ path('admin-reports') }}">Edit user accounts</a>
+                    </li>
+
+                    <li>
+                        <a href="{{ path('admin-reports') }}">Edit courses</a>
+                    </li>
+
+                    <li>
+                        <a href="{{ path('admin-reports') }}">Edit student groups/streams</a>
+                    </li>
+
+                    <li>
+                        <a href="{{ path('admin-reports') }}">Edit project tags</a>
+                    </li>
+
+                    <li>
+                        <a href="{{ path('admin-reports') }}">Create reports</a>
+                    </li>
+
+                    <li>
+                        <a href="{{ path('admin-reports') }}">Archive</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

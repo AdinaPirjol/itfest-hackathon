@@ -1,0 +1,25 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-2">
+        <title>
+            {{ 'mail.reject_project.title'|trans }}
+        </title>
+    </head>
+
+    <body>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+        }
+    </style>
+
+    {{ 'mail.reject_project.body'|trans({'%project%': project.name, '%professor%': project.professor.name}) }}
+    {% if optional %}
+        {{ 'mail.reject_project.optional'|trans -}}
+    {% endif %}.
+    <br>
+    {{ 'mail.footer'|trans }}
+    </body>
+</html>

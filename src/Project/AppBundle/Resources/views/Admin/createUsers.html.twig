@@ -1,0 +1,115 @@
+{% extends "::default/index.html.twig" %}
+
+{% block title %}
+    {{ parent() }}
+    - {{ 'menu.admin'|trans }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/app/js/create-user.js') }}"
+            xmlns="http://www.w3.org/1999/html"></script>
+    <script>
+        $("li.sidebar-list").removeClass("active");
+        $("li.sidebar-list#admin").addClass("active");
+    </script>
+
+    {% if not form_errors(form) and not error and app.request.isMethod('post') %}
+        <script>
+            $.notify({
+                icon: 'fa fa-gift',
+                message: "Successfully added new user!"
+
+            }, {
+                type: 'info',
+                timer: 100
+            });
+        </script>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">{{ 'users.create.title'|trans }}</h4>
+                </div>
+
+                <div class="content">
+                    <form name="{{ form.vars.name }}" method="post" action="{{ path('admin-create-users') }}">
+                        {% if error %}
+                            {{ error }}
+                        {% endif %}
+
+                        {{ form_errors(form) }}
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    {{ form_label(form.firstname) }}<span>*</span>
+                                    {{ form_errors(form.firstname) }}
+                                    {{ form_widget(form.firstname, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    {{ form_label(form.lastname) }}<span>*</span>
+                                    {{ form_errors(form.lastname) }}
+                                    {{ form_widget(form.lastname, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    {{ form_label(form.username) }}<span>*</span>
+                                    {{ form_errors(form.username) }}
+                                    {{ form_widget(form.username, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    {{ form_label(form.email) }}<span>*</span>
+                                    {{ form_errors(form.email) }}
+                                    {{ form_widget(form.email, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    {{ form_label(form.role) }}<span>*</span>
+                                    {{ form_errors(form.role) }}
+                                    {{ form_widget(form.role, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    {{ form_label(form.preferred_locale) }}<span>*</span>
+                                    {{ form_errors(form.preferred_locale) }}
+                                    {{ form_widget(form.preferred_locale, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        {{ form_row(form._token) }}
+
+                        <button type="submit" value="{{ 'users.create.save_button'|trans }}"
+                                class="btn btn-success btn-sm">
+                            <i class="fa fa-external-link"></i>
+                            {{ 'users.create.save_button'|trans }}
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

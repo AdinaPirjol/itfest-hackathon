@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+    <html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-2">
+        <title>
+            {{ 'mail.accept_project.title'|trans }}
+        </title>
+    </head>
+
+    <body>
+        <style>
+            body {
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 12px;
+            }
+        </style>
+
+        {{ 'mail.apply_project.description'|trans({
+            '%student%': student.name,
+            '%email%': student.userCredentials.email,
+            '%project%': project.name
+        }) }}
+
+        <div>
+            <a href="{{ url('applications-accept-decline', {'id': project.id, 'answer': '1','studentId': student.id }) }}">
+                <i class="fa fa-plus"></i>{{ 'mail.apply_project.accept'|trans }}</a> /
+
+            <a href="{{ url('applications-accept-decline', {'id': project.id, 'answer': '0', 'studentId': student.id }) }}">
+                <i class="fa fa-list-ul"></i>{{ 'mail.apply_project.reject'|trans }}</a>
+        </div>
+
+        <br>
+
+        <div>
+            <a href="{{ url('user-view-profile', {'id': student.userCredentials.id }) }}">
+                <i class="fa fa-plus"></i>{{ 'mail.apply_project.view_profile'|trans }}</a>
+        </div>
+
+        <br>
+
+        {{ 'mail.footer'|trans }}
+    </body>
+</html>
+

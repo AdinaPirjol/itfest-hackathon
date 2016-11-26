@@ -1,0 +1,247 @@
+fils_title: FILS
+fils_site: FILS Proiecte de Diploma
+
+error: Eroare
+error_request: Request-ul nu a putut fi procesat.
+
+
+
+streams:
+    engleza: Filiera Engleza
+    franceza: Filiera Franceza
+    germana: Filiera Germana
+
+lang:
+    ro: Romana
+    en: Engleza
+    fr: Franceza
+    de: Germana
+
+roles:
+    ROLE_USER: Student
+    ROLE_ADMIN: Profesor
+    ROLE_SUPER_ADMIN: Admin
+
+ajax:
+    add_user: Utilizatorul a fost adaugat cu succes!
+    change_password: Parola a fost schimbata cu succes!
+    edit_profile: Profilul a fost actualizat cu success!
+    add_project: Proiectul a fost adaugat cu succes!
+    delete_project: Proiectul a fost sters cu succes!
+
+project_form:
+    title: Propuneri teme proiecte de licenta
+    actions:
+        title: Actiuni
+        add: Adaugare proiect
+        view_personal: Listare proiecte personale
+    filters:
+        labels:
+            availability: Valabilitate
+            availability_yes: Disponibile
+            availability_no: Indisponibile
+            stream: Filiera
+            professor: Profesor
+            tag: Etichete
+        empty_value:
+            availability: Toate proiectele
+            stream: Toate filierele
+            professor: Toti profesorii
+            tag: Toate tagurile
+        buttons:
+            submit: Cauta
+            reset: Reseteaza filtre
+    table:
+        professor: Profesor
+        project_name: Nume proiect
+        project_name_ro: Nume proiect (ro)
+        description: Scurta descriere
+        actions: Actiuni
+        date_created: Data adaugarii
+        view: Vizualizare
+        apply: Aplica
+
+import_form:
+    file_button: Rasfoieste fisier
+    title_students: Importa studenti
+    title_professors: Importa profesori
+    bulk_button_students: Adauga studenti
+    bulk_button_professors: Adauga profesori
+    title: Detalii despre importul de utilizatori bulk
+    content: Detaliile despre conturile de utilizator se vor importa in format .csv de pe platforma Moodle. Formatul fisierelor va cuprinde urmatoarele coloane: username, prenume, nume si adresa de email.
+
+mail:
+    footer: Echipa FILS UPB
+    create_account:
+        title: FILS Teme proiect de diploma
+        body: Congratulations! We have created an account for you. Your username is %username% and your password is %password%.
+    apply_project:
+        title: FILS Aplicare propunere tema licenta
+        description: Studentul %student% (%email%) doreste sa aplice la proiectul '%project%'. Trimite raspuns:
+        accept: Accepta
+        reject: Respinge
+        view_profile: Vizualizare profil student
+    accept_project:
+        title: FILS Raspuns pentru aplicare proiect de licenta
+        body: Cererea ta de aplicare pe proiectul %project% (%professor%) a fost acceptata.
+        email: Poti contacta profesorul coordonator la adresa de email %email%.
+    reject_project:
+        title: FILS Raspuns pentru aplicare proiect de licenta
+        body: Cererea ta de aplicare pe proiectul %project% (%professor%) a fost respinsa
+        optional: automat pentru ca nu mai exista locuri disponibile pe proiect
+
+users:
+    create:
+        title: Adaugare utilizator
+        save_button: Adaugare
+        firstname: Prenume
+        lastname: Nume
+        username: Username
+        email: Email
+        role: Rol
+        locale: Limba preferata
+    view:
+        title: Vizualizare profil
+        edit_button: Editeaza profil
+        name: Nume
+        email: Email
+        role: Rol
+        group: Grupa
+        phone: Numar de telefon
+        about: Descriere
+        error: Utilizatorul nu a fost gasit.
+    edit:
+        title: Editeaza profil
+        title_password: Schimba parola
+        update_button: Updateaza profil
+        password_button: Schimba parola
+        username: Username
+        firstname: Prenume
+        lastname: Nume
+        email: Adresa de email
+        group: Grupa
+        phone: Numar de telefon
+        role: Putere ninja speciala
+        disabled: dezactivat
+        about: Descriere
+        locale: Limba preferata
+        placeholders:
+            email: Email
+            group: Numele grupei
+            username: Username
+            firstname: Prenume
+            lastname: Nume
+            phone: Numar de telefon
+            role: Rol
+            about: Spune cateva cuvinte despre tine
+            locale: Limba preferata
+
+application:
+    submit:
+        title: Detalii suplimentare despre proiect
+        design: Initial design data
+        contribution: Student contribution
+        graphics: Compulsory graphical material
+        knowledge: The paper is based on the knowledge obtained at the following study courses
+        environment: Paper development environment
+        serve: The paper serves as
+        date: Paper preparation date
+        save_button: Creeaza formular
+        university: "\"POLITEHNICA\" UNIVERSITY OF BUCHAREST"
+        faculty: FACULTY OF ENGINEERING IN FOREIGN LANGUAGES
+        approval: Approved
+        director: Director of department
+        professor: Prof. dr. ing. George DRAGOI
+        subtitle: DIPLOMA PROJECT THEME FOR
+        theme: Theme title
+        coordinator: Project coordinator
+        student: Student
+        proftitle: Professors' Title
+        download: download
+
+view_project:
+    submitted_by: adaugat de
+    title_edit: Editare proiect
+    title_add: Adaugare proiect
+    name: Nume (original)
+    name_ro: Nume (romana)
+    stream: Filiera
+    description: Descriere
+    tags: Etichete
+    no_students: Numar maxim de studenti
+    no_available_students: Numar disponibil de studenti
+    students: Studenti
+    buttons:
+        apply: Aplica
+        edit: Editeaza
+        delete: Sterge
+        save: Salveaza modificarile
+    professor:
+        title: Propuneri teme proiecte de licenta
+        no_applications: Nu a aplicat nimeni inca.
+        accept: Accepta
+        reject: Respinge
+
+project_student_status:
+    pending: In asteptare
+    accepted: Acceptat
+    rejected: Respins
+    invalidated: Invalidat
+
+apply_project:
+    message:
+        succes: Ai aplicat cu succes! Un mail a fost trimis catre profesorul coordonator.
+        not_allowed: Nu aveti permisiuni sa aplicati la proiecte!
+        already_applied: Ai aplicat deja la acest proiect!
+        already_accepted: Ai fost deja acceptat pentru acest proiect!
+        rejected: Ai fost deja respins la acest proiect! Contacteaza profesorul pentru modificarea raspunsului!
+        invalidated: Aplicarea pentru acest proiect a fost anulata automat pentru ca ai fost acceptat deja pe alt proiect!
+        not_exist: Proiectul nr %id% nu exista!
+        prof_response:
+            success: Raspunsul a fost updatat cu success! Un email de informare a fost trimis catre aplicant.
+            no_spots_available: Nu mai sunt locuri disponibile pentru acest proiect. Un email de informare a fost trimis catre aplicant.
+            accepted: Studentul a fost deja acceptat.
+            rejected: Studentul a fost deja respins. Poti edita raspunsul din lista de propuneri de proiecte inregistrate.
+            invalidated: Studentul a fost deja acceptat pe alt proiect.
+            invalid:
+                project: Proiectul nu a fost gasit.
+                student: Studentul nu a fost gasit.
+                project_student: Inregistrarea pentru aplicatia studentului nu a fost gasita.
+
+dashboard:
+    recent:
+        title: Propuneri de teme de proiecte pentru licenta
+        category: inregistrate de catre profesori
+        footer: ultimele 10 inregistrari propuse
+
+reports:
+    title: Creare rapoarte
+    button_create: Creare
+    good_report: Studenti care si-au ales deja proiectul de diploma
+    bad_report: Studenti care NU si-a ales inca proiectul de diploma
+    report_type: Tipul raportului
+    statistics: Statistici
+
+view_group:
+    title_add: Adauga Grupa
+    buttons:
+        save: Salveaza
+    name: Nume Grupa
+    specialisation: Specializare
+
+group:
+    create:
+        specialisation: Specializare
+        groupname: Nume Grupa
+        stream: Filiera
+
+view_course:
+    title_add: Adauga Curs
+    buttons:
+        save: Salveaza
+    coursename: Nume Curs
+
+course:
+    create:
+        coursename: Nume Curs
+        all_groups: Toate grupele

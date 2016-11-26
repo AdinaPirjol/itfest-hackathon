@@ -1,0 +1,31 @@
+user-view-profile:
+    path: /view/{id}
+    defaults: { _controller: UserBundle:User:viewProfile, id: null }
+
+edit_profile:
+    path: /edit
+    defaults: { _controller: UserBundle:User:editProfile }
+
+user-update-profile:
+    path: /update
+    defaults: { _controller: UserBundle:User:updateProfileAjax }
+    options:
+        expose: true
+
+user-change-password:
+    path: /change-password
+    defaults: { _controller: UserBundle:User:changePasswordAjax }
+    options:
+        expose: true
+
+user-confirm-recover-password:
+    path: /confirm-recover
+    defaults: { _controller: UserBundle:User:confirmForgotPassword, id: 0, answer: 0, token: '' }
+    options:
+        expose: true
+
+user-recover-password:
+    path: /recover-password
+    defaults: { _controller: UserBundle:User:confirmForgotPassword, id: 0, answer: 0, token: '' }
+    options:
+        expose: true

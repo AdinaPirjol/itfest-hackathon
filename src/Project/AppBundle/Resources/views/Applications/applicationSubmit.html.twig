@@ -1,0 +1,128 @@
+{% extends "::default/index.html.twig" %}
+
+{% block title %}
+    {{ parent() }}
+    - {{ 'menu.admin'|trans }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/app/js/applicationSubmit.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">{{ 'application.submit.title'|trans }}</h4>
+                </div>
+                <div class="content">
+                    <form name="{{ form.vars.name }}" method="post" action="{{ path('applications-pdf-ajax') }}">
+                        {{ form_errors(form) }}
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    {{ form_label(form.design) }}<span>*</span>
+                                    {{ form_errors(form.design) }}
+                                    {{ form_widget(form.design, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    {{ form_label(form.contribution) }}<span>*</span>
+                                    {{ form_errors(form.contribution) }}
+                                    {{ form_widget(form.contribution, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    {{ form_label(form.graphics) }}<span>*</span>
+                                    {{ form_errors(form.graphics) }}
+                                    {{ form_widget(form.graphics, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    {{ form_label(form.knowledge) }}<span>*</span>
+                                    {{ form_errors(form.knowledge) }}
+                                    {{ form_widget(form.knowledge, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    {{ form_label(form.environment) }}<span>*</span>
+                                    {{ form_errors(form.environment) }}
+                                    {{ form_widget(form.environment, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    {{ form_label(form.serve) }}<span>*</span>
+                                    {{ form_errors(form.serve) }}
+                                    {{ form_widget(form.serve, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    {{ form_label(form.proftitle) }}<span>*</span>
+                                    {{ form_errors(form.proftitle) }}
+                                    {{ form_widget(form.proftitle, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    {{ form_label(form.preparation) }}<span>*</span>
+                                    {{ form_errors(form.preparation) }}
+                                    {{ form_widget(form.preparation, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    {{ form_label(form.department) }}<span>*</span>
+                                    {{ form_errors(form.department) }}
+                                    {{ form_widget(form.department, { 'attr': {'class': 'form-control'} }) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        {{ form_row(form._token) }}
+
+                        <button id="applicationSubmit_save" type="submit"
+                                value="{{ 'application.submit.save_button'|trans }}"
+                                class="btn btn-success btn-sm">
+                            <i class="fa fa-external-link"></i>
+                            {{ 'application.submit.save_button'|trans }}
+                        </button>
+                        <a id="download" href="{{ path('application-pdf-download', {filename : ''}) }}"
+                           class="btn btn-sm btn-success hidden" data-created="{{ created }}">
+                            <i class="fa fa-cloud-download">{{ "application.submit.download" | trans }}</i>
+                        </a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

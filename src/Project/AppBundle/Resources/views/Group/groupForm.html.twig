@@ -1,0 +1,46 @@
+{#dont include form_start; is child of edit/add#}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="list-unstyled">
+            {{ form_errors(form) }}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            {{ form_label(form.groupname) }}<span>*</span>
+            {{ form_errors(form.groupname) }}
+            {{ form_widget(form.groupname, { 'attr': {'class': 'form-control', 'placeholder': 'view_group.name'|trans } }) }}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            {{ form_label(form.specialisation) }}<span>*</span>
+            {{ form_errors(form.specialisation) }}
+            {{ form_widget(form.specialisation, { 'attr': {'class': 'form-control', 'placeholder': 'view_group.specialisation'|trans } }) }}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            {{ form_label(form.stream) }}<span>*</span>
+            {{ form_errors(form.stream) }}
+            {{ form_widget(form.stream, { 'attr': {'class': 'form-control', 'placeholder': 'view_group.stream'|trans } }) }}
+        </div>
+    </div>
+</div>
+
+<button type="submit" class="btn btn-info btn-fill pull-right" id="{{ form.vars.name }}_save">
+    {{ 'view_group.buttons.save'|trans }}
+</button>
+<div class="clearfix"></div>
+
+{{ form_end(form) }}

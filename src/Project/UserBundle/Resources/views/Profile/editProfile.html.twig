@@ -1,0 +1,170 @@
+{% extends "default/index.html.twig" %}
+
+{% block title %}
+    {{ parent() }}
+    - {{ 'menu.user_profile'|trans }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/user/js/edit-profile.js') }}"></script>
+    <script>
+        $("li").removeClass("active");
+        $("#user").addClass("active");
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">{{ 'users.edit.title'|trans }}</h4>
+                </div>
+
+                <div class="content">
+                    {{ form_start(formProfile, { 'action': path('user-update-profile') }) }}
+
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                {{ form_label(formProfile.username) }}
+                                {{ form_errors(formProfile.username) }}
+                                {{ form_widget(formProfile.username, { 'attr': {'class': 'form-control', 'placeholder': 'users.edit.placeholders.username'|trans } }) }}
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="form-group">
+                                {{ form_label(formProfile.email) }}<span>*</span>
+                                {{ form_errors(formProfile.email) }}
+                                {{ form_widget(formProfile.email, { 'attr': {'class': 'form-control', 'placeholder': 'users.edit.placeholders.email'|trans } }) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                {{ form_label(formProfile.firstname) }}<span>*</span>
+                                {{ form_errors(formProfile.firstname) }}
+                                {{ form_widget(formProfile.firstname, { 'attr': {'class': 'form-control', 'placeholder': 'users.edit.placeholders.firstname'|trans } }) }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                {{ form_label(formProfile.lastname) }}<span>*</span>
+                                {{ form_errors(formProfile.lastname) }}
+                                {{ form_widget(formProfile.lastname, { 'attr': {'class': 'form-control', 'placeholder': 'users.edit.placeholders.lastname'|trans } }) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        {% if user.userType.roleType == constant('\\Project\\UserBundle\\Entity\\UserType::ROLE_USER') %}
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    {{ form_label(formProfile.group) }}<span>*</span>
+                                    {{ form_errors(formProfile.group) }}
+                                    {{ form_widget(formProfile.group, { 'attr': {'class': 'form-control' } }) }}
+                                </div>
+                            </div>
+                        {% endif %}
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                {{ form_label(formProfile.phone) }}
+                                {{ form_errors(formProfile.phone) }}
+                                {{ form_widget(formProfile.phone, { 'attr': {'class': 'form-control', 'placeholder': 'users.edit.placeholders.phone'|trans } }) }}
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                {{ form_label(formProfile.role) }}
+                                {{ form_errors(formProfile.role) }}
+                                {{ form_widget(formProfile.role, { 'attr': {'class': 'form-control', 'placeholder': 'users.edit.placeholders.role'|trans } }) }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                {{ form_label(formProfile.preferred_locale) }}
+                                {{ form_errors(formProfile.preferred_locale) }}
+                                {{ form_widget(formProfile.preferred_locale, { 'attr': {'class': 'form-control', 'placeholder': 'users.edit.placeholders.locale'|trans } }) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                {{ form_label(formProfile.description) }}
+                                {{ form_errors(formProfile.description) }}
+                                {{ form_widget(formProfile.description, { 'attr': {'class': 'form-control', 'placeholder': 'users.edit.placeholders.about'|trans, 'rows': 5 } }) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn btn-info btn-fill pull-right" id="{{ formProfile.vars.name }}_save">
+                        {{ 'users.edit.update_button'|trans }}
+                    </button>
+                    <div class="clearfix"></div>
+
+                    {{ form_end(formProfile) }}
+                </div>
+            </div>
+        </div>
+        {% include 'UserBundle:Profile:portrait.html.twig' with {'user': user} %}
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">{{ 'users.edit.title_password'|trans }}</h4>
+                </div>
+
+                <div class="content">
+                    {{ form_start(form, {
+                        'action': path('fos_user_change_password'),
+                        'attr': { 'class': 'fos_user_change_password' }
+                    }) }}
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                {{ form_label(form.current_password) }}
+                                {{ form_errors(form.current_password) }}
+                                {{ form_widget(form.current_password, { 'attr': {'class': 'form-control'} }) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                {{ form_label(form.plainPassword.first) }}
+                                {{ form_errors(form.plainPassword.first) }}
+                                {{ form_widget(form.plainPassword.first, { 'attr': {'class': 'form-control'} }) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                {{ form_label(form.plainPassword.second) }}
+                                {{ form_errors(form.plainPassword.second) }}
+                                {{ form_widget(form.plainPassword.second, { 'attr': {'class': 'form-control'} }) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn btn-info btn-fill pull-right" id="{{ form.vars.name }}_save">
+                        {{ 'users.edit.password_button'|trans }}
+                    </button>
+                    <div class="clearfix"></div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

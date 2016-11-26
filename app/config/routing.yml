@@ -1,0 +1,26 @@
+_user_bundle:
+    resource: "@UserBundle/Resources/config/routing.yml"
+    prefix: /{_locale}/
+    defaults: { _locale: %locale% }
+    requirements:
+      _locale: %locales%
+
+_app_bundle:
+    resource: "@AppBundle/Resources/config/routing.yml"
+    prefix: /{_locale}/
+    defaults: { _locale: %locale% }
+    requirements:
+      _locale: %locales%
+
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+
+_bazinga_jstranslation:
+    resource: "@BazingaJsTranslationBundle/Resources/config/routing/routing.yml"
+
+root:
+    path: /
+    defaults:
+        _controller: FrameworkBundle:Redirect:urlRedirect
+        path: /ro/
+        permanent: true

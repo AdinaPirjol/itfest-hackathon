@@ -1,0 +1,92 @@
+{% extends "default/index.html.twig" %}
+
+{% block title %}
+    {{ parent() }}
+    - {{ 'menu.user_profile'|trans }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $("li").removeClass("active");
+        $("#user").addClass("active");
+    </script>
+{% endblock %}
+
+{% block content %}
+    {% if params.error %}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="header">
+                        <h4 class="title">
+                            {{ 'error'|trans }}
+                        </h4>
+                    </div>
+                    <div class="content">
+                        {{ 'users.view.error'|trans }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">
+                        <span>{{ 'users.view.title'|trans }}
+                            <small>{{ params.firstname|capitalize }} {{ params.lastname|upper }}</small></span>
+                        {% if params.edit %}
+                            <a href="{{ path('edit_profile') }}" class="btn btn-success btn-sm pull-right">
+                                <i class="fa fa-external-link"></i>
+                                {{ 'users.view.edit_button'|trans }}
+                            </a>
+                        {% endif %}
+                    </h4>
+                </div>
+
+                <div class="content">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                        {#//#}
+                        </thead>
+
+                        <tbody>
+                        <tr>
+                            <td class="text-right">{{ 'users.view.name'|trans }}</td>
+                            <td>{{ params.firstname|capitalize }} {{ params.lastname|capitalize }}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-right">{{ 'users.view.role'|trans }}</td>
+                            <td>{{ ('roles.' ~ params.userType)|trans }}</td>
+                        </tr>
+                        {% if params.userType == constant('\\Project\\UserBundle\\Entity\\UserType::ROLE_USER') %}
+                            <tr>
+                                <td class="text-right">{{ 'users.view.group'|trans }}</td>
+                                <td>{{ params.group }}</td>
+                            </tr>
+                        {% endif %}
+                        <tr>
+                            <td class="text-right">{{ 'users.view.email'|trans }}</td>
+                            <td>{{ params.email }}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-right">{{ 'users.view.phone'|trans }}</td>
+                            <td>{{ params.phone }}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-right">{{ 'users.view.about'|trans }}</td>
+                            <td>{{ params.description }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        {% include 'UserBundle:Profile:portrait.html.twig' with {'user': user} %}
+
+    {% endif %}
+    </div>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "::default/index.html.twig" %}
+
+{% block title %}
+    {{ parent() }}
+    - {{ 'menu.projects'|trans }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('assets/vendor/select2/dist/js/select2.js') }}"></script>
+    <script>
+        $("li.sidebar-list").removeClass("active");
+        $("li.sidebar-list#projects").addClass("active");
+
+        $(".js-example-basic-multiple").select2({maximumSelectionLength: 10});
+
+        {% if error is not null and app.request.isMethod('POST') %}
+            $.notify({
+                icon: 'fa fa-exclamation-circle',
+                message: Translator.trans('error') + ': ' + Translator.trans('error_request')
+
+            }, {
+                type: 'danger',
+                timer: 100
+            });
+        {% elseif error is null and app.request.isMethod('POST') %}
+            $.notify({
+                icon: 'fa fa-gift',
+                message: Translator.trans('ajax.add_project')
+
+            }, {
+                type: 'info',
+                timer: 100
+            });
+        {% endif %}
+    </script>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('assets/vendor/select2/dist/css/select2.css') }}" rel="stylesheet" type="text/css"/>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">{{ 'view_project.title_add'|trans }}</h4>
+                </div>
+
+                <div class="content">
+                    {% if error %}
+                        {{ error }}
+                    {% endif %}
+
+                    {{ form_start(form, { 'action': path('project-add') }) }}
+
+                    {% include 'AppBundle:Project:projectForm.html.twig' with {'form': form, 'project': project} %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
