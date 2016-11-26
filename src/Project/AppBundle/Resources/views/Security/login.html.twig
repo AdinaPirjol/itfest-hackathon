@@ -19,7 +19,7 @@
 <div class="container">
     <div class="card"></div>
     <div class="card">
-        <h1 class="title">Login</h1>
+        <h1 class="title">Login | <a href="{{ path('register') }}">Register</a></h1>
     <form action="{{ path("fos_user_security_check") }}" method="post">
         {% if token is defined %}
             <input type="hidden" name="_csrf_token" value="{{ token }}" />

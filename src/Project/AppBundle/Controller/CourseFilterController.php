@@ -109,6 +109,10 @@ class CourseFilterController extends Controller
         $userService = $this->get(UserService::ID);
         $user = $userService->getCurrentUser();
 
+        /** @var UserService $userService */
+        $userService = $this->get(UserService::ID);
+        $user = $userService->getCurrentUser();
+
         try {
             $projectFilterListType = new CourseFilterListType();
             $params = $request->get($projectFilterListType->getName());
