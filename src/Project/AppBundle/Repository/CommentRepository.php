@@ -17,6 +17,7 @@ class CommentRepository extends EntityRepository
         return $this->createQueryBuilder('c')
             ->select('c')
             ->join('c.event', 'e')
+            ->where('e.id = :id')->setParameter('id', $id)
             ->orderBy('c.rating', 'desc')
             ->getQuery()->getResult();
     }
