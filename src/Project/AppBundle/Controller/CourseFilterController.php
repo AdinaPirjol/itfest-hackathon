@@ -487,4 +487,13 @@ class CourseFilterController extends Controller
             ]
         );
     }
+
+    public function addEventAction($id)
+    {
+        return $this->render(
+            'AppBundle:Event:addEvent.html.twig',
+            ['courseId' => $id]
+        );
+    }
+
 }
