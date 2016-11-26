@@ -106,8 +106,6 @@ $(document).ready(function () {
                         arr.push(value);
                     });
 
-                    console.log(arr);
-
                     $("input[name='createGroup[college]']").autocomplete({
                         source: arr
                     });

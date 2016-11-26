@@ -49,3 +49,7 @@ project-recent:
     defaults: { _controller: AppBundle:CourseFilter:recentProjectsAjax }
     options:
         expose: true
+
+list_events:
+    path: /list-events
+    defaults: { _controller: AppBundle:Admin:listEvents }

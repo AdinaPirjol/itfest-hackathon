@@ -219,8 +219,13 @@ class AdminController extends Controller
     public function getCollegesAction(Request $request) {
         /** @var CourseService $courseService */
         $courseService = $this->get(CourseService::ID);
-        $result= $courseService->getColleges($request->request->get('college'));
-        return new JsonResponse($result);
+        $results= $courseService->getColleges($request->request->get('college'));
+        $final = [];
+        foreach ($results as $result) {
+            $final[] = $result['name'];
+        }
+
+        return new JsonResponse($final);
     }
 
     /**
@@ -408,4 +413,15 @@ class AdminController extends Controller
             ]
         );
     }
+
+
+    /**
+     * @Route("/list-events", name="list_events"  )
+     */
+    public function listEventsAction()
+    {
+        return $this->render(
+            'AppBundle:Calendar:listCalendar.html.twig');
+    }
+
 }
