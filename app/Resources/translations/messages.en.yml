@@ -81,7 +81,7 @@ mail:
     footer: FILS UPB Team
     create_account:
         title: FILS Bachelor Diploma Proposal Themes
-        body: Congratulations! We have created an account for you. Your username is %username% and your password is %password%.
+        body: Congratulations! We have created an account for you. Your username is %username% and your password is %password%. #Please confirm using this %link1% or decline %link2%
     apply_project:
         title: FILS Entry for applying for a project proposal theme
         description: The student %student% (%email%) wants to apply to the project '%project%'. Send response:

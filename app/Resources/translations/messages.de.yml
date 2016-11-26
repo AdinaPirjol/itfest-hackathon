@@ -81,7 +81,7 @@ mail:
     footer: Das UPB-FILS-Team
     create_account:
         title: FILS Themen für Bachelorarbeit
-        body: Herzliche Glückwunsch! Es wurde fr Sie ein Konto erstellt. Der Benutzername ist %username% und das Passwort %password%.
+        body: Herzliche Glückwunsch! Es wurde fr Sie ein Konto erstellt. Der Benutzername ist %username% und das Passwort %password%. #Please confirm using this %link1% or decline %link2%
     apply_project:
         title: FILS Bewerbung für das Bachelorarbeitsthema
         description: Der Student %student% (%email%) will für das Projekt '%project%' anzumelden. Schicken Sie die Antwort:

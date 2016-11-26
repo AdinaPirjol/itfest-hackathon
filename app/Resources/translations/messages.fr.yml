@@ -71,7 +71,7 @@ mail:
     footer: L'équipe FILS UPB
     create_account:
         title: FILS Thèmes projet de fin d'études
-        body: Félicitations! On a créé un compte pour toi. L'identifiant est %username% et le mot de passe est %password%
+        body: Félicitations! On a créé un compte pour toi. L'identifiant est %username% et le mot de passe est %password%. #Please confirm using this %link1% or decline %link2%
     apply_project:
         title: FILS Application propositions thème projet de fin d'études
         description: The student %student% (%email%) wants to apply to the project '%project%'. Send response:

@@ -89,7 +89,7 @@ class UserService
         /** @var UserTypeRepository $userTypeRepository */
         $userTypeRepository = $em->getRepository(UserTypeRepository::ID);
 
-        $role = $params['role'];
+        $role = !empty($params['role']) ? $params['role'] : 'ROLE_USER';
         if (!$role instanceof UserType) {
             if (is_numeric($role)) {
                 $userType = $userTypeRepository->find($role);
@@ -113,7 +113,7 @@ class UserService
                 ->setEmail($params['email'])
                 ->setPlainPassword($password)
                 ->setRoles([$userType->getRoleType()])
-                ->setEnabled(true);
+                ->setEnabled(false);
 
             $now = new \DateTime();
             if ($now->format('m') < 10) {  // if user created before October, credentials should expire in October
@@ -155,7 +155,8 @@ class UserService
             MailService::TYPE_CREATE_ACCOUNT,
             [
                 'username' => $user->getUserCredentials()->getUsername(),
-                'password' => $password
+                'password' => $password,
+                'userId'   => $user->getId()
             ]
         );
     }

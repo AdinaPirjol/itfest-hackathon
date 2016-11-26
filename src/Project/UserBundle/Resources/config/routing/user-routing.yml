@@ -29,3 +29,4 @@ user-recover-password:
     defaults: { _controller: UserBundle:User:confirmForgotPassword, id: 0, answer: 0, token: '' }
     options:
         expose: true
+

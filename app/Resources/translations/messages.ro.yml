@@ -74,7 +74,7 @@ mail:
     footer: Echipa FILS UPB
     create_account:
         title: FILS Teme proiect de diploma
-        body: Congratulations! We have created an account for you. Your username is %username% and your password is %password%.
+        body: Felicitari! Am creat un cont pentru dumneavoastra. Username-ul dumneavoastra este %username% si parola %password%. #Va rugam sa confirmati folosind %link1% sau sa declinati %link2%
     apply_project:
         title: FILS Aplicare propunere tema licenta
         description: Studentul %student% (%email%) doreste sa aplice la proiectul '%project%'. Trimite raspuns:

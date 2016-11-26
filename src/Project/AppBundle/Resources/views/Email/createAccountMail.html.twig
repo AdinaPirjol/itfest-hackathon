@@ -17,6 +17,15 @@
 
         {{ 'mail.create_account.body'|trans({'%username%': username, '%password%': password}) }}
 
+        <div>
+            <a href="{{ url('confirm_user', {'answer': '1','userId': userId}) }}">
+                <i class="fa fa-plus"></i>{{ 'mail.apply_project.accept'|trans }}</a> /
+
+            <a href="{{ url('confirm_user', {'answer': '0', 'userId': userId}) }}">
+                <i class="fa fa-list-ul"></i>{{ 'mail.apply_project.reject'|trans }}</a>
+        </div>
+        <br>
+
         <br>
 
         {{ 'mail.footer'|trans }}

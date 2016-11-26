@@ -13,6 +13,7 @@ use Project\AppBundle\Services\UtilService;
 use Project\UserBundle\Entity\User;
 use Project\UserBundle\Entity\UserCredentials;
 use Project\UserBundle\Form\Type\ChangeUserType;
+use Project\UserBundle\Form\Type\CreateUserType;
 use Project\UserBundle\Services\UserService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -306,4 +307,73 @@ class UserController extends Controller
 
         return $this->render('AppBundle:Security:login.html.twig');
     }
+
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function registerAction(Request $request)
+    {
+        /** @var DefaultService $defaultService */
+        $defaultService = $this->get(DefaultService::ID);
+
+        $form = $this->createForm(
+            $this->get(CreateUserType::ID),
+            array(),
+            array(
+                'translator' => $this->get('translator'),
+                'filterData' => $defaultService->getUserCreateFormFilterData()
+            )
+        );
+
+        $error = null;
+        if ($request->isMethod('POST') && $request->get($form->getName())) {
+            $form->submit($request);
+
+            if ($form->isValid()) {
+                $formData = $form->getData();
+
+                /** @var UserService $userService */
+                $userService = $this->get(UserService::ID);
+                $response = $userService->createUser($formData);
+                $error = $response['error'] ? $response['message'] : null;
+            }
+        }
+
+        $params['form'] = $form->createView();
+        $params['error'] = $error;
+
+        return $this->render(
+            'UserBundle:Profile:register.html.twig',
+            $params
+        );
+    }
+
+
+    /**
+     * @param $answer
+     * @param $userId
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function confirmDeclineUserAction($answer, $userId, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var UserService $userService */
+        $userService = $this->container->get('app.user');
+        /** @var User $user */
+        $user =$em->getRepository('UserBundle:User')->findOneBy(['id' => $request->get('studentId')]);
+
+
+        if ($user instanceof  User && $user->getUserCredentials() instanceof UserCredentials) {
+            if ($request->get('answer') == 1) {
+                $user->getUserCredentials()->setEnabled(true);
+                $em->persist($user);
+                $em->flush();
+            }
+        }
+
+        return $this->redirect('login');
+    }
+
 }
