@@ -1,0 +1,43 @@
+
+{% extends "::default/index.html.twig" %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        //        $('.add-event').on('click').function({
+        //           $('.page-content').append("<div class='form-group'></div>");
+        //        });
+    </script>
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+{% block content %}
+
+    {% if canEdit == true %}
+        <a href="{{ path('add-event', { 'id': course.id }) }}" class="action-view btn btn-success btn-sm add-event">
+            <i class="fa fa-plus"></i> Add event
+        </a>
+
+        <div class="btn-group">
+            <a class="btn btn-warning btn-sm" href="{{ path('admin-edit-course', {'id': course.id}) }}">
+                <i class="fa fa-cog"></i>Editare curs ??
+            </a>
+        </div>
+    {% endif %}
+
+    <ul>
+        {% for event in events %}
+            <h1> </h1>
+            <li>
+                Event - {{ event.course.name }} ({{ event.type }})
+                <a class="btn btn-success btn-sm" href="{{ path('view-event', {'id': event.id}) }}">
+                    <i class="fa fa-cog"></i>Detalii
+                </a>
+            </li>
+
+        {% endfor %}
+    </ul>
+
+
+
+{% endblock %}

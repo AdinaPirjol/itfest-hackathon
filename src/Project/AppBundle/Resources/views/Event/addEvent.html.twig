@@ -1,4 +1,3 @@
-
 {% extends "::default/index.html.twig" %}
 {% block javascripts %}
     {{ parent() }}
@@ -7,22 +6,68 @@
     {{ parent() }}
 {% endblock %}
 {% block content %}
-    <div class="form-group">
-        <label for="exampleInputEmail3" class="col-sm-3 control-label">Email address</label>
-        <div class="col-sm-9">
-            <input type="email" class="form-control" id="exampleInputEmail3" name="exampleInputEmail3" placeholder="example@example.com" required="">
+    <form action="{{ path('add-event-submit') }}" method="post">
+
+        <div class="form-group">
+            <label class="col-md-3 control-label">Nume eveniment</label>
+
+            <div class="col-md-12">
+                <input type="text" class="form-control" id="name" name="name" placeholder="" required="">
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <label for="exampleInputEmail3" class="col-sm-3 control-label">Email address</label>
-        <div class="col-sm-9">
-            <input type="email" class="form-control" id="exampleInputEmail3" name="exampleInputEmail3" placeholder="example@example.com" required="">
+
+        <div class="form-group">
+            <label class="col-md-3 control-label">Tip eveniment</label>
+
+            <select class="form-control" name="tip" id="tip">
+                {% for key, tip in tipuri %}
+                    <option id="{{ key }}">{{ tip }}</option>
+                {% endfor %}
+            </select>
         </div>
-    </div>
-    <div class="form-group">
-        <label for="exampleInputEmail3" class="col-sm-3 control-label">Email address</label>
-        <div class="col-sm-9">
-            <input type="email" class="form-control" id="exampleInputEmail3" name="exampleInputEmail3" placeholder="example@example.com" required="">
+
+        <div class="form-group">
+            <label class="col-md-3 control-label">Recurenta:</label>
+            <select class="form-control" name="recurenta" id="recurenta">
+                {% for key, r in recurenta %}
+                    <option id="{{ key }}">{{ r }}</option>
+                {% endfor %}
+            </select>
         </div>
-    </div>
+
+        <div class="form-group">
+            <label class="col-md-3 control-label">Data:</label>
+
+            <div class="col-md-12">
+                <input type="text" class="form-control" id="name" name="name" placeholder="" required="">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-3 control-label">Ora incepere</label>
+
+            <div class="col-md-12">
+                <input type="text" class="form-control" id="name" name="name" placeholder="" required="">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-3 control-label">Ora sfarsit</label>
+
+            <div class="col-md-12">
+                <input type="text" class="form-control" id="name" name="name" placeholder="" required="">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-12">
+                <div class="btn-group">
+                    <button type="submit" class="btn btn-warning btn-sm">
+                        <i class="fa fa-cog"></i>Salveaza
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </form>
 {% endblock %}

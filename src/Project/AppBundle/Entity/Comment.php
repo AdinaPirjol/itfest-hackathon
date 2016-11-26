@@ -10,6 +10,7 @@ namespace Project\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Project\UserBundle\Entity\StudentGroup;
+use Symfony\Component\Security\Core\User\User;
 
 /**
  * @ORM\Entity
@@ -38,17 +39,23 @@ class Comment
     protected $attachments;
 
     /**
-     * @var Event
-     * @ORM\ManyToOne(targetEntity="Project\AppBundle\Entity\Event", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="event_id", referencedColumnName="id")
+     * @var User
+     * @ORM\ManyToOne(targetEntity="Project\UserBundle\Entity\User", fetch="EXTRA_LAZY")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
-    protected $event;
+    protected $user;
 
     /**
      * @var Rating[]
      * @ORM\OneToMany(targetEntity="Project\AppBundle\Entity\Rating", fetch="EXTRA_LAZY", mappedBy="comment", cascade={"persist"})
      */
     protected $ratings;
+
+    /**
+     * @var integer
+     * @ORM\Column(type="integer", name="rating")
+     */
+    protected $rating = 0;
 
     /**
      * @return mixed
@@ -113,6 +120,39 @@ class Comment
     {
         $this->event = $event;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+    }
+
+    /**
+     * @return Rating[]
+     */
+    public function getRatings()
+    {
+        return $this->ratings;
+    }
+
+    /**
+     * @param Rating[] $ratings
+     */
+    public function setRatings($ratings)
+    {
+        $this->ratings = $ratings;
+    }
+
 
 
 

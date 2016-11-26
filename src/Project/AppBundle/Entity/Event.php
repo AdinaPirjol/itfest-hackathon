@@ -18,6 +18,15 @@ use Project\UserBundle\Entity\StudentGroup;
  */
 class Event
 {
+
+    const CURS = 'curs';
+    const EVENT = 'event';
+    const EXAM = 'examen';
+
+    const NONE = 'Fara recurenta';
+    const DAILY = 'Zilnic';
+    const WEEKLY = 'Saptamanal';
+    const MONTHLY = 'Lunar';
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -31,13 +40,6 @@ class Event
      * @ORM\JoinColumn(name="course_id", referencedColumnName="id")
      */
     protected $course;
-
-    /**
-     * @var Classroom
-     * @ORM\ManyToOne(targetEntity="Project\AppBundle\Entity\Course", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="classroom_id", referencedColumnName="id")
-     */
-    protected $classroom;
 
     /**
      * @var \DateTime
@@ -68,6 +70,12 @@ class Event
      * @ORM\OneToMany(targetEntity="Project\AppBundle\Entity\Comment", fetch="EXTRA_LAZY", mappedBy="comment", cascade={"persist"})
      */
     protected $comments;
+
+    /**
+     * @var string
+     * @ORM\Column(name="type", type="string", columnDefinition="enum('examen', 'curs', 'event')")
+     */
+    protected $type;
 
     /**
      * @return mixed

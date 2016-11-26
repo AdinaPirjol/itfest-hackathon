@@ -28,10 +28,10 @@
                     <td>
                         <div class="btn-group">
 
-                            <button class="action-view btn btn-success btn-sm"
-                                    data-href="{{ path('view-event', { 'id': p.id }) }}">
+                            <a class="action-view btn btn-success btn-sm"
+                                    href="{{ path('view-events', { 'id': p.id }) }}">
                                 <i class="fa fa-plus"></i> View event
-                            </button>
+                            </a>
 
 
                             <button id="sub-{{ p.id }}" class="action-apply btn btn-primary btn-sm"

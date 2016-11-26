@@ -4,9 +4,11 @@ namespace Project\AppBundle\Controller;
 
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Knp\Component\Pager\Paginator;
+use Project\AppBundle\Entity\Comment;
 use Project\AppBundle\Entity\Course;
 use Project\AppBundle\Entity\CourseProfessors;
 use Project\AppBundle\Entity\CourseSubscribers;
+use Project\AppBundle\Entity\Event;
 use Project\AppBundle\Entity\Project;
 use Project\AppBundle\Entity\ProjectStudent;
 use Project\AppBundle\Form\Type\CourseFilterListType;
@@ -42,7 +44,7 @@ class CourseFilterController extends Controller
         /** @var Translator $translator */
         $translator = $this->get('translator');
         /** @var Paginator $paginator */
-        $paginator  = $this->get('knp_paginator');
+        $paginator = $this->get('knp_paginator');
         /** @var CourseService $courseService */
         $courseService = $this->get(CourseService::ID);
         /** @var UserService $userService */
@@ -66,9 +68,9 @@ class CourseFilterController extends Controller
         $enabled = [];
         /** @var CourseSubscribersRepository $courseSubRepo */
         $courseSubRepo = $this->getDoctrine()->getRepository('AppBundle:CourseSubscribers');
-        foreach($courseProf->getResult() as $c) {
+        foreach ($courseProf->getResult() as $c) {
             $cs = $courseSubRepo->findOneBy(['student' => $user->getId(), 'course' => $c['id']]);
-            if(!UtilService::isNullObject($cs)) {
+            if (!UtilService::isNullObject($cs)) {
                 $enabled[$c['id']] = true;
             } else {
                 $enabled[$c['id']] = false;
@@ -102,7 +104,7 @@ class CourseFilterController extends Controller
     public function listAjaxAction(Request $request)
     {
         /** @var Paginator $paginator */
-        $paginator  = $this->get('knp_paginator');
+        $paginator = $this->get('knp_paginator');
         /** @var CourseService $courseService */
         $courseService = $this->get(CourseService::ID);
         /** @var UserService $userService */
@@ -122,9 +124,9 @@ class CourseFilterController extends Controller
             $enabled = [];
             /** @var CourseSubscribersRepository $courseSubRepo */
             $courseSubRepo = $this->getDoctrine()->getRepository('AppBundle:CourseSubscribers');
-            foreach($projects->getResult() as $c) {
+            foreach ($projects->getResult() as $c) {
                 $cs = $courseSubRepo->findOneBy(['student' => $user->getId(), 'course' => $c['id']]);
-                if(!UtilService::isNullObject($cs)) {
+                if (!UtilService::isNullObject($cs)) {
                     $enabled[$c['id']] = true;
                 } else {
                     $enabled[$c['id']] = false;
@@ -153,7 +155,7 @@ class CourseFilterController extends Controller
         } catch (\Exception $e) {
             $response = array(
                 'error' => true,
-                'message' => $e->getMessage(), /** for debugging */
+                'message' => $e->getMessage(),/** for debugging */
             );
         }
 
@@ -179,10 +181,10 @@ class CourseFilterController extends Controller
         /** @var User $user */
         $currentUser = $userService->getCurrentUser();
 
-        $canView = $this->getDoctrine()->getRepository('AppBundle:CourseSubscribers')->findOneBy(['course'=>$id, 'student' => $currentUser->getId()]);
-        $canEdit = $this->getDoctrine()->getRepository('AppBundle:CourseProfessors')->findOneBy(['course'=>$id, 'professor' => $currentUser->getId()]);
+        $canView = $this->getDoctrine()->getRepository('AppBundle:CourseSubscribers')->findOneBy(['course' => $id, 'student' => $currentUser->getId()]);
+        $canEdit = $this->getDoctrine()->getRepository('AppBundle:CourseProfessors')->findOneBy(['course' => $id, 'professor' => $currentUser->getId()]);
 
-        $courseProf = $this->getDoctrine()->getRepository('AppBundle:CourseProfessors')->findBy(['course'=>$id, 'professor' => $currentUser->getId()]);
+        $courseProf = $this->getDoctrine()->getRepository('AppBundle:CourseProfessors')->findBy(['course' => $id, 'professor' => $currentUser->getId()]);
 
         return $this->render(
             'AppBundle:Project:projectMoreInfo.html.twig',
@@ -231,7 +233,7 @@ class CourseFilterController extends Controller
             return new JsonResponse($response);
         }
 
-        if ($enabled == 1){
+        if ($enabled == 1) {
             $courseSub = new CourseSubscribers();
             $courseSub->setStudent($user);
             $courseSub->setCourse($course);
@@ -452,7 +454,7 @@ class CourseFilterController extends Controller
      * @param $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function viewEventAction(Request $request, $id)
+    public function viewEventsAction(Request $request, $id)
     {
         /** @var UserService $userService */
         $userService = $this->get(UserService::ID);
@@ -464,36 +466,78 @@ class CourseFilterController extends Controller
 
         /** @var array $courseProfessors */
         $courseProfessors = $this->getDoctrine()->getRepository('AppBundle:CourseProfessors')->findBy(['course' => $course->getId()]);
-        /** @var CourseProfessors $courseProfessor */
-        foreach ($courseProfessors as $courseProfessor) {
-            if ($courseProfessor->getProfessor()->getId() == $user->getId()) {
-                return $this->render(
-                    'AppBundle:Event:eventEdit.html.twig',
-                    [
-                        'canEdit' => true,
-                        'course' => $course,
-                        'events' => $events
-                    ]
-                );
-            }
-        }
 
         return $this->render(
-            'AppBundle:Event:eventEdit.html.twig',
+            'AppBundle:Event:events.html.twig',
             [
-                'canEdit' => false,
+                'canEdit' => true,
                 'course' => $course,
-                'events' => $events
+                'events' => $events,
+                'courseProf' => $courseProfessors
+            ]
+        );
+    }
+
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function viewEventAction(Request $request, $id)
+    {
+        /** @var UserService $userService */
+        $userService = $this->get(UserService::ID);
+        $user = $userService->getCurrentUser();
+
+        $event = $this->getDoctrine()->getRepository('AppBundle:Event')->find($id);
+
+        return $this->render(
+            'AppBundle:Event:events.html.twig',
+            [
+                'event' => $event
             ]
         );
     }
 
     public function addEventAction($id)
     {
+        $course = $this->getDoctrine()->getRepository('AppBundle:Course')->find($id);
         return $this->render(
             'AppBundle:Event:addEvent.html.twig',
-            ['courseId' => $id]
+            [
+                'course' => $course,
+                'tipuri' => [
+                    0 => Event::CURS,
+                    1 => Event::EVENT,
+                    2 => Event::EXAM
+                ],
+                'recurenta' => [
+                    0 => Event::NONE,
+                    1 => Event::DAILY,
+                    2 => Event::WEEKLY,
+                    3 => Event::MONTHLY
+                ]
+            ]
         );
     }
 
+    public function addEventSubmit(Request $request) {
+        
+    }
+
+    public function addCommentAction(Request $request, $id)
+    {
+
+        /** @var Event $event */
+        $event = $this->getDoctrine()->getRepository('AppBundle:Event')->find($id);
+
+        $comment = new Comment();
+        $comment->setEvent($event);
+        $comment->setComment($request->request->get('comment'));
+
+        $this->getDoctrine()->getManager()->persist($comment);
+        $this->getDoctrine()->getManager()->flush();
+
+        return new JsonResponse(['error' => false, 'comment' => $comment]);
+    }
 }

@@ -14,9 +14,7 @@ use Project\UserBundle\Entity\User;
  */
 class Course
 {
-    const CURS = 'curs';
-    const EVENT = 'event';
-    const EXAM = 'exam';
+
 
     /**
      * @ORM\Id

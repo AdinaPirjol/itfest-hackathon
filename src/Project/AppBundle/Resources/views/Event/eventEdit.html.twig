@@ -1,27 +1,65 @@
-
 {% extends "::default/index.html.twig" %}
 {% block javascripts %}
     {{ parent() }}
     <script>
-//        $('.add-event').on('click').function({
-//           $('.page-content').append("<div class='form-group'></div>");
-//        });
+        //        $('.add-event').on('click').function({
+        //           $('.page-content').append("<div class='form-group'></div>");
+        //        });
     </script>
 {% endblock %}
 {% block stylesheets %}
     {{ parent() }}
 {% endblock %}
 {% block content %}
+
+
+
+
     {% if canEdit == true %}
-        <a href="{{ path('add_event', { 'id': p.id })) }}" class="action-view btn btn-success btn-sm add-event">
+        <a href="{{ path('add_event', { 'id': p.id }) }}" class="action-view btn btn-success btn-sm add-event">
             <i class="fa fa-plus"></i> Add event
         </a>
     {% endif %}
     <ul>
-    {% for event in events %}
-        <li>event.start_date</li>
-        <li>event.recurrence_type</li>
-    {% endfor %}
+        {% for event in events %}
+            <h1>Event</h1>
+            <li>{{ event.course.name }} ({{ event.type }})</li>
+            <li>{{ event.date }}</li>
+            <li>{{ event.startDate }} - {{ event.endDate }}</li>
+            <li>{{ event.recurrenceType }}</li>
+        {% endfor %}
     </ul>
+
+    <h1>Comentarii:</h1>
+
+    <ul>
+        {% for comment in event.comments %}
+            <li>Userul {{ comment.user.firstName ~ ' ' ~ comment.user.lastName }} a zis:</li>
+            <li>{{ comment.comment }}</li>
+            <li>Rating: {{ comment.rating }}
+                <i class="fa fa-thumbs-up" style="color:green"></i>
+                <i class="fa fa-thumbs-down" style="color:red"></i>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <form action="{{ path('add-comment', {'id': event.id}) }}">
+        <div class="form-group">
+            <label for="comment" class="col-sm-3 control-label">Comment:</label>
+
+            <div class="col-sm-9">
+                <textarea class="form-control" id="comment" name="comment" required>
+            </div>
+        </div>
+
+        <div class="btn-group">
+            <a class="btn btn-warning btn-sm" href="{{ path('add-comment', {'id': event.id}) }}">
+                <i class="fa fa-cog"></i>{{ 'view_project.buttons.edit'|trans }}
+            </a>
+        </div>
+    </form>
+
+
+
 
 {% endblock %}

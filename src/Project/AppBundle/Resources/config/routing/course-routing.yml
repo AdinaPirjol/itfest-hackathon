@@ -52,14 +52,34 @@ list_events:
     path: /list-events
     defaults: { _controller: AppBundle:Admin:listEvents }
 
+view-events:
+    path: /view-events/{id}
+    defaults: { _controller: AppBundle:CourseFilter:viewEvents, id: 0 }
+    requirements:
+        id: \d+
+
 view-event:
     path: /view-event/{id}
     defaults: { _controller: AppBundle:CourseFilter:viewEvent, id: 0 }
     requirements:
         id: \d+
 
-add_event:
-    path: /add-event
+add-event:
+    path: /add-event/{id}
     defaults: { _controller: AppBundle:CourseFilter:addEvent, id: 0 }
     requirements:
         id: \d+
+
+add-event-submit:
+    path: /add-event
+    defaults: { _controller: AppBundle:CourseFilter:addEventSubmit, id: 0 }
+    requirements:
+        id: \d+
+
+add-comment:
+    path: /add-comment
+    defaults: { _controller: AppBundle:CourseFilter:addComment, id: 0 }
+    requirements:
+        id: \d+
+    options:
+        expose: true
