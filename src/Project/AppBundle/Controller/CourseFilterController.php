@@ -573,12 +573,24 @@ class CourseFilterController extends Controller
 
         $comment = new Comment();
         $comment->setEvent($event);
-        $comment->setComment($request->request->get('comment'));
+        $comment->setComment('some comment');
+        /** @var UserService $userService */
+        $userService = $this->get(UserService::ID);
+
+        $user = $userService->getCurrentUser();
+        $comment->setUser($user);
 
         $this->getDoctrine()->getManager()->persist($comment);
         $this->getDoctrine()->getManager()->flush();
 
-        return new JsonResponse(['error' => false, 'comment' => $comment]);
+        return $this->render(
+            'AppBundle:Event:eventEdit.html.twig',
+            [
+                'event' => $event,
+                'course' => $event->getCourse(),
+                'comments' => $this->getDoctrine()->getRepository('AppBundle:Comment')->sortComments($id)
+            ]
+        );
     }
 
 
