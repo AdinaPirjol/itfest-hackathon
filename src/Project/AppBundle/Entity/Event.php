@@ -53,19 +53,13 @@ class Event
 
     /**
      * @var \DateTime
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $endDate;
 
     /**
-     * @var boolean
-     * @ORM\Column(type="boolean")
-     */
-    protected $recurrent;
-
-    /**
      * @var string
-     * @ORM\Column(name="recurrenceType", type="string", columnDefinition="enum('daily', 'weekly', 'monthly')")
+     * @ORM\Column(name="recurrenceType", type="string", columnDefinition="enum('daily', 'weekly', 'monthly', 'none')")
      */
     protected $recurrenceType;
 

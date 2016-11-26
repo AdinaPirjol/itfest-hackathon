@@ -123,7 +123,7 @@ class UserController extends Controller
             array(
                 'translator' => $this->get('translator'),
                 'user' => $user,
-                'groups' => $userService->getGroupsForm(),
+//                'groups' => $userService->getGroupsForm(),
                 'locales' => $defaultService->getLocales()
             )
         );

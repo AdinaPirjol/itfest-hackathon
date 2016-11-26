@@ -27,9 +27,9 @@
                     <td>
                         <div class="btn-group">
 
-                            <button class="action-view btn btn-primary btn-sm"
-                                    data-href="{{ path('project-view', { 'id': p.id }) }}">
-                                <i class="fa fa-external-link"></i>{{ 'project_form.table.view'|trans }}
+                            <button class="action-view btn btn-success btn-sm"
+                                    data-href="{{ path('view-event', { 'id': p.id }) }}">
+                                <i class="fa fa-plus"></i> View event
                             </button>
 
 
@@ -48,7 +48,7 @@
 
                             <a href="{{ path('list_events') }}" class="action-apply btn btn-warning btn-sm"
                                     data-project-id="{{ p.id }}">
-                                <i class="fa fa-calendar"></i>Course calendar
+                                <i class="fa fa-calendar"></i> Course calendar
                             </a>
                         </div>
                     </td>

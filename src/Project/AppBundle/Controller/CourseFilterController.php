@@ -86,6 +86,7 @@ class CourseFilterController extends Controller
         //$params['projects'] = $projects;
         $params['form'] = $form->createView();
         $params['pagination'] = $pagination;
+        $params['canEdit'] = $userService->getCurrentUser();
 
         return $this->render(
             'AppBundle:Course:courseListFormFilters.html.twig',
@@ -440,5 +441,46 @@ class CourseFilterController extends Controller
         );
 
         return new JsonResponse($data);
+    }
+
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function viewEventAction(Request $request, $id)
+    {
+        /** @var UserService $userService */
+        $userService = $this->get(UserService::ID);
+        $user = $userService->getCurrentUser();
+
+        /** @var Course $course */
+        $course = $this->getDoctrine()->getRepository('AppBundle:Course')->find($id);
+        $events = $this->getDoctrine()->getRepository('AppBundle:Event')->findBy(['course' => $course->getId()]);
+
+        /** @var array $courseProfessors */
+        $courseProfessors = $this->getDoctrine()->getRepository('AppBundle:CourseProfessors')->findBy(['course' => $course->getId()]);
+        /** @var CourseProfessors $courseProfessor */
+        foreach ($courseProfessors as $courseProfessor) {
+            if ($courseProfessor->getProfessor()->getId() == $user->getId()) {
+                return $this->render(
+                    'AppBundle:Event:eventEdit.html.twig',
+                    [
+                        'canEdit' => true,
+                        'course' => $course,
+                        'events' => $events
+                    ]
+                );
+            }
+        }
+
+        return $this->render(
+            'AppBundle:Event:eventEdit.html.twig',
+            [
+                'canEdit' => false,
+                'course' => $course,
+                'events' => $events
+            ]
+        );
     }
 }

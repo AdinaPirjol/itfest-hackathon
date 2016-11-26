@@ -1,0 +1,27 @@
+
+{% extends "::default/index.html.twig" %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $('.add-event').on('click').function({
+           $('.page-content').append('<div class="form-group"></div>');
+        });
+    </script>
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+{% block content %}
+    {% if canEdit == true %}
+        <button class="action-view btn btn-success btn-sm add-event">
+            <i class="fa fa-plus"></i> Add event
+        </button>
+    {% endif %}
+    <ul>
+    {% for event in events %}
+        <li>event.start_date</li>
+        <li>event.recurrence_type</li>
+    {% endfor %}
+    </ul>
+
+{% endblock %}

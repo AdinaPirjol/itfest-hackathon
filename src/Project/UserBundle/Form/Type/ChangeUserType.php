@@ -27,7 +27,7 @@ class ChangeUserType extends AbstractType
         $translator = $options['translator'];
         /** @var User $user */
         $user = $options['user'];
-        $groups = $options['groups'];
+//        $groups = $options['groups'];
         $locales = $options['locales'];
 
         $builder
@@ -143,24 +143,24 @@ class ChangeUserType extends AbstractType
                 )
             );
 
-        if ($user->getUserType()->getRoleType() == UserType::ROLE_USER) {
-            $builder->add(
-                'group',
-                'choice',
-                array(
-                    'choices' => $groups,
-                    'label' => $translator->trans('users.edit.group'),
-                    'data' => $user->getPreferredLocale(),
-                    'invalid_message' => 'group',
-                    'empty_value' => '',
-                    'required' => true,
-                    'error_bubbling' => true,
-                    'constraints' => array(
-                        new Choice(array('choices' => array_keys($groups)))
-                    )
-                )
-            );
-        }
+//        if ($user->getUserType()->getRoleType() == UserType::ROLE_USER) {
+//            $builder->add(
+//                'group',
+//                'choice',
+//                array(
+//                    'choices' => $groups,
+//                    'label' => $translator->trans('users.edit.group'),
+//                    'data' => $user->getPreferredLocale(),
+//                    'invalid_message' => 'group',
+//                    'empty_value' => '',
+//                    'required' => true,
+//                    'error_bubbling' => true,
+//                    'constraints' => array(
+//                        new Choice(array('choices' => array_keys($groups)))
+//                    )
+//                )
+//            );
+//        }
     }
 
     /**

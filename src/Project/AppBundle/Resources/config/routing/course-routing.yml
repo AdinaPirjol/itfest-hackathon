@@ -51,3 +51,9 @@ project-recent:
 list_events:
     path: /list-events
     defaults: { _controller: AppBundle:Admin:listEvents }
+
+view-event:
+    path: /view-event/{id}
+    defaults: { _controller: AppBundle:CourseFilter:viewEvent, id: 0 }
+    requirements:
+        id: \d+
