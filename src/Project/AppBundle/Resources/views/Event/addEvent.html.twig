@@ -1,6 +1,22 @@
 {% extends "::default/index.html.twig" %}
 {% block javascripts %}
     {{ parent() }}
+
+    <script>
+        $('.datepicker').datepicker();
+
+        var hours = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
+
+        $.each( hours, function( key ) {
+            $('#start').append($("<option></option>")
+                    .attr("value",key)
+                    .text(key));
+
+            $('#end').append($("<option></option>")
+                    .attr("value",key)
+                    .text(key));
+        })
+    </script>
 {% endblock %}
 {% block stylesheets %}
     {{ parent() }}
@@ -35,12 +51,11 @@
             </select>
         </div>
 
-        <div class='example'>
+        <div class="form-group">
             Data:
-            <input class="datepicker" id="date" data-bind='datepicker: startDate' />
-            <select data-bind="options: hourOptions, optionsText: formatTimeOption, value: startDateHour"></select>
-            <select data-bind="options: hourOptions, optionsText: formatTimeOption, value: endDateHour"></select>
-            <p>Selected date: <span data-bind='text: startDate'></span> -  <span data-bind='text: endDate'></span></p>
+            <input class="datepicker" id="date" name="date"/>
+            <select id="start" name="start"></select>
+            <select id="end" name="end"></select>
         </div>
 
         <div class="form-group">

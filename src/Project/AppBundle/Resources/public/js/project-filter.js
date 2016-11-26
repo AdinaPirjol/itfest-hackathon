@@ -175,4 +175,6 @@ function thumbsDown(id, obj) {
             rating.val( parseInt(rating.val()) - 1);
         }
     });
+
+
 }

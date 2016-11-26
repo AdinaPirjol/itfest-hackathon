@@ -532,11 +532,13 @@ class CourseFilterController extends Controller
         $em = $this->getDoctrine()->getManager();
         $form = $request->request->all();
 
+        $date = \DateTime::createFromFormat('m/d/Y', $form['date']);
+
         $event = new Event();
         $event->setCourse($doctrine->getRepository('AppBundle:Course')->find($id));
-        $event->setDate(new \DateTime());
-        $event->setStartDate(new \DateTime());
-        $event->setEndDate(new \DateTime());
+        $event->setDate($date);
+        $event->setStartDate($date->setTime($form['start'], 0));
+        $event->setEndDate($date->setTime($form['end'], 0));
         $event->setRecurrenceType(Event::$rec[$form['recurenta']]);
         $event->setType(Event::$types[$form['tip']]);
 
