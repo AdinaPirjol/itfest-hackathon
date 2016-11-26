@@ -50,6 +50,14 @@
                                     data-project-id="{{ p.id }}">
                                 <i class="fa fa-calendar"></i> Course calendar
                             </a>
+
+                            <a href="{{ path('list_moderators', { 'id': p.id }) }}" class="action-apply btn btn-neutral btn-sm">
+                                <i class="fa fa-user"></i> List moderators
+                            </a>
+
+                            <a href="{{ path('unsubscribe_moderator', { 'id': p.id }) }}" class="action-apply btn btn-danger btn-sm">
+                                <i class="fa fa-user"></i> Unsubscribe
+                            </a>
                         </div>
                     </td>
                 </tr>

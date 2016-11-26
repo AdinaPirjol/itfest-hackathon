@@ -2,8 +2,10 @@
 
 namespace Project\AppBundle\Controller;
 
+use Project\AppBundle\Entity\CourseProfessors;
 use Project\AppBundle\Entity\Event;
 use Project\UserBundle\Entity\User;
+use Project\UserBundle\Entity\UserCredentials;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use FOS\UserBundle\Model\Group;
 use JMS\SecurityExtraBundle\Annotation\Secure;
@@ -461,6 +463,64 @@ class AdminController extends Controller
         }
 
         return new JsonResponse($json);
+    }
+
+    public function listModeratorsAction($id)
+    {
+        /** @var CourseProfessors $courseProf */
+        $courseProf = $this->getDoctrine()->getRepository('AppBundle:CourseProfessors')->findBy(['course'=>$id]);
+
+        $profList = [];
+        foreach ($courseProf as $prof) {
+            $profList[] = $prof->getProfessor();
+        }
+
+        return $this->render(
+            'AppBundle:Course:listModerators.html.twig',
+            ['prof' => $profList, 'course'=>$id]);
+    }
+
+    public function addModeratorAction(Request $request)
+    {
+        $em = $this->getDoctrine();
+        $moderator = $em->getRepository('UserBundle:UserCredentials')->findOneBy(['emailCanonical'=>$request->request->get('exampleInputEmail3')]);
+
+        if ($moderator instanceof UserCredentials) {
+            /** @var CourseProfessors $courseProf */
+            $courseProf = $em->getRepository('AppBundle:CourseProfessors')->findOneBy(['course'=>$request->request->get('courseID')]);
+            if ($courseProf instanceof CourseProfessors) {
+                $c = new CourseProfessors();
+                $c->setCourse($courseProf->getCourse());
+                $c->setProfessor($em->getRepository('UserBundle:User')->findOneBy(
+                    ['userCredentials'=> $moderator->getId()]
+                    )
+                );
+                $em->getManager()->persist($c);
+                $em->getManager()->flush();
+            }
+        }
+
+        return $this->redirect($this->generateUrl('list_moderators', ['id' => $request->request->get('courseID')]));
+    }
+
+    public function unsubscribeModeratorAction($id)
+    {
+        /** @var UserService $userService */
+        $userService = $this->get(UserService::ID);
+        /** @var User $user */
+        $user = $userService->getCurrentUser();
+        if ($user instanceof  User) {
+            $moderators = $this->getDoctrine()->getRepository('AppBundle:CourseProfessors')->findBy(['course' => $id]);
+            $courseProfessor = $this->getDoctrine()->getRepository('AppBundle:CourseProfessors')->findOneBy(['course' => $id, 'professor' => $user->getId()]);
+            if ($courseProfessor instanceof CourseProfessors && count($moderators) > 1) {
+                $this->getDoctrine()->getManager()->remove($courseProfessor);
+                $this->getDoctrine()->getManager()->flush();
+            }
+
+        }
+
+        return $this->redirect($this->generateUrl('filter-projects'));
+
     }
 
 }

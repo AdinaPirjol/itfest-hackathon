@@ -89,3 +89,17 @@ get_event:
     defaults: { _controller: AppBundle:Admin:getEventAjax, id: 0 }
     requirements:
         id: \d+
+
+list_moderators:
+    path: /list-moderators/{id}
+    defaults: { _controller: AppBundle:Admin:listModerators, id: 0 }
+    requirements:
+        id: \d+
+
+add_moderators:
+    path: /add-moderators
+    defaults: { _controller: AppBundle:Admin:addModerator }
+
+unsubscribe_moderator:
+    path: /unsubscribe-moderators/{id}
+    defaults: { _controller: AppBundle:Admin:unsubscribeModerator }
