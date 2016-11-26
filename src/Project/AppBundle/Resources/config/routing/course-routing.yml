@@ -57,3 +57,9 @@ view-event:
     defaults: { _controller: AppBundle:CourseFilter:viewEvent, id: 0 }
     requirements:
         id: \d+
+
+add_event:
+    path: /add-event
+    defaults: { _controller: AppBundle:CourseFilter:addEvent, id: 0 }
+    requirements:
+        id: \d+
