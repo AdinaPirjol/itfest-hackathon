@@ -1,21 +1,21 @@
 <div id="sidebar" class="sidebar sidebar-fixed">
     <div class="sidebar-outer">
         <ul class="sidebar-inner">
-            {% if is_granted('ROLE_SUPER_ADMIN') %}
-                <li id="admin" class="menu-item">
-                    <a href="{{ path('admin-index') }}">
-                        <i class="fa fa-cog"></i>
-                        <span>{{ 'menu.admin'|trans }}</span>
-                    </a>
-                </li>
-            {% endif %}
+            {#{% if is_granted('ROLE_SUPER_ADMIN') %}#}
+                {#<li id="admin" class="menu-item">#}
+                    {#<a href="{{ path('admin-index') }}">#}
+                        {#<i class="fa fa-cog"></i>#}
+                        {#<span>{{ 'menu.admin'|trans }}</span>#}
+                    {#</a>#}
+                {#</li>#}
+            {#{% endif %}#}
 
-            <li id="dashboard" class="menu-item">
-                <a href="{{ path('index') }}">
-                    <i class="fa fa-tachometer"></i>
-                    <span>{{ 'menu.dashboard'|trans }}</span>
-                </a>
-            </li>
+            {#<li id="dashboard" class="menu-item">#}
+                {#<a href="{{ path('index') }}">#}
+                    {#<i class="fa fa-tachometer"></i>#}
+                    {#<span>{{ 'menu.dashboard'|trans }}</span>#}
+                {#</a>#}
+            {#</li>#}
 
             <li id="user" class="menu-item">
                 <a href="{{ path('user-view-profile') }}">
@@ -31,19 +31,12 @@
                 </a>
             </li>
 
-            <li id="messages" class="menu-item">
-                <a href="#">
-                    <i class="fa fa-bell"></i>
-                    <span>{{ 'menu.messages'|trans }}</span>
-                </a>
-            </li>
-
-            <li id="messages" class="menu-item">
-                <a href="{{ path('applications-pdf-index') }}">
-                    <i class="fa fa-graduation-cap"></i>
-                    <span>{{ 'menu.form'|trans }}</span>
-                </a>
-            </li>
+            {#<li id="messages" class="menu-item">#}
+                {#<a href="#">#}
+                    {#<i class="fa fa-bell"></i>#}
+                    {#<span>{{ 'menu.messages'|trans }}</span>#}
+                {#</a>#}
+            {#</li>#}
         </ul>
     </div>
     <div class="sidebar-control">

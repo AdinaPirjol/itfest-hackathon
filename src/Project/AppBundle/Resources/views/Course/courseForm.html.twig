@@ -9,21 +9,19 @@
 </div>
 
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="form-group">
-            {{ form_label(form.coursename) }}<span>*</span>
-            {{ form_errors(form.coursename) }}
-            {{ form_widget(form.coursename, { 'attr': {'class': 'form-control', 'placeholder': 'view_course.coursename'|trans } }) }}
+            {{ form_label(form.name) }}<span>*</span>
+            {{ form_errors(form.name) }}
+            {{ form_widget(form.name, { 'attr': {'class': 'form-control', 'placeholder': 'view_course.coursename'|trans } }) }}
         </div>
     </div>
-</div>
 
-<div class="row">
     <div class="col-md-12">
         <div class="form-group">
-            {{ form_label(form.group) }}<span>*</span>
-            {{ form_errors(form.group) }}
-            {{ form_widget(form.group, { 'attr': {'class': 'form-control', 'placeholder': 'view_course.group'|trans } }) }}
+            {{ form_label(form.college) }}<span>*</span>
+            {{ form_errors(form.college) }}
+            {{ form_widget(form.college, { 'attr': {'class': 'form-control', 'placeholder': 'Universitate'|trans, 'autocomplete':'off' } }) }}
         </div>
     </div>
 </div>

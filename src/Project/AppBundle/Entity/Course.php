@@ -2,6 +2,7 @@
 
 namespace Project\AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Project\UserBundle\Entity\StudentGroup;
 use Project\UserBundle\Entity\User;
@@ -25,12 +26,6 @@ class Course
      * @ORM\Column(type="string", name="name", length=128)
      */
     protected $name;
-
-    /**
-     * @var User[]
-     * @ORM\OneToMany(targetEntity="Project\UserBundle\Entity\User", fetch="EXTRA_LAZY", mappedBy="courses", cascade={"persist"})
-     */
-    protected $professors;
 
     /**
      * @var College
@@ -72,18 +67,20 @@ class Course
     }
 
     /**
-     * @return StudentGroup
+     * @return College
      */
-    public function getStudentGroup()
+    public function getCollege()
     {
-        return $this->studentGroup;
+        return $this->college;
     }
 
     /**
-     * @param StudentGroup $studentGroup
+     * @param College $college
      */
-    public function setStudentGroup($studentGroup)
+    public function setCollege($college)
     {
-        $this->studentGroup = $studentGroup;
+        $this->college = $college;
     }
+
+
 }

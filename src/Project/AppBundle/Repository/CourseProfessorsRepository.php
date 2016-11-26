@@ -13,4 +13,25 @@ use Doctrine\ORM\EntityRepository;
 class CourseProfessorsRepository extends EntityRepository
 {
 
+    public function findCourses($params)
+    {
+        $qb = $this->createQueryBuilder('cp');
+        $qb->select('c.id, c.name, p.id as professorId')
+            ->join('cp.course', 'c')
+            ->join('cp.professor', 'p');
+
+        if (!empty($params['professor'])) {
+            $qb->andWhere('p.id in (:professor)')->setParameter('professor', $params['professor']);
+        }
+
+        if (!empty($params['course'])) {
+            $qb->andWhere('c.id in (:course)')->setParameter('course', $params['course']);
+        }
+
+        if (!empty($params['courseInput'])) {
+            $qb->andWhere('c.name like :courseInput')->setParameter('courseInput','%'.$params['courseInput'].'%');
+        }
+
+        return $qb->getQuery();
+    }
 }

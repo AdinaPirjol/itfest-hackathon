@@ -17,37 +17,20 @@ class CourseRepository extends EntityRepository
      */
     public function getFilterCoursesData($params)
     {
-        $qb = $this->createQueryBuilder('p');
+        $qb = $this->createQueryBuilder('c');
         $qb->select('c.id, c.name, p.id as professorId')
             ->addSelect(
                 [
                     $qb->expr()->concat(
                         $qb->expr()->concat(
-                            'u.firstName',
+                            'p.firstName',
                             $qb->expr()->literal(' ')
-                        ), 'u.lastName')
+                        ), 'p.lastName')
                     . 'as professor'
                 ]
             )
-            ->join('c.professors', 'p');
-
-//        if (!empty($params['course'])) {
-//            $orX = $qb->expr()->orX();
-//            foreach ($params['course'] as $condition) {
-//                $orX->add('c.name like \'%' . $condition . '%\'');
-//            }
-//
-//            $qb->add('where', $orX);
-//        }
-//
-//        if (!empty($params['course'])) {
-//            $orX = $qb->expr()->orX();
-//            foreach ($params['course'] as $condition) {
-//                $orX->add('c-name like \'%' . $condition . '%\'');
-//            }
-//
-//            $qb->add('where', $orX);
-//        }
+            ->join('c.courseProfessors', 'cp')
+            ->join('cp.professor', 'p');
 
         if (!empty($params['professor'])) {
             $qb->andWhere('p.id in (:professor)')->setParameter('professor', $params['professor']);

@@ -33,13 +33,6 @@ class Attachment
     protected $name;
 
     /**
-     * @var Comment
-     * @ORM\ManyToOne(targetEntity="Project\AppBundle\Entity\Comment", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="comment_id", referencedColumnName="id")
-     */
-    protected $comment;
-
-    /**
      * @return string
      */
     public function getName()
@@ -70,23 +63,5 @@ class Attachment
     {
         $this->id = $id;
     }
-
-    /**
-     * @return Comment
-     */
-    public function getComment()
-    {
-        return $this->comment;
-    }
-
-    /**
-     * @param Comment $comment
-     */
-    public function setComment($comment)
-    {
-        $this->comment = $comment;
-    }
-
-
 
 }

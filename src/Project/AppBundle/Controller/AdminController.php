@@ -2,8 +2,10 @@
 
 namespace Project\AppBundle\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use FOS\UserBundle\Model\Group;
 use JMS\SecurityExtraBundle\Annotation\Secure;
+use Project\AppBundle\Entity\College;
 use Project\AppBundle\Form\Type\ReportType;
 use Project\AppBundle\Entity\Course;
 use Project\AppBundle\Form\Type\CreateGroupType;
@@ -173,7 +175,8 @@ class AdminController extends Controller
 
     public function createCourseAction(Request $request)
     {
-
+        /** @var UserService $userService */
+        $userService = $this->get(UserService::ID);
         /** @var CourseService $courseService */
         $courseService = $this->get(CourseService::ID);
 
@@ -195,7 +198,7 @@ class AdminController extends Controller
 
             if ($form->isValid()) {
                 $formData = $form->getData();
-                $error = $courseService->editCourse($course, $formData);
+                $error = $courseService->editCourse($course, $formData,$userService->getCurrentUser());
             }
         }
 
@@ -209,6 +212,16 @@ class AdminController extends Controller
         );
     }
 
+    /**
+     * @Route("/get-colleges", name="get-colleges"  )
+     * @return JsonResponse
+     */
+    public function getCollegesAction(Request $request) {
+        /** @var CourseService $courseService */
+        $courseService = $this->get(CourseService::ID);
+        $result= $courseService->getColleges($request->request->get('college'));
+        return new JsonResponse($result);
+    }
 
     /**
      * @param Request $request

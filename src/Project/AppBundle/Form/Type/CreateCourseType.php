@@ -2,6 +2,7 @@
 
 namespace Project\AppBundle\Form\Type;
 
+use Project\AppBundle\Entity\College;
 use Project\AppBundle\Entity\Course;
 use Project\AppBundle\Validator\Constraints\Name;
 use Project\UserBundle\Entity\StudentGroup;
@@ -43,28 +44,32 @@ class CreateCourseType extends AbstractType
 
         $builder
             ->add(
-                'coursename',
+                'name',
                 'text',
                 [
-                    'label' => $translator->trans('course.create.coursename'),
+                    'label' => 'Nume curs',
                     'data' => $course->getName(),
                     'required' => true,
                     'error_bubbling' => true,
                     'trim' => true,
                     'constraints' => [
                         new NotBlank(),
-                        new Length(['min' => 5, 'max' => 255])
+                        new Length(['min' => 2, 'max' => 255])
                     ]
                 ]
             )
             ->add(
-                'group',
-                'choice',
+                'college',
+                'text',
                 array(
-                    'choices' => $this->getGroups(),
-                    'label' => $translator->trans('course.create.group'),
-                    'empty_value' => $translator->trans('course.create.all_groups'),
+                    'label' => 'Universitate',
                     'required' => true,
+                    'error_bubbling' => true,
+                    'trim' => true,
+                    'constraints' => [
+                        new NotBlank(),
+                        new Length(['min' => 2, 'max' => 255])
+                    ]
                 )
             );
     }
@@ -100,17 +105,5 @@ class CreateCourseType extends AbstractType
         return 'createGroup';
     }
 
-    public function getGroups()
-    {
-        $er = $this->em->getRepository('UserBundle:StudentGroup');
-        $results = $er->createQueryBuilder('c')
-            ->getQuery()
-            ->getResult();
-        $groups = array();
-        /** @var StudentGroup $group */
-        foreach ($results as $group) {
-            $groups[$group->getGroupName()] = $group->getGroupName();
-        }
-        return $groups;
-    }
+
 }

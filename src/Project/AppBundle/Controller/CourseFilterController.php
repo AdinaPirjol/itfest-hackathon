@@ -4,8 +4,11 @@ namespace Project\AppBundle\Controller;
 
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Knp\Component\Pager\Paginator;
+use Project\AppBundle\Entity\Course;
+use Project\AppBundle\Entity\CourseProfessors;
 use Project\AppBundle\Entity\Project;
 use Project\AppBundle\Entity\ProjectStudent;
+use Project\AppBundle\Form\Type\CourseFilterListType;
 use Project\AppBundle\Form\Type\EditProjectType;
 use Project\AppBundle\Form\Type\ProjectFilterListType;
 use Project\AppBundle\Repository\ProjectRepository;
@@ -23,7 +26,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class ProjectFilterController extends Controller
+class CourseFilterController extends Controller
 {
     /**
      * @param Request $request
@@ -39,14 +42,14 @@ class ProjectFilterController extends Controller
         /** @var Paginator $paginator */
         $paginator  = $this->get('knp_paginator');
         /** @var CourseService $courseService */
-        $courseService = $this->get(ProjectService::ID);
+        $courseService = $this->get(CourseService::ID);
         /** @var UserService $userService */
         $userService = $this->get(UserService::ID);
 
-        $projectFilterListType = new ProjectFilterListType();
+        $courseFilterListType = new CourseFilterListType();
 
         $form = $this->createForm(
-            $projectFilterListType,
+            $courseFilterListType,
             array(),
             array(
                 'translator' => $translator,
@@ -54,10 +57,13 @@ class ProjectFilterController extends Controller
             )
         );
 
-        $courses = $courseService->getCourseFilterData(array());
+        /** @var Course $course */
+        $courseProf = $courseService->getCourseFilterData(array());
+
+//        var_dump($courseProf);die;
 
         $pagination = $paginator->paginate(
-            $courses, /* query NOT result */
+            $courseProf, /* query NOT result */
             $request->query->getInt('page', 1)/*page number*/,
             10 /*limit per page*/
         );
@@ -81,16 +87,16 @@ class ProjectFilterController extends Controller
     {
         /** @var Paginator $paginator */
         $paginator  = $this->get('knp_paginator');
-        /** @var ProjectService $projectService */
-        $projectService = $this->get(ProjectService::ID);
+        /** @var CourseService $courseService */
+        $courseService = $this->get(CourseService::ID);
         /** @var UserService $userService */
         $userService = $this->get(UserService::ID);
 
         try {
-            $projectFilterListType = new ProjectFilterListType();
+            $projectFilterListType = new CourseFilterListType();
             $params = $request->get($projectFilterListType->getName());
-            $projects = $projectService->getProjectFilterData($params);
-            $canApply = $userService->canApplyForProject();
+
+            $projects = $courseService->getCourseFilterData($params);
 
             $pagination = $paginator->paginate(
                 $projects, /* query NOT result */
@@ -99,10 +105,9 @@ class ProjectFilterController extends Controller
             );
 
             $data = $this->renderView(
-                'AppBundle:Project:projectList.html.twig',
+                'AppBundle:Course:courseList.html.twig',
                 [
                     'pagination' => $pagination,
-                    'canApply' => $canApply
                 ]
             );
 
@@ -114,7 +119,7 @@ class ProjectFilterController extends Controller
         } catch (\Exception $e) {
             $response = array(
                 'error' => true,
-                //'message' => $e->getMessage(), /** for debugging */
+                'message' => $e->getMessage(), /** for debugging */
             );
         }
 
@@ -170,15 +175,6 @@ class ProjectFilterController extends Controller
             'error' => false,
             'message' => $translator->trans('apply_project.message.succes')
         ];
-
-        if ($this->isGranted('ROLE_ADMIN') || $this->isGranted('ROLE_SUPER_ADMIN')) {
-            $response = [
-                'error' => true,
-                'message' => $translator->trans('apply_project.message.not_allowed')
-            ];
-
-            return new JsonResponse($response);
-        }
 
         /** @var UserService $userService */
         $userService = $this->container->get('app.user');

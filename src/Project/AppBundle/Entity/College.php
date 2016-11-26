@@ -32,9 +32,37 @@ class College
     protected $name;
 
     /**
-     * @var Course[]
-     * @ORM\OneToMany(targetEntity="Project\AppBundle\Entity\Course", fetch="EXTRA_LAZY", mappedBy="college", cascade={"persist"})
+     * @return mixed
      */
-    protected $courses;
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+
 
 }

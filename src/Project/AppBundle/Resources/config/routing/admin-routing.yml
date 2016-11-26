@@ -47,3 +47,9 @@ admin-edit-group:
     defaults: { _controller: AppBundle:Admin:editGroup, id: 0 }
     options:
         expose: true
+
+get-colleges:
+    path: /get-colleges
+    defaults: { _controller: AppBundle:Admin:getColleges }
+    options:
+        expose: true

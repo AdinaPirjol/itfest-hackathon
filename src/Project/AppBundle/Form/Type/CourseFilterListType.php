@@ -32,7 +32,15 @@ class CourseFilterListType extends AbstractType
                 array(
                     'choices' => $filterData['professor'],
                     'label' => $translator->trans('project_form.filters.labels.professor'),
-                    'multiple' => true,
+                    'multiple' => false,
+                    'required' => false,
+                )
+            )
+            ->add(
+                'courseInput',
+                'text',
+                array(
+                    'label' => $translator->trans('Curs'),
                     'required' => false,
                 )
             )
@@ -76,6 +84,6 @@ class CourseFilterListType extends AbstractType
      */
     public function getName()
     {
-        return 'projectFilterList';
+        return 'courseFilterList';
     }
 }

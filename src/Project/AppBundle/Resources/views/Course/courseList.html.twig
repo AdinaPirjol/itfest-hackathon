@@ -7,42 +7,43 @@
         </div>
         <table class="table table-hover table-striped">
             <thead>
-            {# sorting of properties based on query components #}
-            <th {% if pagination.isSorted('p.professor') %} class="sorted {{ pagination.getDirection() }}"{% endif %}>{{ knp_pagination_sortable(pagination, 'project_form.table.professor'|trans, ['u.firstName', 'u.lastName']) }}
+            sorting of properties based on query components
+            <th {% if pagination.isSorted('c.id') %} class="sorted {{ pagination.getDirection() }}"{% endif %}>
+                {{ knp_pagination_sortable(pagination, 'project_form.table.professor'|trans, ['p.firstName', ' ', 'p.lastName']) }}
                 <i class="fa fa-fw fa-sort"></i></th>
-            <th {% if pagination.isSorted('p.name') %} class="sorted {{ pNagination.getDirection() }}"{% endif %}>{{ knp_pagination_sortable(pagination, 'project_form.table.project_name'|trans, 'p.name') }}
+            <th {% if pagination.isSorted('c.name') %} class="sorted {{ pagination.getDirection() }}"{% endif %}>
+                {{ knp_pagination_sortable(pagination, 'project_form.table.project_name'|trans, 'c.name') }}
                 <i class="fa fa-fw fa-sort"></i></th>
-            <th {% if pagination.isSorted('p.nameRo') %} class="sorted {{ pagination.getDirection() }}"{% endif %}>{{ knp_pagination_sortable(pagination, 'project_form.table.project_name_ro'|trans, 'p.nameRo') }}
+            <th {% if pagination.isSorted('professor') %} class="sorted {{ pagination.getDirection() }}"{% endif %}>
+                {{ knp_pagination_sortable(pagination, 'Professor', 'professor') }}
                 <i class="fa fa-fw fa-sort"></i></th>
-            <th {% if pagination.isSorted('p.description') %} class="sorted {{ pagination.getDirection() }}"{% endif %}>{{ knp_pagination_sortable(pagination, 'project_form.table.description'|trans, 'p.description') }}
-                <i class="fa fa-fw fa-sort"></i></th>
+
             <th>{{ 'project_form.table.actions'|trans }}</th>
             </thead>
 
             <tbody>
-            {% for project in pagination %}
+            {% for p in pagination %}
                 <tr>
                     <td>
-                        <a href="{{ path('user-view-profile', {'id': project.professorId}) }}">
-                            {{ project.professor }}
+                        <a href="{{ path('user-view-profile', {'id': p.professorId}) }}">
+                            {{ p.professorId }}
                         </a>
                     </td>
-                    <td>{{ project.name }}</td>
-                    <td>{{ project.nameRo }}</td>
-                    <td>{{ project.description|slice(0,50) }}{{ project.description|length > 50 ? '...' : '' }}</td>
+                    <td>{{ p.id }}</td>
+                    <td>{{ p.name }}</td>
+                    <td>{{ p.professorId }}</td>
+                    {#<td>{{ course.description|slice(0,50) }}{{ course.description|length > 50 ? '...' : '' }}</td>#}
                     <td>
                         <div class="btn-group">
                             <button class="action-view btn btn-primary btn-sm"
-                                    data-href="{{ path('project-view', { 'id': project.id }) }}">
+                                    data-href="{{ path('project-view', { 'id': p.id }) }}">
                                 <i class="fa fa-external-link"></i>{{ 'project_form.table.view'|trans }}
                             </button>
 
-                            {% if canApply and project.remainingStudentNo %}
-                                <button class="action-apply btn btn-primary btn-sm"
-                                        data-project-id="{{ project.id }}">
-                                    <i class="fa fa-external-link"></i>{{ 'project_form.table.apply'|trans }}
-                                </button>
-                            {% endif %}
+                            <button class="action-apply btn btn-primary btn-sm"
+                                    data-project-id="{{ p.id }}">
+                                <i class="fa fa-external-link"></i>Subscribe
+                            </button>
                         </div>
                     </td>
                 </tr>

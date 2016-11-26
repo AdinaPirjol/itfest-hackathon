@@ -11,7 +11,11 @@ namespace Project\AppBundle\Services;
 
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
+use Project\AppBundle\Entity\College;
 use Project\AppBundle\Entity\Course;
+use Project\AppBundle\Entity\CourseProfessors;
+use Project\AppBundle\Repository\CollegeRepository;
+use Project\AppBundle\Repository\CourseProfessorsRepository;
 use Project\AppBundle\Repository\CourseRepository;
 use Project\UserBundle\Entity\StudentGroup;
 use Project\UserBundle\Entity\User;
@@ -71,19 +75,24 @@ class CourseService
      * @return bool
      * @throws \Doctrine\DBAL\ConnectionException
      */
-    public function editCourse(Course $course, $formdata)
+    public function editCourse(Course $course, $formdata, User $user)
     {
         $em = $this->getEntityManager();
         $em->getConnection()->beginTransaction();
 
         try {
-            /** @var StudentGroup $studentGroup */
-            $studentGroup = $em->getRepository('UserBundle:StudentGroup')->findOneBy(array('groupName'=>$formdata['group']));
-
-            $course->setName($formdata['coursename']);
-            $course->setStudentGroup($studentGroup);
+            $course->setName($formdata['name']);
+            /** @var College $college */
+            $college = $em->getRepository('AppBundle:College')->findOneBy(['name' => $formdata['college']]);
+            $course->setCollege($college);
 
             $em->persist($course);
+
+            $courseProfessor = new CourseProfessors();
+            $courseProfessor->setCourse($course);
+            $courseProfessor->setProfessor($user);
+            $em->persist($courseProfessor);
+
             $em->flush();
             $em->getConnection()->commit();
         } catch(\Exception $e) {
@@ -100,12 +109,9 @@ class CourseService
      */
     public function getCourseFilterData($params)
     {
-        $em = $this->getEntityManager();
-
-        /** @var CourseRepository $courseRepository */
-        $courseRepository = $em->getRepository(CourseRepository::ID);
-
-        return $courseRepository->getFilterCoursesData($params);
+        /** @var CourseProfessorsRepository $em */
+        $em = $this->getEntityManager()->getRepository("AppBundle:CourseProfessors");
+        return $em->findCourses($params);
     }
 
     public function getCourseFilterFormData()
@@ -135,5 +141,12 @@ class CourseService
         }
 
         return $filterData;
+    }
+
+    public function getColleges($data)
+    {
+        /** @var CollegeRepository $er */
+        $er = $this->getDoctrine()->getRepository('AppBundle:College');
+        return array_values($er->getColleges($data));
     }
 }

@@ -1,12 +1,12 @@
 $(document).ready(function () {
-    $('#projectFilterList_save').click(function () {
-        var form = $('form[name="projectFilterList"]');
+    $('#courseFilterList_save').click(function () {
+        var form = $('form[name="courseFilterList"]');
 
         $.ajax({
             url: Routing.generate('filter-projects-ajax', {'_locale': Translator.locale}),
             type: 'POST',
             data: form.serialize(),
-            beforeSend: function() {
+            beforeSend: function () {
                 //show loading modal
             },
             success: function (data) {
@@ -23,7 +23,7 @@ $(document).ready(function () {
                     $("div#projects-list").html(data.projects);
                 }
             },
-            error: function() {
+            error: function () {
                 $.notify({
                     icon: 'fa fa-exclamation-circle',
                     message: Translator.trans('error') + ': ' + Translator.trans('error_request')
@@ -36,23 +36,23 @@ $(document).ready(function () {
         });
     });
 
-    $('#projectFilterList_reset').on('click', function () {
-        $('#projectFilterList_professor').val('').trigger('change');
-        $('#projectFilterList_tag').val('').trigger('change');
-        $('#projectFilterList_save').click();
+    $('#courseFilterList_reset').on('click', function () {
+        $('#courseFilterList_professor').val('').trigger('change');
+        $('#courseFilterList_tag').val('').trigger('change');
+        $('#courseFilterList_save').click();
     });
 
-    $('.action-view').click(function() {
-       window.location.href = $(this).data('href');
+    $('.action-view').click(function () {
+        window.location.href = $(this).data('href');
     });
 
-    $('.action-apply').click(function() {
+    $('.action-apply').click(function () {
         var selector = $(this);
 
         $.ajax({
             url: Routing.generate('project-apply', {'_locale': Translator.locale, 'id': selector.data('project-id')}),
             type: 'POST',
-            beforeSend: function() {
+            beforeSend: function () {
                 //show loading modal
             },
             success: function (data) {
@@ -76,7 +76,8 @@ $(document).ready(function () {
                     });
                 }
             },
-            error: function() {
+            error: function (data) {
+                console.log(data);
                 $.notify({
                     icon: 'fa fa-exclamation-circle',
                     message: Translator.trans('error') + ': ' + Translator.trans('error_request')
@@ -85,6 +86,32 @@ $(document).ready(function () {
                     type: 'danger',
                     timer: 100
                 });
+            }
+        });
+    });
+
+    $("input[name='createGroup[college]']").keyup(function () {
+
+        $.ajax({
+            url: Routing.generate('get-colleges', {'_locale': Translator.locale}),
+            type: 'GET',
+            dataType: 'json',
+            data: {
+                college: $("input[name='createGroup[college]']").val()
+            },
+            success: function (data) {
+                var arr = [];
+                if(data.length > 0) {
+                    $.each(data, function(key,value){
+                        arr.push(value);
+                    });
+
+                    console.log(arr);
+
+                    $("input[name='createGroup[college]']").autocomplete({
+                        source: arr
+                    });
+                }
             }
         });
     });

@@ -1,0 +1,51 @@
+filter-projects:
+    path: /list
+    defaults: { _controller: AppBundle:CourseFilter:index }
+
+filter-projects-ajax:
+    path: /list-ajax
+    defaults: { _controller: AppBundle:CourseFilter:listAjax }
+    options:
+        expose: true
+
+project-view:
+    path: /view/{id}
+    defaults: { _controller: AppBundle:CourseFilter:viewProject, id: 0 }
+    requirements:
+        id: \d+
+
+project-apply:
+    path: /apply/{id}
+    defaults: { _controller: AppBundle:CourseFilter:applyProject, id: 0 }
+    requirements:
+        id: \d+
+    options:
+        expose: true
+
+project-add:
+    path: /add-project
+    defaults: { _controller: AppBundle:CourseFilter:addProject }
+
+project-list-by-professor:
+    path: /show-all
+    defaults: { _controller: AppBundle:CourseFilter:listProjectsByProfessor }
+
+project-edit:
+    path: /edit/{id}
+    defaults: { _controller: AppBundle:CourseFilter:projectEdit, id: 0 }
+    requirements:
+        id: \d+
+
+project-delete:
+    path: /delete/{id}
+    defaults: { _controller: AppBundle:CourseFilter:projectDelete, id: 0 }
+    requirements:
+        id: \d+
+    options:
+        expose: true
+
+project-recent:
+    path: /recent
+    defaults: { _controller: AppBundle:CourseFilter:recentProjectsAjax }
+    options:
+        expose: true

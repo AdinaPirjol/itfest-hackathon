@@ -12,5 +12,12 @@ use Doctrine\ORM\EntityRepository;
 
 class CollegeRepository extends EntityRepository
 {
-
+    public function getColleges($data)
+    {
+        return $this->createQueryBuilder('c')
+            ->select('c.name')
+            ->where('c.name like :college')
+            ->setParameter('college', '%' . $data['college'] . '%')
+            ->getQuery()->getResult();
+    }
 }

@@ -57,13 +57,6 @@ class User
     protected $phoneNumber;
 
     /**
-     * @var StudentGroup
-     * @ORM\ManyToOne(targetEntity="Project\UserBundle\Entity\StudentGroup", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="student_group_id", referencedColumnName="id")
-     */
-    protected $group;
-
-    /**
      * @var string
      * @ORM\Column(name="preferred_locale", type="string", columnDefinition="enum('ro', 'en', 'fr', 'de')")
      */
@@ -190,25 +183,6 @@ class User
     public function setUserType(UserType $userType)
     {
         $this->userType = $userType;
-
-        return $this;
-    }
-
-    /**
-     * @return StudentGroup
-     */
-    public function getGroup()
-    {
-        return $this->group;
-    }
-
-    /**
-     * @param StudentGroup $group
-     * @return $this
-     */
-    public function setGroup(StudentGroup $group)
-    {
-        $this->group = $group;
 
         return $this;
     }

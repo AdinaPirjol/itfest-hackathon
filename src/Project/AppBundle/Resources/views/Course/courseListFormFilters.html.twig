@@ -11,7 +11,7 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/javascript" src="{{ asset('bundles/app/js/project-filter.js') }}"></script>
+
     <script type="text/javascript" src="{{ asset('assets/vendor/select2/dist/js/select2.js') }}"></script>
     <script type="text/javascript">
         $("li.sidebar-list").removeClass("active");
@@ -36,11 +36,11 @@
                         <span>{{ 'project_form.actions.title'|trans }}</span>
 
                         <div class="btn-group pull-right">
-                            <a class="btn btn-success btn-sm" href="{{ path('project-add') }}">
-                                <i class="fa fa-plus"></i>{{ 'project_form.actions.add'|trans }}</a>
+                            <a class="btn btn-success btn-sm" href="{{ path('admin-create-course') }}">
+                                <i class="fa fa-plus"></i>Adaugare curs</a>
 
-                            <a class="btn btn-success btn-sm" href="{{ path('project-list-by-professor') }}">
-                                <i class="fa fa-list-ul"></i>{{ 'project_form.actions.view_personal'|trans }}</a>
+                            {#<a class="btn btn-success btn-sm" href="{{ path('project-list-by-professor') }}">#}
+                                {#<i class="fa fa-list-ul"></i>{{ 'project_form.actions.view_personal'|trans }}</a>#}
                         </div>
                     </h4>
                 </div>
@@ -63,46 +63,31 @@
                     {{ form_errors(form) }}
 
                     <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                {{ form_label(form.availability) }}
-                                {{ form_errors(form.availability) }}
-                                {{ form_widget(form.availability, { 'attr': {'class': 'form-control'} }) }}
-                            </div>
-                        </div>
+                        {#<div class="col-md-6">#}
+                            {#<div class="form-group">#}
+                                {#{{ form_label(form.professor) }}#}
+                                {#{{ form_errors(form.professor) }}#}
+                                {#{{ form_widget(form.professor, { 'attr': {'class': 'form-control'} }) }}#}
+                            {#</div>#}
+                        {#</div>#}
 
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
-                                {{ form_label(form.stream) }}
-                                {{ form_errors(form.stream) }}
-                                {{ form_widget(form.stream, { 'attr': {'class': 'form-control'} }) }}
+                                {{ form_label(form.courseInput) }}
+                                {{ form_errors(form.courseInput) }}
+                                {{ form_widget(form.courseInput, { 'attr': {'class': 'form-control'} }) }}
                             </div>
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                {{ form_label(form.professor) }}
-                                {{ form_errors(form.professor) }}
-                                {{ form_widget(form.professor, { 'attr': {'class': 'form-control js-example-basic-multiple'} }) }}
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                {{ form_label(form.tag) }}
-                                {{ form_errors(form.tag) }}
-                                {{ form_widget(form.tag, { 'attr': {'class': 'form-control js-example-basic-multiple'} }) }}
-                            </div>
-                        </div>
-                    </div>
 
                     <div class="btn-group">
-                        <button type="button" id="{{ form.vars.name }}_save" name="{{ form.vars.name }}[save]" class="btn btn-success btn-sm">
+                        <button type="button" id="{{ form.vars.name }}_save" name="{{ form.vars.name }}[save]"
+                                class="btn btn-success btn-sm">
                             {{ 'project_form.filters.buttons.submit'|trans }}
                         </button>
-                        <button type="reset" id="{{ form.vars.name }}_reset" name="{{ form.vars.name }}[reset]" class="btn btn-warning btn-sm">
+                        <button type="reset" id="{{ form.vars.name }}_reset" name="{{ form.vars.name }}[reset]"
+                                class="btn btn-warning btn-sm">
                             {{ 'project_form.filters.buttons.reset'|trans }}
                         </button>
                     </div>
@@ -116,7 +101,7 @@
     {#Projects#}
     <div class="row">
         <div id="projects-list">
-            {% include "AppBundle:Project:projectList.html.twig" with {pagination: pagination} %}
+            {% include "AppBundle:Course:courseList.html.twig" with {pagination: pagination} %}
         </div>
     </div>
 {% endblock %}
