@@ -13,5 +13,11 @@ use Doctrine\ORM\EntityRepository;
 
 class CommentRepository extends EntityRepository
 {
-
+    public function sortComments($id) {
+        return $this->createQueryBuilder('c')
+            ->select('c')
+            ->join('c.event', 'e')
+            ->orderBy('c.rating', 'desc')
+            ->getQuery()->getResult();
+    }
 }

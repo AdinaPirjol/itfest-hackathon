@@ -6,7 +6,7 @@
     {{ parent() }}
 {% endblock %}
 {% block content %}
-    <form action="{{ path('add-event-submit') }}" method="post">
+    <form action="{{ path('add-event-submit', {'id':course.id}) }}" method="post">
 
         <div class="form-group">
             <label class="col-md-3 control-label">Nume eveniment</label>
@@ -21,7 +21,7 @@
 
             <select class="form-control" name="tip" id="tip">
                 {% for key, tip in tipuri %}
-                    <option id="{{ key }}">{{ tip }}</option>
+                    <option value="{{ key }}">{{ tip }}</option>
                 {% endfor %}
             </select>
         </div>
@@ -30,33 +30,17 @@
             <label class="col-md-3 control-label">Recurenta:</label>
             <select class="form-control" name="recurenta" id="recurenta">
                 {% for key, r in recurenta %}
-                    <option id="{{ key }}">{{ r }}</option>
+                    <option value="{{ key }}">{{ r }}</option>
                 {% endfor %}
             </select>
         </div>
 
-        <div class="form-group">
-            <label class="col-md-3 control-label">Data:</label>
-
-            <div class="col-md-12">
-                <input type="text" class="form-control" id="name" name="name" placeholder="" required="">
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="col-md-3 control-label">Ora incepere</label>
-
-            <div class="col-md-12">
-                <input type="text" class="form-control" id="name" name="name" placeholder="" required="">
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="col-md-3 control-label">Ora sfarsit</label>
-
-            <div class="col-md-12">
-                <input type="text" class="form-control" id="name" name="name" placeholder="" required="">
-            </div>
+        <div class='example'>
+            Data:
+            <input class="datepicker" id="date" data-bind='datepicker: startDate' />
+            <select data-bind="options: hourOptions, optionsText: formatTimeOption, value: startDateHour"></select>
+            <select data-bind="options: hourOptions, optionsText: formatTimeOption, value: endDateHour"></select>
+            <p>Selected date: <span data-bind='text: startDate'></span> -  <span data-bind='text: endDate'></span></p>
         </div>
 
         <div class="form-group">

@@ -71,13 +71,13 @@ add-event:
         id: \d+
 
 add-event-submit:
-    path: /add-event
+    path: /add-event-submit/{id}
     defaults: { _controller: AppBundle:CourseFilter:addEventSubmit, id: 0 }
     requirements:
         id: \d+
 
 add-comment:
-    path: /add-comment
+    path: /add-comment/{id}
     defaults: { _controller: AppBundle:CourseFilter:addComment, id: 0 }
     requirements:
         id: \d+
@@ -89,6 +89,7 @@ get_event:
     defaults: { _controller: AppBundle:Admin:getEventAjax, id: 0 }
     requirements:
         id: \d+
+
 
 list_moderators:
     path: /list-moderators/{id}
@@ -103,3 +104,20 @@ add_moderators:
 unsubscribe_moderator:
     path: /unsubscribe-moderators/{id}
     defaults: { _controller: AppBundle:Admin:unsubscribeModerator }
+
+thumbs-up:
+    path: /thumbs-up
+    defaults: { _controller: AppBundle:CourseFilter:thumbsUp, id: 0 }
+    requirements:
+        id: \d+
+    options:
+        expose: true
+
+thumbs-down:
+    path: /thumbs-down
+    defaults: { _controller: AppBundle:CourseFilter:thumbsDown, id: 0 }
+    requirements:
+        id: \d+
+    options:
+        expose: true
+>>>>>>> Stashed changes

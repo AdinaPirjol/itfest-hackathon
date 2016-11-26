@@ -11,10 +11,10 @@
             <th {% if pagination.isSorted('c.id') %} class="sorted {{ pagination.getDirection() }}"{% endif %}>
                 {{ knp_pagination_sortable(pagination, 'Id curs', ['p.firstName', ' ', 'p.lastName']) }}
                 <i class="fa fa-fw fa-sort"></i></th>
+
             <th {% if pagination.isSorted('c.name') %} class="sorted {{ pagination.getDirection() }}"{% endif %}>
                 {{ knp_pagination_sortable(pagination, 'Curs', 'c.name') }}
                 <i class="fa fa-fw fa-sort"></i></th>
-            <th>Profesor</th>
 
             <th>{{ 'project_form.table.actions'|trans }}</th>
             </thead>

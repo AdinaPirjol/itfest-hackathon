@@ -14,7 +14,9 @@ use Project\AppBundle\Entity\ProjectStudent;
 use Project\AppBundle\Form\Type\CourseFilterListType;
 use Project\AppBundle\Form\Type\EditProjectType;
 use Project\AppBundle\Form\Type\ProjectFilterListType;
+use Project\AppBundle\Repository\CommentRepository;
 use Project\AppBundle\Repository\CourseSubscribersRepository;
+use Project\AppBundle\Repository\EventRepository;
 use Project\AppBundle\Repository\ProjectRepository;
 use Project\AppBundle\Services\CourseService;
 use Project\AppBundle\Services\MailService;
@@ -29,6 +31,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 class CourseFilterController extends Controller
 {
@@ -489,12 +492,23 @@ class CourseFilterController extends Controller
         $userService = $this->get(UserService::ID);
         $user = $userService->getCurrentUser();
 
-        $event = $this->getDoctrine()->getRepository('AppBundle:Event')->find($id);
+        /** @var EventRepository $repo */
+        $repo = $this->getDoctrine()->getRepository('AppBundle:Event');
+        /** @var CommentRepository $commentRepo */
+        $commentRepo = $this->getDoctrine()->getRepository('AppBundle:Comment');
+
+
+        /** @var Event $event */
+        $event = $repo->find($id);
+
+        $comments = $commentRepo->sortComments($id);
 
         return $this->render(
-            'AppBundle:Event:events.html.twig',
+            'AppBundle:Event:eventEdit.html.twig',
             [
-                'event' => $event
+                'event' => $event,
+                'course' => $event->getCourse(),
+                'comments' => $comments
             ]
         );
     }
@@ -506,28 +520,54 @@ class CourseFilterController extends Controller
             'AppBundle:Event:addEvent.html.twig',
             [
                 'course' => $course,
-                'tipuri' => [
-                    0 => Event::CURS,
-                    1 => Event::EVENT,
-                    2 => Event::EXAM
-                ],
-                'recurenta' => [
-                    0 => Event::NONE,
-                    1 => Event::DAILY,
-                    2 => Event::WEEKLY,
-                    3 => Event::MONTHLY
-                ]
+                'tipuri' => Event::$types,
+                'recurenta' => Event::$rec
             ]
         );
     }
 
-    public function addEventSubmit(Request $request) {
-        
+    public function addEventSubmitAction(Request $request, $id)
+    {
+        $doctrine = $this->getDoctrine();
+        $em = $this->getDoctrine()->getManager();
+        $form = $request->request->all();
+
+        $event = new Event();
+        $event->setCourse($doctrine->getRepository('AppBundle:Course')->find($id));
+        $event->setDate(new \DateTime());
+        $event->setStartDate(new \DateTime());
+        $event->setEndDate(new \DateTime());
+        $event->setRecurrenceType(Event::$rec[$form['recurenta']]);
+        $event->setType(Event::$types[$form['tip']]);
+
+        $em->persist($event);
+        $em->flush();
+
+
+        /** @var UserService $userService */
+        $userService = $this->get(UserService::ID);
+        $user = $userService->getCurrentUser();
+
+        /** @var Course $course */
+        $course = $this->getDoctrine()->getRepository('AppBundle:Course')->find($id);
+        $events = $this->getDoctrine()->getRepository('AppBundle:Event')->findBy(['course' => $course->getId()]);
+
+        /** @var array $courseProfessors */
+        $courseProfessors = $this->getDoctrine()->getRepository('AppBundle:CourseProfessors')->findBy(['course' => $course->getId()]);
+
+        return $this->render(
+            'AppBundle:Event:events.html.twig',
+            [
+                'canEdit' => true,
+                'course' => $course,
+                'events' => $events,
+                'courseProf' => $courseProfessors
+            ]
+        );
     }
 
     public function addCommentAction(Request $request, $id)
     {
-
         /** @var Event $event */
         $event = $this->getDoctrine()->getRepository('AppBundle:Event')->find($id);
 
@@ -539,5 +579,26 @@ class CourseFilterController extends Controller
         $this->getDoctrine()->getManager()->flush();
 
         return new JsonResponse(['error' => false, 'comment' => $comment]);
+    }
+
+
+
+    public function thumbsUpAction(Request $request, $id) {
+        /** @var Comment $comment */
+        $comment = $this->getDoctrine()->getRepository('AppBundle:Comment')->find($id);
+        $comment->setRating($comment->getRating()+1);
+        $this->getDoctrine()->getManager()->persist($comment);
+        $this->getDoctrine()->getManager()->flush();
+        return new JsonResponse([]);
+    }
+
+    public function thumbsDownAction(Request $request, $id) {
+        /** @var Comment $comment */
+        $comment = $this->getDoctrine()->getRepository('AppBundle:Comment')->find($id);
+        $comment->setRating($comment->getRating()-1);
+        $this->getDoctrine()->getManager()->persist($comment);
+        $this->getDoctrine()->getManager()->flush();
+
+        return new JsonResponse([]);
     }
 }

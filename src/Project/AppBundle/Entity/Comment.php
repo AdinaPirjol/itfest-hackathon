@@ -33,12 +33,6 @@ class Comment
     protected $comment;
 
     /**
-     * @var Attachment[]
-     * @ORM\OneToMany(targetEntity="Project\AppBundle\Entity\Attachment", fetch="EXTRA_LAZY", mappedBy="attachment", cascade={"persist"})
-     */
-    protected $attachments;
-
-    /**
      * @var User
      * @ORM\ManyToOne(targetEntity="Project\UserBundle\Entity\User", fetch="EXTRA_LAZY")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
@@ -46,16 +40,17 @@ class Comment
     protected $user;
 
     /**
-     * @var Rating[]
-     * @ORM\OneToMany(targetEntity="Project\AppBundle\Entity\Rating", fetch="EXTRA_LAZY", mappedBy="comment", cascade={"persist"})
-     */
-    protected $ratings;
-
-    /**
      * @var integer
      * @ORM\Column(type="integer", name="rating")
      */
     protected $rating = 0;
+
+    /**
+     * @var Event
+     * @ORM\ManyToOne(targetEntity="Project\AppBundle\Entity\Event", inversedBy="comments", fetch="EXTRA_LAZY")
+     * @ORM\JoinColumn(name="event_id", referencedColumnName="id")
+     */
+    protected $event;
 
     /**
      * @return mixed
@@ -87,22 +82,6 @@ class Comment
     public function setComment($comment)
     {
         $this->comment = $comment;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getAttachments()
-    {
-        return $this->attachments;
-    }
-
-    /**
-     * @param mixed $attachments
-     */
-    public function setAttachments($attachments)
-    {
-        $this->attachments = $attachments;
     }
 
     /**
@@ -138,22 +117,20 @@ class Comment
     }
 
     /**
-     * @return Rating[]
+     * @return int
      */
-    public function getRatings()
+    public function getRating()
     {
-        return $this->ratings;
+        return $this->rating;
     }
 
     /**
-     * @param Rating[] $ratings
+     * @param int $rating
      */
-    public function setRatings($ratings)
+    public function setRating($rating)
     {
-        $this->ratings = $ratings;
+        $this->rating = $rating;
     }
-
-
 
 
 }

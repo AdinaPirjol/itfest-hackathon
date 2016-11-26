@@ -138,4 +138,41 @@ $(document).ready(function () {
             }
         });
     });
+
 });
+
+
+function thumbsUp(id, obj) {
+
+
+    $.ajax({
+        url: Routing.generate('thumbs-up', {'_locale': Translator.locale}),
+        type: 'GET',
+        dataType: 'json',
+        data: {
+            id: id
+        },
+        success: function (data) {
+            var rating = obj.closest('.rating');
+            rating.val( parseInt(rating.val()) + 1);
+        }
+    });
+}
+
+
+function thumbsDown(id, obj) {
+
+
+    $.ajax({
+        url: Routing.generate('thumbs-down', {'_locale': Translator.locale}),
+        type: 'GET',
+        dataType: 'json',
+        data: {
+            id: id
+        },
+        success: function () {
+            var rating = obj.closest('.rating');
+            rating.val( parseInt(rating.val()) - 1);
+        }
+    });
+}

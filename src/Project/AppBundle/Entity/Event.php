@@ -18,6 +18,18 @@ use Project\UserBundle\Entity\StudentGroup;
  */
 class Event
 {
+    public  static $types = [
+        0 => Event::CURS,
+        1 => Event::EVENT,
+        2 => Event::EXAM
+    ];
+
+     public  static $rec = [
+        0 => Event::NONE,
+        1 => Event::DAILY,
+        2 => Event::WEEKLY,
+        3 => Event::MONTHLY
+    ];
 
     const CURS = 'curs';
     const EVENT = 'event';
@@ -67,7 +79,7 @@ class Event
 
     /**
      * @var Comment[]
-     * @ORM\OneToMany(targetEntity="Project\AppBundle\Entity\Comment", fetch="EXTRA_LAZY", mappedBy="comment", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Project\AppBundle\Entity\Comment", fetch="EXTRA_LAZY", mappedBy="event", cascade={"persist"})
      */
     protected $comments;
 
@@ -220,5 +232,22 @@ class Event
     {
         $this->comments = $comments;
     }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
 
 }
